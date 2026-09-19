@@ -1,0 +1,14 @@
+---
+description: DRF serializer and ViewSet conventions
+globs: "**/serializers.py,**/viewsets.py,**/api/**/*.py"
+alwaysApply: false
+---
+
+# Django REST Framework
+
+- Validate in serializers. Stamp `request.user` in `create` / `perform_create`.
+- Override `get_queryset()` and scope it to the current user.
+- Always `select_related` / `prefetch_related` on API querysets.
+- Paginate list endpoints. Default permission is authenticated write.
+
+See skill: `django-rest-framework`.

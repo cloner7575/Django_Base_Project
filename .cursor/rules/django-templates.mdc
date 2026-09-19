@@ -1,0 +1,14 @@
+---
+description: Template inheritance and partials
+globs: "**/*.html"
+alwaysApply: false
+---
+
+# Django Templates
+
+- Pages extend `base.html`. HTMX fragments use `_partial.html` names.
+- `{% url %}` instead of hardcoded paths. `{% empty %}` on loops that can be empty.
+- Keep logic out of templates; use model methods (`user.can_moderate`).
+- POST forms include `{% csrf_token %}`.
+
+See skills: `django-templates`, `htmx-patterns`.

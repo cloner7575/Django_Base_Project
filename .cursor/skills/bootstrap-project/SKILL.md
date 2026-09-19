@@ -1,0 +1,48 @@
+---
+name: bootstrap-project
+description: Turn this Django starter into a new product repo while keeping architecture, skills, and rules. Use when the user wants a new project from this base, to clone, fork, or rename the starter.
+---
+
+# Bootstrap a project from this starter
+
+Goal: a new codebase that still looks like this starter, so the senior Django + UI assistant keeps working.
+
+## Keep
+
+- `apps/`, `core/`, `templates/`, `static/`, `tests/`, `.cursor/` (including `ui-ux-pro-max`), `AGENTS.md`
+- `AUTH_USER_MODEL = "accounts.User"`
+- Split settings modules
+- Ruff / pytest config
+
+## Drop or regenerate
+
+- `.venv/`, `db.sqlite3`, `__pycache__/`, `.env`
+- Copy `.env.example` → `.env` and set `DJANGO_SITE_NAME` to the product name
+
+## Rename (optional)
+
+If they want a package name other than `core`:
+
+1. Rename the `core/` directory and every `core.` import (`DJANGO_SETTINGS_MODULE`, `ROOT_URLCONF`, WSGI/ASGI)
+2. Leave `apps.accounts` / `apps.common` labels unchanged
+3. Update `AGENTS.md` Quick facts only — do not rewrite skills
+
+If they keep the name `core` (recommended), only change `DJANGO_SITE_NAME`.
+
+## First commands in the new repo
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-dev.txt
+cp .env.example .env
+.venv/bin/python manage.py migrate
+.venv/bin/pytest
+```
+
+Then add the first domain app with `starter-architecture`.
+
+## Do not
+
+- Start from a blank `django-admin startproject` and try to re-apply skills by hand
+- Delete `.cursor/` or `AGENTS.md`
+- Replace the template shell with an unrelated UI kit on day one

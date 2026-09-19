@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITE_NAME }} · Starter{% endblock %}
+
+{% block content %}
+  <div class="stack">
+    <section class="hero">
+      <h1>A reusable Django base.</h1>
+      <p class="lede">
+        Settings, custom user, templates, and Cursor skills are already here.
+        Add a domain app under <code>apps/</code> and keep this layout so every new project stays consistent.
+      </p>
+    </section>
+    <section class="card-grid" aria-label="Next steps">
+      <article class="card">
+        <h2>Create an app</h2>
+        <ol>
+          <li><code>.venv/bin/python manage.py startapp shop apps/shop</code></li>
+          <li>Set <code>name = "apps.shop"</code> and a short <code>label</code> in <code>apps.py</code></li>
+          <li>Add the AppConfig to <code>INSTALLED_APPS</code></li>
+        </ol>
+      </article>
+      <article class="card">
+        <h2>Models</h2>
+        <p>Subclass <code>apps.common.models.TimeStampedModel</code>. Put domain rules on the model, not in the view.</p>
+      </article>
+      <article class="card">
+        <h2>UI</h2>
+        <p>Extend <code>templates/base.html</code>. Use tokens in <code>static/css/tokens.css</code>. Follow the <code>ui-ux</code> skill for a11y, forms, and empty states.</p>
+      </article>
+    </section>
+    <p>
+      {% include "components/_button.html" with text="Open admin" href="/admin/" %}
+    </p>
+  </div>
+{% endblock %}

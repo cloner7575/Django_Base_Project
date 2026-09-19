@@ -1,0 +1,10 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="{% url 'common:home' %}">{{ SITE_NAME }}</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="{% url 'common:home' %}" {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>Home</a>
+      <a href="{% url 'admin:index' %}">Admin</a>
+      <a href="{% url 'common:health' %}">Health</a>
+    </nav>
+  </div>
+</header>

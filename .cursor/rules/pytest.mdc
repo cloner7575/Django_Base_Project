@@ -1,0 +1,15 @@
+---
+description: pytest-django TDD conventions
+globs: "**/test_*.py,**/tests/**/*.py,**/conftest.py,*_test.py"
+alwaysApply: false
+---
+
+# Pytest
+
+- TDD: failing test before production code.
+- `@pytest.mark.django_db` (or module `pytestmark`) when touching the database.
+- Factory Boy for models once factories exist; fixtures in `conftest.py`.
+- Test behavior and HTTP/status/side effects, not Django internals.
+- Run with `.venv/bin/pytest`. Settings module is `core.settings.test`.
+
+See skill: `pytest-django-patterns`.

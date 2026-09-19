@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": ".cursor/hooks/protect-main.sh",
+        "matcher": "Write|StrReplace",
+        "timeout": 5
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/format-python.sh",
+        "timeout": 30
+      },
+      {
+        "command": ".cursor/hooks/lint-python.sh",
+        "timeout": 30
+      },
+      {
+        "command": ".cursor/hooks/run-tests.sh",
+        "timeout": 90
+      }
+    ]
+  }
+}
