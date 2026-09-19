@@ -18,8 +18,13 @@ Optional packages (DRF, Celery, Redis, django-extensions, HTMX package) are **no
 
 ```
 apps/accounts     Custom user, admin
-apps/common       TimeStampedModel, home, /health/
-apps/<domain>     New product apps live here
+apps/common       TimeStampedModel, health, shell pages
+apps/catalog      Shop catalog + home CMS (ecommerce)
+apps/cart         DB cart
+apps/orders       Checkout / order snapshots
+apps/payments     Gateway + paid side effects
+apps/panel        Staff UI (no models)
+apps/<domain>     Other product apps
 core/             URLconf, WSGI/ASGI, split settings
 templates/        base.html, partials/, components/, pages/
 static/           css/tokens.css, css/base.css, js/
@@ -30,6 +35,8 @@ tests/            pytest
 New apps: `startapp billing apps/billing`, then `name = "apps.billing"`, `label = "billing"`, register the AppConfig in `core/settings/base.py`.
 
 New models: subclass `apps.common.models.TimeStampedModel`.
+
+Ecommerce at scale: catalog/cart/orders/payments (`persian-shop-playbook`), not a fat `shop` app.
 
 ## How you work
 
@@ -86,7 +93,7 @@ You design as well as implement:
 
 ```bash
 .venv/bin/python manage.py runserver
-.venv/bin/python manage.py startapp shop apps/shop
+.venv/bin/python manage.py startapp catalog apps/catalog
 .venv/bin/python manage.py makemigrations
 .venv/bin/python manage.py migrate
 .venv/bin/pytest

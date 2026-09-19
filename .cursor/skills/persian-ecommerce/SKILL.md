@@ -46,14 +46,17 @@ Settings (optional overrides in `.env`):
 
 ## Domain layout
 
-Prefer `apps/shop` (or another single bounded context) with:
+For shops that may grow, split apps (see `persian-shop-playbook` / `domain.md`):
 
-| Model | Notes |
-|-------|--------|
-| `Category` / `Product` | `price` in تومان; `stock`; image optional |
-| Session cart | `{product_id: qty}` until checkout |
-| `Order` / `OrderItem` | snapshot `unit_price` + `line_total` in تومان |
-| `Payment` | gateway authority; store gateway amount + currency used if needed |
+| App | Owns |
+|-----|------|
+| `apps.catalog` | Category / Product / variants / home CMS; `product_to_dict`; seed |
+| `apps.cart` | DB `Cart` + `CartItem` (user XOR session); merge on login |
+| `apps.orders` | `Order` / `OrderItem` snapshots; checkout create (no stock decrement) |
+| `apps.payments` | `Payment` + Zarinpal; stock decrement on paid verify |
+| `apps.panel` | Staff UI only |
+
+Tiny MVPs may start thinner, but do not grow a single fat `apps/shop` with everything.
 
 Models subclass `apps.common.models.TimeStampedModel`. Dates shown to users → Jalali (`persian-locale`).
 

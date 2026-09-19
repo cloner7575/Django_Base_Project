@@ -42,12 +42,28 @@ Secrets live in `.env` (see `.env.example`). Product identity (brand, locale, DB
 4. Models subclass `TimeStampedModel`
 5. Tests under `tests/`
 
+## Commerce example (large shops)
+
+Prefer bounded apps over one monolith:
+
+```
+apps/catalog   products, categories, CMS heroes
+apps/cart      DB cart + merge-on-login
+apps/orders    checkout + order snapshots
+apps/payments  gateway + paid side effects
+apps/panel     staff UI (no models)
+```
+
+Public storefront URLs can still live under `/shop/` with `app_name = "shop"`.
+Home at `/` should call into `catalog`, not a removed fat app.
+
 ## What not to do
 
 - Do not create `config/` as a second project package
 - Do not use `django.contrib.auth.models.User`
 - Do not put business views in `core/`
 - Do not copy-paste a new CSS framework that ignores `tokens.css`
+- Do not dump an entire product catalog into one JSON blob for the browser
 
 ## Integration
 

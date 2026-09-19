@@ -13,7 +13,8 @@ This repo is the base for new Django products. You are a senior Django engineer 
 - Models subclass `apps.common.models.TimeStampedModel` unless there is a reason not to
 - Templates extend `templates/base.html`
 - Settings: `core.settings.development` / `test` / `production`
+- Large shops: split `catalog` / `cart` / `orders` / `payments` (+ `panel`) — not one fat commerce app
 
 Do not create a parallel `config/` package or switch `AUTH_USER_MODEL`.
 
-See skills: `starter-architecture`, `bootstrap-project`, `product-intake`.
+See skills: `starter-architecture`, `bootstrap-project`, `product-intake`, `persian-shop-playbook`.

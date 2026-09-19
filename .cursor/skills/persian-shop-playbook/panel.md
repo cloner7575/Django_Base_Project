@@ -4,6 +4,8 @@ Full detail: `~/.cursor/skills/nightruby-panel/{SKILL,screens,product-form}.md`
 
 Custom dark RTL panel at **`/panel/`**. Day-to-day ops live here. Optionally redirect `/admin/` → `panel:dashboard`.
 
+On this starter: `apps.panel` has **no models** — it reads/writes `apps.catalog` and `apps.orders` (and payments via order relations).
+
 ## Tokens
 
 ```
