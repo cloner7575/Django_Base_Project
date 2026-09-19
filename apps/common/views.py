@@ -1,5 +1,6 @@
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render
+
+from apps.shop.views import home as shop_home
 
 
 def health(request: HttpRequest) -> JsonResponse:
@@ -7,4 +8,4 @@ def health(request: HttpRequest) -> JsonResponse:
 
 
 def home(request: HttpRequest) -> HttpResponse:
-    return render(request, "pages/home.html")
+    return shop_home(request)

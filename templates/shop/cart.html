@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}سبد خرید · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack">
+    <h1>سبد خرید</h1>
+    {% if cart_empty %}
+      <div class="empty-state" role="status">
+        <p>سبد خرید شما خالی است.</p>
+        {% include "components/_button.html" with text="مشاهده محصولات" href="/shop/products/" %}
+      </div>
+    {% else %}
+      <ul class="cart-list">
+        {% for line in lines %}
+          <li class="cart-line">
+            <div>
+              <a href="{{ line.product.get_absolute_url }}"><strong>{{ line.product.name }}</strong></a>
+              <p class="product-card__meta">
+                {% if line.size %}{{ line.size }}{% endif %}
+                {% if line.color_name %} · {{ line.color_name }}{% endif %}
+                — {{ line.line_total|toman }}
+              </p>
+            </div>
+            <form method="post" action="{% url 'shop:cart_update' line.variant.id %}" class="cart-line__qty">
+              {% csrf_token %}
+              <label class="visually-hidden" for="qty-{{ line.variant.id }}">تعداد</label>
+              <input id="qty-{{ line.variant.id }}" type="number" name="quantity" min="0" value="{{ line.quantity }}" required>
+              <button class="btn btn--ghost" type="submit">به‌روزرسانی</button>
+            </form>
+            <form method="post" action="{% url 'shop:cart_remove' line.variant.id %}">
+              {% csrf_token %}
+              <button class="btn btn--ghost" type="submit">حذف</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="cart-total"><strong>جمع کل:</strong> {{ total|toman }}</p>
+      {% if user.is_authenticated %}
+        {% include "components/_button.html" with text="ادامه خرید و پرداخت" href="/shop/checkout/" %}
+      {% else %}
+        <p class="lede">برای تکمیل سفارش وارد شوید.</p>
+        {% include "components/_button.html" with text="ورود" href="/accounts/login/?next=/shop/checkout/" %}
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

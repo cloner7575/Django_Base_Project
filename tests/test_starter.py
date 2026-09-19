@@ -14,12 +14,14 @@ def test_health(client) -> None:
     assert response.json() == {"status": "ok"}
 
 
+@pytest.mark.django_db
 def test_home_page_is_accessible(client) -> None:
     response = client.get(reverse("common:home"))
     assert response.status_code == 200
     html = response.content.decode()
     assert 'href="#main"' in html
     assert "<main" in html
-    assert "Skip to content" in html
-    assert 'lang="' in html
-    assert 'dir="ltr"' in html
+    assert "رفتن به محتوا" in html
+    assert 'lang="fa"' in html
+    assert 'dir="rtl"' in html
+    assert "محفل" in html

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}محصولات · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack catalog-page">
+    <header class="catalog-intro">
+      <h1>فروشگاه</h1>
+      <p>ترشی و محصولات خانگی محفل</p>
+    </header>
+
+    {% if categories %}
+      <nav class="catalog-cats" aria-label="فیلتر دسته">
+        <a class="catalog-cat {% if not active_category %}is-active{% endif %}" href="{% url 'shop:product_list' %}">همه</a>
+        {% for category in categories %}
+          <a class="catalog-cat {% if active_category.id == category.id %}is-active{% endif %}" href="{% url 'shop:product_list' %}?category={{ category.slug }}">{{ category.name }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+
+    {% if products %}
+      <div class="product-grid">
+        {% for product in products %}
+          {% include "components/_product_card.html" with product=product %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state" role="status">
+        <p>فعلاً محصولی در این دسته موجود نیست.</p>
+        {% include "components/_button.html" with text="بازگشت" href="/shop/products/" variant="ghost" %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

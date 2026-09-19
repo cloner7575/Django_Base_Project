@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}تسویه حساب · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack checkout">
+    <h1>تسویه حساب</h1>
+    <p class="lede">اطلاعات تحویل را وارد کنید؛ سپس به درگاه زرین‌پال (تست) منتقل می‌شوید.</p>
+    <aside class="checkout__summary" aria-label="خلاصه سفارش">
+      <h2 class="section-title">سفارش شما</h2>
+      <ul class="cart-list">
+        {% for line in lines %}
+          <li class="cart-line">
+            <span>{{ line.product.name }}{% if line.size %} ({{ line.size }}){% endif %} × {{ line.quantity }}</span>
+            <span>{{ line.line_total|toman }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="cart-total"><strong>جمع:</strong> {{ total|toman }}</p>
+    </aside>
+    <form method="post" class="stack" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      {% include "components/_field.html" with field=form.full_name %}
+      {% include "components/_field.html" with field=form.phone %}
+      {% include "components/_field.html" with field=form.address %}
+      {% include "components/_button.html" with text="پرداخت با زرین‌پال" %}
+    </form>
+  </div>
+{% endblock %}

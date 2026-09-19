@@ -1,10 +1,54 @@
-<header class="site-header">
-  <div class="site-header__inner">
-    <a class="brand" href="{% url 'common:home' %}">{{ SITE_NAME }}</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="{% url 'common:home' %}" {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>Home</a>
-      <a href="{% url 'admin:index' %}">Admin</a>
-      <a href="{% url 'common:health' %}">Health</a>
-    </nav>
+<header class="site-header" id="site-header">
+  <div class="site-header__inner site-header__desktop">
+    <button type="button" class="header-search" id="open-search" aria-label="جستجو">جستجو در محصولات…</button>
+    <a class="brand brand--center" href="{% url 'common:home' %}">
+      <span class="brand__mark">محفل</span>
+      <span class="brand__tag">طعم خانه، هر روز</span>
+    </a>
+    <div class="header-actions">
+      <a class="header-icon-btn" href="{% url 'shop:wishlist' %}" aria-label="علاقه‌مندی">
+        <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.2A4.2 4.2 0 0 1 12 7.1a4.2 4.2 0 0 1 7 3.7C19 15.6 12 20 12 20Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="header-icon-btn" href="{% url 'shop:cart_detail' %}" aria-label="سبد خرید">
+        <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h15l-1.5 9H8L6 7Zm0 0L5 4H2m7 16a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        {% if cart_count %}<span class="header-cart-badge">{{ cart_count }}</span>{% endif %}
+      </a>
+      {% if user.is_authenticated %}
+        <form class="logout-form" method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+          <button type="submit">خروج</button>
+        </form>
+      {% else %}
+        <a class="header-icon-btn header-icon-btn--text" href="{% url 'accounts:login' %}">ورود</a>
+      {% endif %}
+    </div>
+  </div>
+  <nav class="nav nav--desktop" aria-label="منوی اصلی">
+    <a href="{% url 'common:home' %}" {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>خانه</a>
+    <a href="{% url 'shop:product_list' %}" {% if request.resolver_match.url_name == "product_list" %}aria-current="page"{% endif %}>فروشگاه</a>
+    <a href="{% url 'shop:cart_detail' %}">سبد خرید</a>
+    {% if user.is_staff %}<a href="{% url 'panel:dashboard' %}">پنل</a>{% endif %}
+  </nav>
+
+  <div class="site-header__inner site-header__mobile">
+    <button type="button" class="header-icon-btn" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="منو">
+      <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <a class="brand brand--center" href="{% url 'common:home' %}">
+      <span class="brand__mark">محفل</span>
+    </a>
+    <a class="header-icon-btn" href="{% url 'shop:cart_detail' %}" aria-label="سبد خرید">
+      <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h15l-1.5 9H8L6 7Zm0 0L5 4H2m7 16a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      {% if cart_count %}<span class="header-cart-badge">{{ cart_count }}</span>{% endif %}
+    </a>
+  </div>
+  <div id="mobile-menu" hidden>
+    <a href="{% url 'shop:product_list' %}">فروشگاه</a>
+    <a href="{% url 'shop:wishlist' %}">علاقه‌مندی</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'accounts:logout' %}">خروج</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">ورود / حساب</a>
+    {% endif %}
   </div>
 </header>

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}{{ product_dict.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <article class="nr-pdp stack" id="pdp" data-product='{{ product_json|escape }}'>
+    <div class="nr-pdp-grid">
+      <div class="nr-pdp-gallery">
+        {% if product_dict.image_url %}
+          <img class="nr-pdp-stage" src="{{ product_dict.image_url }}" alt="{{ product_dict.name }}" width="640" height="768">
+        {% else %}
+          <div class="product-card__placeholder product-card__placeholder--{{ product_dict.category|default:'torshiijat' }} product-card__placeholder--lg" aria-hidden="true">
+            <span class="pc-jar">
+              <span class="pc-jar__lid"></span>
+              <span class="pc-jar__glass"></span>
+              <span class="pc-jar__label">محفل</span>
+            </span>
+          </div>
+        {% endif %}
+      </div>
+      <div class="nr-pdp-info stack">
+        <p class="product-card__meta">{{ product_dict.category_title }}</p>
+        <h1>{{ product_dict.name }}</h1>
+        <p class="product-price">
+          {% if product_dict.sale_price_num %}
+            <span class="price-old">{{ product_dict.price }}</span>
+          {% endif %}
+          <span id="pdp-price">{{ product_dict.display_price }}</span>
+          <span class="toman">تومان</span>
+        </p>
+        {% if product_dict.description %}
+          <p class="lede">{{ product_dict.description }}</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'shop:cart_add' product.slug %}" class="stack" id="pdp-form">
+          {% csrf_token %}
+          <input type="hidden" name="variant_id" id="variant_id" value="{{ product_dict.default_variant_id }}">
+          {% if product_dict.sizes %}
+            <fieldset class="pdp-fieldset">
+              <legend>بسته / سایز</legend>
+              <div class="chip-row" id="size-chips">
+                {% for size in product_dict.sizes %}
+                  <button type="button" class="nr-size-chip" data-size="{{ size }}">{{ size }}</button>
+                {% endfor %}
+              </div>
+            </fieldset>
+          {% endif %}
+          {% if product_dict.colors %}
+            <fieldset class="pdp-fieldset">
+              <legend>رنگ</legend>
+              <div class="chip-row" id="color-chips">
+                {% for color in product_dict.colors %}
+                  <button type="button" class="nr-color-swatch" data-color="{{ color.name }}" style="--swatch:{{ color.hex }}" title="{{ color.name }}"></button>
+                {% endfor %}
+              </div>
+            </fieldset>
+          {% endif %}
+          {% include "components/_field.html" with field=form.quantity %}
+          <button class="btn btn--primary nr-pdp-cta" type="submit">افزودن به سبد</button>
+        </form>
+      </div>
+    </div>
+  </article>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  const root = document.getElementById("pdp");
+  if (!root) return;
+  const data = JSON.parse(root.getAttribute("data-product") || "{}");
+  const matrix = data.variant_matrix || {};
+  const variantInput = document.getElementById("variant_id");
+  const priceEl = document.getElementById("pdp-price");
+  let size = (data.sizes && data.sizes[0]) || "";
+  let color = "";
+  function sync() {
+    const key = size + "|" + (color || "");
+    let variant = matrix[key];
+    if (!variant) {
+      const entries = Object.values(matrix);
+      variant = entries.find(function (v) { return v.size === size; }) || entries[0];
+    }
+    if (variant) {
+      variantInput.value = variant.id;
+      if (priceEl) priceEl.textContent = variant.display_price;
+    }
+    document.querySelectorAll(".nr-size-chip").forEach(function (btn) {
+      btn.classList.toggle("is-active", btn.getAttribute("data-size") === size);
+    });
+    document.querySelectorAll(".nr-color-swatch").forEach(function (btn) {
+      btn.classList.toggle("is-active", btn.getAttribute("data-color") === color);
+    });
+  }
+  document.querySelectorAll(".nr-size-chip").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      size = btn.getAttribute("data-size") || "";
+      sync();
+    });
+  });
+  document.querySelectorAll(".nr-color-swatch").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      color = btn.getAttribute("data-color") || "";
+      sync();
+    });
+  });
+  sync();
+})();
+</script>
+{% endblock %}

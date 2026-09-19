@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ورود پنل · {{ SITE_NAME }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/panel.css' %}">
+  </head>
+  <body class="panel-body">
+    <div class="panel-card panel-login">
+      <h1>ورود کارکنان</h1>
+      <p style="color:var(--panel-muted)">فقط کاربران staff</p>
+      <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}<p style="color:var(--panel-danger)">{{ form.non_field_errors }}</p>{% endif %}
+        <label for="id_username">نام کاربری</label>
+        {{ form.username }}
+        <label for="id_password">رمز عبور</label>
+        {{ form.password }}
+        <button class="panel-btn panel-btn-primary" type="submit" style="width:100%">ورود</button>
+      </form>
+    </div>
+  </body>
+</html>

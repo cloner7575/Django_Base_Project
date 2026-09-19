@@ -1,36 +1,125 @@
 {% extends "base.html" %}
 
-{% block title %}{{ SITE_NAME }} · Starter{% endblock %}
+{% block title %}{{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-  <div class="stack">
-    <section class="hero">
-      <h1>A reusable Django base.</h1>
-      <p class="lede">
-        Settings, custom user, templates, and Cursor skills are already here.
-        Add a domain app under <code>apps/</code> and keep this layout so every new project stays consistent.
-      </p>
+  <div class="home-page stack">
+    <section class="mahfel-hero" aria-labelledby="home-brand">
+      <div class="mahfel-hero__glow" aria-hidden="true"></div>
+      <div class="mahfel-hero__copy">
+        {% with slide=hero_slides.0 %}
+          {% if slide %}
+            <p class="mahfel-hero__eyebrow">{{ slide.badge|default:"طعم خانه" }}</p>
+            <h1 id="home-brand" class="mahfel-hero__brand">محفل</h1>
+            <p class="mahfel-hero__accent">{{ slide.headline_accent|default:"محصولات خانگی تازه" }}</p>
+            <p class="lede">{{ slide.subtitle|default:"ترشی، مربا و لبنیات خانگی با ارسال مطمئن." }}</p>
+            <p class="mahfel-hero__cta">{% include "components/_button.html" with text=slide.cta_label href=slide.cta_url %}</p>
+          {% else %}
+            <p class="mahfel-hero__eyebrow">طعم خانه</p>
+            <h1 id="home-brand" class="mahfel-hero__brand">محفل</h1>
+            <p class="mahfel-hero__accent">محصولات خانگی تازه</p>
+            <p class="lede">ترشی، مربا و لبنیات خانگی با ارسال مطمئن.</p>
+            <p class="mahfel-hero__cta">{% include "components/_button.html" with text="مشاهده فروشگاه" href="/shop/products/" %}</p>
+          {% endif %}
+        {% endwith %}
+      </div>
+      <div class="mahfel-hero__visual" aria-hidden="true">
+        <div class="hero-jars">
+          <div class="hero-jar hero-jar--back">
+            <span class="hero-jar__lid"></span>
+            <span class="hero-jar__body hero-jar__body--amber"></span>
+          </div>
+          <div class="hero-jar hero-jar--main">
+            <span class="hero-jar__lid"></span>
+            <span class="hero-jar__body"></span>
+            <span class="hero-jar__label">محفل</span>
+          </div>
+          <div class="hero-jar hero-jar--front">
+            <span class="hero-jar__lid"></span>
+            <span class="hero-jar__body hero-jar__body--rose"></span>
+          </div>
+        </div>
+      </div>
     </section>
-    <section class="card-grid" aria-label="Next steps">
-      <article class="card">
-        <h2>Create an app</h2>
-        <ol>
-          <li><code>.venv/bin/python manage.py startapp shop apps/shop</code></li>
-          <li>Set <code>name = "apps.shop"</code> and a short <code>label</code> in <code>apps.py</code></li>
-          <li>Add the AppConfig to <code>INSTALLED_APPS</code></li>
-        </ol>
-      </article>
-      <article class="card">
-        <h2>Models</h2>
-        <p>Subclass <code>apps.common.models.TimeStampedModel</code>. Put domain rules on the model, not in the view.</p>
-      </article>
-      <article class="card">
-        <h2>UI</h2>
-        <p>Extend <code>templates/base.html</code>. Use tokens in <code>static/css/tokens.css</code>. Follow the <code>ui-ux</code> skill for a11y, forms, and empty states.</p>
-      </article>
-    </section>
-    <p>
-      {% include "components/_button.html" with text="Open admin" href="/admin/" %}
-    </p>
+
+    {% if features %}
+      <section class="trust-bar" aria-label="مزایا">
+        {% for feature in features %}
+          <article class="trust-card">
+            <h2>{{ feature.title }}</h2>
+            <p>{{ feature.subtitle }}</p>
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    {% if categories %}
+      <section aria-labelledby="cats-heading">
+        <header class="section-header">
+          <div>
+            <h2 id="cats-heading">دسته‌ها</h2>
+            <div class="section-ruby-line" aria-hidden="true"></div>
+          </div>
+          <a href="{% url 'shop:product_list' %}">مشاهده همه</a>
+        </header>
+        <div class="catalog-cats">
+          {% for category in categories %}
+            <a class="catalog-cat" href="{% url 'shop:product_list' %}?category={{ category.slug }}">{{ category.name }}</a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if new_products %}
+      <section aria-labelledby="new-heading">
+        <header class="section-header">
+          <div>
+            <h2 id="new-heading">تازه‌ها</h2>
+            <div class="section-ruby-line" aria-hidden="true"></div>
+          </div>
+          <a href="{% url 'shop:product_list' %}">مشاهده همه</a>
+        </header>
+        <div class="product-grid">
+          {% for product in new_products %}
+            {% include "components/_product_card.html" with product=product %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if best_sellers %}
+      <section class="section-tone-b" aria-labelledby="best-heading">
+        <header class="section-header">
+          <div>
+            <h2 id="best-heading">پرفروش‌ها</h2>
+            <div class="section-ruby-line" aria-hidden="true"></div>
+          </div>
+        </header>
+        <div class="product-grid">
+          {% for product in best_sellers %}
+            {% include "components/_product_card.html" with product=product %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    {% if testimonials %}
+      <section class="section-tone-d" aria-labelledby="testi-heading">
+        <header class="section-header">
+          <div>
+            <h2 id="testi-heading">نظر مشتریان</h2>
+            <div class="section-ruby-line" aria-hidden="true"></div>
+          </div>
+        </header>
+        <div class="testimonial-grid">
+          {% for t in testimonials %}
+            <blockquote class="testimonial-card">
+              <p>{{ t.text }}</p>
+              <footer>{{ t.name }} · {{ t.rating }}/۵</footer>
+            </blockquote>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
   </div>
 {% endblock %}

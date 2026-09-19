@@ -1,0 +1,1 @@
+"""Zarinpal payment integration."""

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}علاقه‌مندی · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack empty-state" role="status">
+    <h1>علاقه‌مندی‌ها</h1>
+    <p class="lede">لیست علاقه روی همین دستگاه ذخیره می‌شود.</p>
+    <div id="wishlist-root" data-storage-key="mahfel_wishlist"></div>
+    {% include "components/_button.html" with text="مشاهده فروشگاه" href="/shop/products/" %}
+  </div>
+{% endblock %}

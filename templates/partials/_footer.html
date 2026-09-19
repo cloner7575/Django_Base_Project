@@ -1,5 +1,12 @@
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <p>{{ SITE_NAME }} starter. Copy this repo, then add domain apps under <code>apps/</code>.</p>
+    <p class="footer-brand">{{ SITE_NAME }}</p>
+    <p>ترشی و محصولات خانگی تازه — ارسال با مراقبت.</p>
+    <div class="footer-links">
+      <a href="{% url 'shop:product_list' %}">فروشگاه</a>
+      <a href="{% url 'accounts:login' %}">ورود</a>
+      {% if user.is_staff %}<a href="{% url 'panel:dashboard' %}">پنل</a>{% endif %}
+    </div>
+    <div class="footer-ruby-bar">طعم اصیل خانه</div>
   </div>
 </footer>
