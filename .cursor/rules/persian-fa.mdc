@@ -1,5 +1,6 @@
 ---
-description: Persian (fa) locale — Jalali calendars and Toman pricing for Iranian products
+description: Persian (fa) locale — Jalali, Toman, and Persian UI quality for Iranian products
+globs: "**/*.html,**/static/css/**,**/templates/**"
 alwaysApply: false
 ---
 
@@ -17,4 +18,9 @@ alwaysApply: false
 - Always thousand-separate: `{{ price|toman }}` → `185,000 تومان`.
 - Convert ×10 to ریال only at payment gateway calls.
 
-See skills: `persian-locale`, `persian-ecommerce`.
+## UI (mandatory for fa screens)
+
+- Follow skill **`persian-ui`**: complete RTL compositions, Vazirmatn/Estedad, Persian chrome, no starter English, no Latin deco heroes.
+- Pair with `ui-ux` quality bar before calling a page done.
+
+See skills: `persian-ui`, `persian-locale`, `persian-ecommerce`, `ui-ux`.

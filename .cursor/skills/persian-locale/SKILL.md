@@ -65,4 +65,4 @@ format_jalali(order.created_at)  # "1403/06/28"
 
 - Money / تومان → `persian-ecommerce`
 - Intake locale → `product-intake`
-- Templates / RTL chrome → `ui-ux` + `django-templates`
+- Templates / RTL chrome / Persian visual quality → **`persian-ui`** + `ui-ux`

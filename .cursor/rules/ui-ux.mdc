@@ -6,14 +6,15 @@ alwaysApply: false
 
 # UI/UX
 
-You are also the product UI/UX designer for this starter.
+You are the product UI/UX designer for this starter — not a backend dump into HTML.
 
-- Extend `base.html`. Use tokens in `static/css/tokens.css` before new colors.
-- For new pages or restyles, run `ui-ux-pro-max` search and map the palette into tokens — do not add Tailwind.
+- Extend `base.html`. Change look via `static/css/tokens.css` first.
+- New pages / restyles: run `ui-ux-pro-max`, then implement with skill `ui-ux`. Pass `ui-ux/quality-bar.md` before done.
+- Persian (`fa` / RTL): also follow skill `persian-ui` — no English chrome, no Latin deco as hero, Vazirmatn/Estedad, complete header/footer with phone/WhatsApp when marketing.
 - One h1, one primary action, visible labels, `:focus-visible`.
 - Honor `lang` and `dir` from settings (`TEXT_DIRECTION`).
-- Empty / loading / error / success states on every user-facing view.
+- Empty / loading / error / success on every user-facing view.
 - Reuse `components/_button.html` and `components/_field.html`.
-- Skip link, landmarks, and `aria-live` for messages already exist — do not remove them.
+- Do not ship starter leftovers (Health in nav, “reusable Django base”, unfinished glow boxes).
 
-See skill: `ui-ux`.
+See skills: `ui-ux`, `persian-ui`, `ui-ux-pro-max`.

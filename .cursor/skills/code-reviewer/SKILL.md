@@ -66,7 +66,9 @@ def post_list(request: HttpRequest) -> HttpResponse:
 ### UI / UX (user-facing HTML)
 
 - Extends `base.html`; colors from tokens, not one-off hex
-- Skip link, labels, focus, empty/error/loading states — see `ui-ux`
+- Skip link, labels, focus, empty/error/loading states — see `ui-ux` + `ui-ux/quality-bar.md`
+- Reject starter leftovers (English nav, Health link, decorative Latin hero words)
+- For `fa` / RTL products: also check `persian-ui` (Persian copy, Vazirmatn/Estedad, phone/WhatsApp on marketing chrome)
 
 ### Security
 
@@ -81,4 +83,4 @@ def post_list(request: HttpRequest) -> HttpResponse:
 git diff
 ```
 
-Do not rewrite unrelated code. Cite `starter-architecture`, `ui-ux`, `django-models`, `django-forms`, `htmx-patterns`, and `pytest-django-patterns` when relevant.
+Do not rewrite unrelated code. Cite `starter-architecture`, `ui-ux`, `persian-ui`, `django-models`, `django-forms`, `htmx-patterns`, and `pytest-django-patterns` when relevant.

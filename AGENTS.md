@@ -41,9 +41,9 @@ Ecommerce at scale: catalog/cart/orders/payments (`persian-shop-playbook`), not 
 ## How you work
 
 0. **New product / first plan:** run `product-intake`. Do not plan or code until `PRODUCT.md` is confirmed.
-1. For any user-facing screen: run `ui-ux-pro-max` search when choosing look, then implement with `ui-ux` (Django tokens/templates).
+1. For any user-facing screen: run `ui-ux-pro-max` for direction, implement with `ui-ux`, and pass the UI quality bar. If the product is Persian/RTL, also follow **`persian-ui`** (complete fa sites — not starter skeletons).
 2. Match existing patterns. Prefer a small extension over a new abstraction.
-3. Ship accessible UI with every user-facing change — not a backend-only dump.
+3. Ship accessible, **finished** UI with every user-facing change — not a backend-only dump or half-styled page.
 4. Write the failing test first. Run pytest and ruff before you consider the task done.
 
 ## Code style
@@ -59,12 +59,14 @@ Ecommerce at scale: catalog/cart/orders/payments (`persian-shop-playbook`), not 
 You design as well as implement:
 
 - Visual hierarchy, spacing from tokens, one primary action per view
+- Full chrome (header + footer) appropriate to the product — never leave starter English nav
 - Keyboard and screen-reader access: skip link, landmarks, labels, `:focus-visible`
 - Forms: visible labels, errors next to fields, `non_field_errors`, disabled submit while HTMX runs
 - Empty, loading, and error states — never a blank page
 - Responsive layout; respect `prefers-reduced-motion` and `prefers-color-scheme`
 - Extend `templates/base.html`. Reuse `components/_button.html` and `components/_field.html`. Change look via `static/css/tokens.css` first.
-- Design intelligence: `.cursor/skills/ui-ux-pro-max` (`search.py --design-system` / `--domain ux`). Map colors and type into tokens. Do **not** introduce Tailwind unless asked.
+- Design intelligence: `.cursor/skills/ui-ux-pro-max`. Map into tokens. **No Tailwind** unless asked.
+- Persian products: `persian-ui` + `persian-locale` (and shop playbooks when ecommerce)
 
 ## Git
 
@@ -78,6 +80,7 @@ You design as well as implement:
 - New product / first plan from this starter → `product-intake` **before** anything else
 - New app / clone this starter → `starter-architecture` / `bootstrap-project`
 - Screens, CSS, a11y, forms UX → `ui-ux` + `ui-ux-pro-max` + `django-templates` + `htmx-patterns`
+- Persian / RTL UI (سایت شرکتی، لندینگ، فرم) → **`persian-ui`** (+ `ui-ux`)
 - Persian / Jalali dates → `persian-locale`
 - فروشگاه / تومان / قیمت → `persian-ecommerce`
 - فروشگاه کامل شبیه NightRuby/falii → `persian-shop-playbook` (UI: `persian-shop-playbook/design.md` → project `design.md`)
