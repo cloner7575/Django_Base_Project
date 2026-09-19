@@ -30,8 +30,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "apps.accounts.apps.AccountsConfig",
     "apps.common.apps.CommonConfig",
+    "apps.catalog.apps.CatalogConfig",
+    "apps.cart.apps.CartConfig",
+    "apps.orders.apps.OrdersConfig",
+    "apps.payments.apps.PaymentsConfig",
+    "apps.panel.apps.PanelConfig",
 ]
 
 MIDDLEWARE = [
@@ -60,6 +66,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.common.context_processors.site",
+                "apps.cart.context_processors.cart",
             ],
         },
     },
@@ -108,9 +115,38 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-LOGIN_URL = "/admin/login/"
+LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "common:home"
 LOGOUT_REDIRECT_URL = "common:home"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+}
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = os.getenv(
+    "CELERY_RESULT_BACKEND",
+    os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0"),
+)
+CELERY_TASK_TRACK_STARTED = True
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = os.getenv("DJANGO_TIME_ZONE", "UTC")
+
+ZARINPAL_MERCHANT_ID = os.getenv("ZARINPAL_MERCHANT_ID", "")
+ZARINPAL_SANDBOX = get_bool("ZARINPAL_SANDBOX", default=True)
+ZARINPAL_CALLBACK_URL = os.getenv("ZARINPAL_CALLBACK_URL", "")
+DEFAULT_FROM_EMAIL = os.getenv("DJANGO_DEFAULT_FROM_EMAIL", "noreply@fitile-shop.local")
+CURRENCY_LABEL = os.getenv("DJANGO_CURRENCY_LABEL", "تومان")
+USE_JALALI = get_bool("DJANGO_USE_JALALI", default=True)
 
 LANGUAGE_CODE = os.getenv("DJANGO_LANGUAGE_CODE", "en-us")
 TIME_ZONE = os.getenv("DJANGO_TIME_ZONE", "UTC")

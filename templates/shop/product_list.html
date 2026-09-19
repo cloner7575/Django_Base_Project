@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}فروشگاه · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<div class="catalog-page pb-10">
+  <div class="container-nr pt-6 md:pt-10">
+    <div class="nr-page-banner mb-8">
+      <div class="nr-page-banner__box rounded-section border border-border/70 bg-gradient-to-l from-[#FFFEFB] to-[#F0E9DF] px-6 py-8 md:px-10">
+        <h1 class="text-xl font-bold text-[#14110F] md:text-2xl">فروشگاه</h1>
+        <p class="mt-2 text-sm text-muted">شمع و سنگ مصنوعی فیتیله</p>
+      </div>
+    </div>
+
+    <div class="catalog-toolbar">
+      {% if categories %}
+        <nav class="flex flex-wrap gap-2" aria-label="فیلتر دسته">
+          <a href="{% url 'shop:product_list' %}{% if sort %}?sort={{ sort }}{% endif %}" class="rounded-pill border px-4 py-2 text-[12px] {% if not active_category %}border-transparent bg-ruby text-white{% else %}border-border bg-cream text-ruby hover:border-ruby/30{% endif %}">همه</a>
+          {% for category in categories %}
+            <a href="{% url 'shop:product_list' %}?category={{ category.slug }}&sort={{ sort }}" class="rounded-pill border px-4 py-2 text-[12px] {% if active_category.id == category.id %}border-transparent bg-ruby text-white{% else %}border-border bg-cream text-ruby hover:border-ruby/30{% endif %}">{{ category.name }}</a>
+          {% endfor %}
+        </nav>
+      {% endif %}
+      <form method="get" class="catalog-sort">
+        {% if active_category %}<input type="hidden" name="category" value="{{ active_category.slug }}">{% endif %}
+        {% if q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}
+        <label class="sr-only" for="sort">مرتب‌سازی</label>
+        <select id="sort" name="sort" onchange="this.form.submit()">
+          <option value="name" {% if sort == "name" %}selected{% endif %}>نام</option>
+          <option value="new" {% if sort == "new" %}selected{% endif %}>جدیدترین</option>
+          <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>ارزان‌ترین</option>
+          <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>گران‌ترین</option>
+        </select>
+      </form>
+    </div>
+
+    {% if products %}
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:gap-4">
+        {% for product in products %}
+          {% include "components/_product_card.html" with product=product %}
+        {% endfor %}
+      </div>
+      {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="mt-10 flex items-center justify-center gap-2" aria-label="صفحه‌بندی">
+          {% if page_obj.has_previous %}
+            <a class="rounded-btn border border-border bg-cream px-3 py-2 text-[12px]" href="?page={{ page_obj.previous_page_number }}{% if active_category %}&category={{ active_category.slug }}{% endif %}&sort={{ sort }}">قبلی</a>
+          {% endif %}
+          <span class="text-[12px] text-muted">صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a class="rounded-btn border border-border bg-cream px-3 py-2 text-[12px]" href="?page={{ page_obj.next_page_number }}{% if active_category %}&category={{ active_category.slug }}{% endif %}&sort={{ sort }}">بعدی</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      <div class="flex flex-col items-center gap-4 py-20 text-center">
+        <p class="text-muted">محصولی یافت نشد</p>
+        <a href="{% url 'shop:product_list' %}" class="btn-ruby-solid">بازگشت به فروشگاه</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

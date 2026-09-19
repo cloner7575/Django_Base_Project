@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}علاقه‌مندی · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section class="fitile-commerce" x-data="wishlistPage()">
+  <div class="container-nr">
+    <h1 class="section-title mb-4">علاقه‌مندی‌ها</h1>
+    <p class="mb-8 text-[14px] text-muted">لیست علاقه روی همین دستگاه ذخیره می‌شود.</p>
+    <template x-if="slugs.length === 0">
+      <div class="fitile-commerce-card text-center" role="status">
+        <p class="text-muted">هنوز محصولی به علاقه‌مندی اضافه نشده.</p>
+        <a href="{% url 'shop:product_list' %}" class="btn-ruby-solid mt-6 inline-flex">مشاهده فروشگاه</a>
+      </div>
+    </template>
+    <div class="fitile-commerce-card" x-show="slugs.length > 0">
+      <ul class="divide-y divide-border/60">
+        <template x-for="slug in slugs" :key="slug">
+          <li class="flex items-center justify-between gap-3 py-3 text-[14px]">
+            <a class="font-medium text-[#14110F]" :href="'/shop/products/' + slug + '/'" x-text="slug"></a>
+            <button type="button" class="text-[12px] text-muted underline" @click="remove(slug)">حذف</button>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

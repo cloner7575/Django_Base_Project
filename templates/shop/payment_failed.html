@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}پرداخت ناموفق · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack" role="alert">
+    <h1>پرداخت ناموفق</h1>
+    <p class="lede">سفارش شماره {{ order.pk }} پرداخت نشد. می‌توانید دوباره از سبد خرید اقدام کنید.</p>
+    {% include "components/_button.html" with text="مشاهده محصولات" href="/shop/products/" %}
+  </div>
+{% endblock %}

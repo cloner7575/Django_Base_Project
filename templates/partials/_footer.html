@@ -1,5 +1,38 @@
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <p>{{ SITE_NAME }} starter. Copy this repo, then add domain apps under <code>apps/</code>.</p>
+{% load static %}
+<footer class="site-footer mt-auto">
+  <div class="footer-main py-10 md:py-16">
+    <div class="container-nr">
+      <div class="footer-brand">
+        <a href="{% url 'common:home' %}" aria-label="فیتیله" class="logo-header-link">
+          <img src="{% static 'img/logo-header.svg' %}" alt="فیتیله" class="logo-header-img" width="120" height="42" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="logo-fitile-mark" style="display:none">فیتیله</span>
+        </a>
+        <p class="footer-tagline">
+          شمع و سنگ مصنوعی برای دکور و هدیه — نور و بافت خانه
+        </p>
+      </div>
+      <div class="footer-columns" style="margin-top:2rem">
+        <div class="footer-col">
+          <h3 class="footer-col-title">دسترسی سریع</h3>
+          <ul class="footer-links">
+            <li><a href="{% url 'shop:product_list' %}">فروشگاه</a></li>
+            <li><a href="{% url 'shop:product_list' %}?category=shama">شمع</a></li>
+            <li><a href="{% url 'shop:product_list' %}?category=sang">سنگ مصنوعی</a></li>
+            <li><a href="{% url 'shop:cart_detail' %}">سبد خرید</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-col-title">حساب کاربری</h3>
+          <ul class="footer-links">
+            <li><a href="{% url 'accounts:login' %}">ورود</a></li>
+            <li><a href="{% url 'accounts:register' %}">ثبت‌نام</a></li>
+            {% if user.is_staff %}<li><a href="{% url 'panel:dashboard' %}">پنل مدیریت</a></li>{% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-ruby-bar">
+    <p>© {% now "Y" %} فیتیله شاپ — تمامی حقوق محفوظ است</p>
   </div>
 </footer>

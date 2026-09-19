@@ -1,36 +1,239 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}{{ SITE_NAME }} · Starter{% endblock %}
+{% block title %}{{ SITE_NAME }} — نور و بافت خانه{% endblock %}
 
 {% block content %}
-  <div class="stack">
-    <section class="hero">
-      <h1>A reusable Django base.</h1>
-      <p class="lede">
-        Settings, custom user, templates, and Cursor skills are already here.
-        Add a domain app under <code>apps/</code> and keep this layout so every new project stays consistent.
-      </p>
-    </section>
-    <section class="card-grid" aria-label="Next steps">
-      <article class="card">
-        <h2>Create an app</h2>
-        <ol>
-          <li><code>.venv/bin/python manage.py startapp shop apps/shop</code></li>
-          <li>Set <code>name = "apps.shop"</code> and a short <code>label</code> in <code>apps.py</code></li>
-          <li>Add the AppConfig to <code>INSTALLED_APPS</code></li>
-        </ol>
-      </article>
-      <article class="card">
-        <h2>Models</h2>
-        <p>Subclass <code>apps.common.models.TimeStampedModel</code>. Put domain rules on the model, not in the view.</p>
-      </article>
-      <article class="card">
-        <h2>UI</h2>
-        <p>Extend <code>templates/base.html</code>. Use tokens in <code>static/css/tokens.css</code>. Follow the <code>ui-ux</code> skill for a11y, forms, and empty states.</p>
-      </article>
-    </section>
-    <p>
-      {% include "components/_button.html" with text="Open admin" href="/admin/" %}
-    </p>
-  </div>
+<div class="home-page">
+  <section class="hero-section" aria-label="بنر اصلی"
+    x-data="heroSlider({ themes: [{% for slide in hero_slides %}'{{ slide.theme|default:"photo" }}'{% if not forloop.last %}, {% endif %}{% empty %}'photo'{% endfor %}] })">
+    <div class="container-nr">
+      <div class="hero-shell" :class="shellClass()">
+        {% for slide in hero_slides %}
+          <div class="hero-slide hero-slide--{{ slide.theme|default:'photo' }}" :class="current === {{ forloop.counter0 }} && 'is-active'" data-slide x-show="current === {{ forloop.counter0 }}">
+            <div class="hero-photo-stack">
+              <div class="hero-photo-stack__media">
+                <a href="{{ slide.cta_url|default:'/shop/products/' }}" class="hero-photo-link" aria-label="{{ slide.cta_label }}">
+                  {% if slide.image %}
+                    <img src="{{ slide.image.url }}" alt="" class="hero-slide-bg" width="1400" height="700" {% if forloop.first %}fetchpriority="high"{% endif %}>
+                  {% else %}
+                    <img src="{% static 'img/hero-fitile.jpg' %}" alt="" class="hero-slide-bg" width="1400" height="700" {% if forloop.first %}fetchpriority="high"{% endif %}>
+                  {% endif %}
+                </a>
+                <div class="hero-slide-scrim" aria-hidden="true"></div>
+              </div>
+              <div class="hero-photo-stack__body">
+                <div class="hero-content">
+                  <div class="hero-content-body">
+                    <span class="hero-badge">{{ slide.badge|default:"نور و بافت خانه" }}</span>
+                    <div class="hero-accent-line" aria-hidden="true"></div>
+                    <h1 class="hero-headline">
+                      {{ slide.headline|default:"فیتیله" }}
+                      <span class="hero-headline-accent">{{ slide.headline_accent }}</span>
+                    </h1>
+                    <p class="hero-subtext">{{ slide.subtitle }}</p>
+                    <div class="hero-actions flex">
+                      <a href="{{ slide.cta_url|default:'/shop/products/' }}" class="btn-ruby-solid hero-btn-primary">
+                        {{ slide.cta_label|default:"مشاهده فروشگاه" }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="hero-slide hero-slide--photo is-active">
+            <div class="hero-photo-stack">
+              <div class="hero-photo-stack__media">
+                <a href="{% url 'shop:product_list' %}" class="hero-photo-link">
+                  <img src="{% static 'img/hero-fitile.jpg' %}" alt="" class="hero-slide-bg" width="1400" height="700">
+                </a>
+                <div class="hero-slide-scrim" aria-hidden="true"></div>
+              </div>
+              <div class="hero-photo-stack__body">
+                <div class="hero-content">
+                  <div class="hero-content-body">
+                    <span class="hero-badge">نور و بافت خانه</span>
+                    <h1 class="hero-headline">فیتیله <span class="hero-headline-accent">شمع و سنگ مصنوعی</span></h1>
+                    <div class="hero-actions flex">
+                      <a href="{% url 'shop:product_list' %}" class="btn-ruby-solid">مشاهده فروشگاه</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        {% if hero_slides|length > 1 %}
+          <div class="hero-dots flex justify-center gap-2 py-3">
+            {% for slide in hero_slides %}
+              <button type="button" class="h-2 w-2 rounded-full bg-[#14110F]/40" :class="current === {{ forloop.counter0 }} && 'bg-[#C45A7A]'" @click="go({{ forloop.counter0 }})" aria-label="اسلاید {{ forloop.counter }}"></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  {% if features %}
+  <section class="trust-bar" aria-labelledby="features-title">
+    <div class="container-nr relative">
+      <h2 id="features-title" class="sr-only">مزایای فیتیله</h2>
+      <div class="trust-grid">
+        {% for feature in features %}
+          <article class="trust-card group">
+            <div class="trust-card-body">
+              <h3 class="trust-card-title">{{ feature.title }}</h3>
+              <p class="trust-card-text">{{ feature.subtitle }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if categories %}
+  <section class="relative overflow-hidden section-tone-a py-14 md:py-20" aria-labelledby="categories-title">
+    <div class="container-nr relative">
+      <div class="section-title-stack mb-12">
+        <img src="{% static 'icons/diamond.svg' %}" alt="" class="diamond-icon" width="20" height="20" aria-hidden="true">
+        <h2 id="categories-title" class="section-title">دسته‌بندی‌ها</h2>
+      </div>
+      <div class="section-ruby-line -mt-8 mb-12"></div>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 lg:gap-6">
+        {% for category in categories %}
+          <a href="{{ category.url }}" class="group flex flex-col items-center text-center">
+            <div class="category-circle-photo">
+              {% if category.image_url %}
+                <img src="{{ category.image_url }}" alt="" width="112" height="112">
+              {% endif %}
+            </div>
+            <h3 class="mt-3 text-[12px] font-bold text-[#14110F] transition-colors duration-350 group-hover:text-[#C45A7A] sm:mt-5 sm:text-[13px]">{{ category.title }}</h3>
+            <p class="mt-1 hidden max-w-[140px] text-[11px] leading-relaxed text-muted sm:block">{{ category.subtitle }}</p>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if new_products %}
+  <section class="section-tone-c py-14 md:py-20" aria-labelledby="new-arrivals-title">
+    <div class="container-nr">
+      <header class="section-header">
+        <div class="section-header-side" aria-hidden="true"></div>
+        <div class="section-title-stack">
+          <img src="{% static 'icons/diamond.svg' %}" alt="" class="diamond-icon" width="20" height="20" aria-hidden="true">
+          <h2 id="new-arrivals-title" class="section-title">تازه‌ها</h2>
+        </div>
+        <div class="section-header-side section-header-action">
+          <a href="{% url 'shop:product_list' %}?sort=new" class="section-link inline-flex items-center gap-1.5">مشاهده همه</a>
+        </div>
+      </header>
+      <div class="section-ruby-line"></div>
+      <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:gap-4">
+        {% for product in new_products %}
+          {% include "components/_product_card.html" with product=product %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if collections %}
+  <section class="section-tone-b py-14 md:py-20" aria-labelledby="collections-title">
+    <div class="container-nr">
+      <div class="section-title-stack mb-8">
+        <img src="{% static 'icons/diamond.svg' %}" alt="" class="diamond-icon" width="20" height="20" aria-hidden="true">
+        <h2 id="collections-title" class="section-title">کالکشن‌ها</h2>
+      </div>
+      <div class="section-ruby-line -mt-4 mb-10"></div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {% for col in collections %}
+          <a href="{{ col.url }}" class="fitile-collection-tile">
+            {% if col.image_url %}
+              <img src="{{ col.image_url }}" alt="" width="640" height="480">
+            {% endif %}
+            <div class="fitile-collection-tile__body">
+              <h3 class="text-lg font-bold">{{ col.title }}</h3>
+              <p class="mt-1 text-sm opacity-90">{{ col.subtitle }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if sale_products %}
+  <section class="section-tone-a py-14 md:py-20" aria-labelledby="sale-title">
+    <div class="container-nr">
+      <header class="section-header">
+        <div class="section-header-side" aria-hidden="true"></div>
+        <div class="section-title-stack">
+          <img src="{% static 'icons/diamond.svg' %}" alt="" class="diamond-icon" width="20" height="20" aria-hidden="true">
+          <h2 id="sale-title" class="section-title">تخفیف‌ها</h2>
+        </div>
+        <div class="section-header-side section-header-action">
+          <a href="{% url 'shop:product_list' %}" class="section-link">مشاهده همه</a>
+        </div>
+      </header>
+      <div class="section-ruby-line"></div>
+      <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:gap-4">
+        {% for product in sale_products %}
+          {% include "components/_product_card.html" with product=product %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if best_sellers %}
+  <section class="section-tone-c py-14 md:py-20" aria-labelledby="best-sellers-title">
+    <div class="container-nr">
+      <header class="section-header">
+        <div class="section-header-side" aria-hidden="true"></div>
+        <div class="section-title-stack">
+          <img src="{% static 'icons/diamond.svg' %}" alt="" class="diamond-icon" width="20" height="20" aria-hidden="true">
+          <h2 id="best-sellers-title" class="section-title">پرفروش‌ها</h2>
+        </div>
+        <div class="section-header-side section-header-action">
+          <a href="{% url 'shop:product_list' %}" class="section-link">مشاهده همه</a>
+        </div>
+      </header>
+      <div class="section-ruby-line"></div>
+      <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:gap-4">
+        {% for product in best_sellers %}
+          {% include "components/_product_card.html" with product=product %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if testimonials %}
+  <section class="section-tone-d py-14 md:py-20" aria-labelledby="testimonials-title">
+    <div class="container-nr">
+      <div class="section-title-stack mb-8">
+        <img src="{% static 'icons/diamond.svg' %}" alt="" class="diamond-icon" width="20" height="20" aria-hidden="true">
+        <h2 id="testimonials-title" class="section-title">نظر مشتریان</h2>
+      </div>
+      <div class="section-ruby-line -mt-4 mb-10"></div>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {% for item in testimonials %}
+          <blockquote class="rounded-card border border-border/70 bg-cream p-5 shadow-sm">
+            <div class="fitile-stars" aria-label="امتیاز {{ item.rating }} از ۵">
+              {% for i in "12345" %}{% if forloop.counter <= item.rating %}★{% else %}☆{% endif %}{% endfor %}
+            </div>
+            <p class="mt-3 text-[13px] leading-relaxed text-[#14110F]">«{{ item.text }}»</p>
+            <footer class="mt-4 text-[12px] font-medium text-muted">{{ item.name }}</footer>
+          </blockquote>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+</div>
 {% endblock %}

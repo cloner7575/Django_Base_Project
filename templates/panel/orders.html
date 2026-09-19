@@ -1,0 +1,30 @@
+{% extends "panel/base.html" %}
+{% block title %}سفارش‌ها · پنل{% endblock %}
+{% block heading %}سفارش‌ها{% endblock %}
+{% block content %}
+  <nav class="panel-tabs" aria-label="فیلتر سفارش">
+    <a href="?tab=action" class="{% if tab == 'action' %}is-active{% endif %}">نیاز به اقدام</a>
+    <a href="?tab=payment" class="{% if tab == 'payment' %}is-active{% endif %}">پرداخت</a>
+    <a href="?tab=done" class="{% if tab == 'done' %}is-active{% endif %}">پرداخت‌شده</a>
+    <a href="?tab=failed" class="{% if tab == 'failed' %}is-active{% endif %}">ناموفق</a>
+    <a href="?tab=all" class="{% if tab == 'all' %}is-active{% endif %}">همه</a>
+  </nav>
+  <div class="panel-card">
+    <table class="panel-table">
+      <thead><tr><th>#</th><th>گیرنده</th><th>تلفن</th><th>مبلغ</th><th>وضعیت</th></tr></thead>
+      <tbody>
+        {% for order in orders %}
+          <tr>
+            <td><a href="{% url 'panel:order_detail' order.pk %}">{{ order.pk }}</a></td>
+            <td>{{ order.full_name }}</td>
+            <td dir="ltr">{{ order.phone }}</td>
+            <td>{{ order.total_amount }}</td>
+            <td>{{ order.get_status_display }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">موردی نیست.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

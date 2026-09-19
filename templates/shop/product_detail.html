@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product_dict.name }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+{{ product_dict|json_script:"fitile-product-data" }}
+<article
+  class="nr-pdp container-nr py-8 md:py-12 pb-28 lg:pb-12"
+  id="pdp"
+  x-data="productDetailPage()"
+>
+  <div class="grid gap-8 lg:grid-cols-2 lg:gap-12">
+    <div class="fitile-pdp-sticky">
+      <div class="overflow-hidden rounded-card border border-border/70 bg-gradient-to-br from-[#FFFEFB] to-[#F0E9DF]">
+        <img
+          class="aspect-[4/5] w-full object-cover"
+          src="{{ product_dict.image_url }}"
+          :src="currentImage"
+          alt="{{ product_dict.name }}"
+          width="640"
+          height="800"
+          {% if not product_dict.image_url %}style="display:none"{% endif %}
+          x-show="currentImage"
+        >
+        <div
+          class="flex aspect-[4/5] items-center justify-center text-muted"
+          x-show="!currentImage"
+          {% if product_dict.image_url %}style="display:none"{% endif %}
+        >فیتیله</div>
+      </div>
+      {% if product_dict.gallery|length > 1 %}
+      <div class="fitile-pdp-thumbs">
+        <template x-for="(img, index) in gallery" :key="img.id || index">
+          <button type="button" class="p-0 border-0 bg-transparent" @click="selectImage(index)" :aria-label="'تصویر ' + (index + 1)">
+            <img
+              class="fitile-pdp-thumb"
+              :class="{ 'is-active': imageIndex === index }"
+              :src="img.url"
+              :alt="img.alt || product.name"
+              width="64"
+              height="80"
+            >
+          </button>
+        </template>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="fitile-pdp-sticky flex flex-col">
+      <p class="text-[12px] text-muted">{{ product_dict.category_title }}</p>
+      <h1 class="mt-2 text-2xl font-bold text-[#14110F]">{{ product_dict.name }}</h1>
+      <p class="product-price mt-4 text-base">
+        <span
+          class="me-2 text-sm font-normal text-muted line-through"
+          x-show="activeSale"
+          x-text="formatPrice(activeBase)"
+          x-cloak
+        ></span>
+        <span x-text="formatPrice(activePrice)">{{ product_dict.display_price }}</span>
+        <span class="text-sm font-normal text-muted">تومان</span>
+      </p>
+
+      {% if product_dict.colors %}
+      <fieldset class="mt-6">
+        <legend class="mb-2 text-[13px] font-medium">رنگ</legend>
+        <div class="flex flex-wrap gap-2">
+          {% for color in product_dict.colors %}
+            <button
+              type="button"
+              class="fitile-color-swatch"
+              :class="{ 'is-active': selectedColor === '{{ color.name|escapejs }}' }"
+              style="background: {{ color.hex }}"
+              aria-label="{{ color.name }}"
+              @click="selectColor('{{ color.name|escapejs }}')"
+            ></button>
+          {% endfor %}
+        </div>
+      </fieldset>
+      {% endif %}
+
+      {% if product_dict.sizes %}
+      <fieldset class="mt-5">
+        <legend class="mb-2 text-[13px] font-medium">بسته / سایز</legend>
+        <div class="flex flex-wrap gap-2">
+          {% for size in product_dict.sizes %}
+            <button
+              type="button"
+              class="nr-size-chip rounded-btn border border-border bg-cream px-3 py-2 text-[12px]"
+              :class="{ 'ring-2': selectedSize === '{{ size|escapejs }}', 'ring-[#14110F]': selectedSize === '{{ size|escapejs }}' }"
+              @click="selectSize('{{ size|escapejs }}')"
+            >{{ size }}</button>
+          {% endfor %}
+        </div>
+      </fieldset>
+      {% endif %}
+
+      <div class="mt-5">
+        <label class="mb-2 block text-[13px] font-medium" for="pdp-qty">تعداد</label>
+        <div class="fitile-qty">
+          <button type="button" @click="qty = Math.max(1, qty - 1)" aria-label="کاهش">−</button>
+          <input id="pdp-qty" type="number" min="1" x-model.number="qty" value="1">
+          <button type="button" @click="qty = qty + 1" aria-label="افزایش">+</button>
+        </div>
+      </div>
+
+      <button
+        class="btn-ruby-solid fitile-pdp-add-desktop mt-8 w-full"
+        type="button"
+        @click="add()"
+        :disabled="!canAdd"
+      >افزودن به سبد</button>
+
+      <div class="fitile-pdp-tabs" role="tablist">
+        <button type="button" class="fitile-pdp-tab" :class="{ 'is-active': tab === 'desc' }" @click="tab = 'desc'" role="tab">توضیحات</button>
+        <button type="button" class="fitile-pdp-tab" :class="{ 'is-active': tab === 'care' }" @click="tab = 'care'" role="tab">نگهداری</button>
+        <button type="button" class="fitile-pdp-tab" :class="{ 'is-active': tab === 'reviews' }" @click="tab = 'reviews'" role="tab">نظرات</button>
+      </div>
+      <div class="mt-4 text-[14px] leading-relaxed text-muted" x-show="tab === 'desc'">
+        {{ product_dict.description|default:"توضیحات تکمیلی به‌زودی." }}
+      </div>
+      <div class="mt-4 text-[14px] leading-relaxed text-muted" x-show="tab === 'care'" x-cloak>
+        دور از حرارت مستقیم نگه‌دارید. فتیله را کوتاه کنید. سنگ‌ها را با پارچه نرم پاک کنید.
+      </div>
+      <div class="mt-4 text-[14px] leading-relaxed text-muted" x-show="tab === 'reviews'" x-cloak>
+        هنوز نظری ثبت نشده؛ پس از خرید می‌توانید تجربه خود را بنویسید.
+      </div>
+    </div>
+  </div>
+
+  <div class="fitile-mobile-cta">
+    <button class="btn-ruby-solid w-full" type="button" @click="add()" :disabled="!canAdd">افزودن به سبد</button>
+  </div>
+</article>
+{% endblock %}

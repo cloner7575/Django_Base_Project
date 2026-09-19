@@ -4,21 +4,41 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
+    <meta name="color-scheme" content="light">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nr-main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fitile-theme.css' %}">
     {% block extra_css %}{% endblock %}
   </head>
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="has-mobile-nav" x-data="appStore" @keydown.escape.window="closeAllModals()">
+    <a class="skip-link sr-only focus:not-sr-only" href="#main-content">رفتن به محتوا</a>
+
+    {% if messages %}
+      <div class="fixed top-20 start-1/2 z-[70] w-full max-w-md space-y-2 px-4" style="transform: translateX(50%);">
+        {% for message in messages %}
+          <div class="rounded-lg border px-4 py-3 text-sm shadow-lg {% if message.tags == 'error' %}border-red-200 bg-red-50 text-red-800{% elif message.tags == 'success' %}border-green-200 bg-green-50 text-green-800{% else %}border-border bg-white text-[#14110F]{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% include "partials/_loading.html" %}
     {% include "partials/_header.html" %}
-    <main id="main" class="site-main" tabindex="-1">
-      {% include "partials/_messages.html" %}
+
+    <main id="main-content">
       {% block content %}{% endblock %}
     </main>
+
     {% include "partials/_footer.html" %}
-    <script src="{% static 'js/app.js' %}" defer></script>
+    {% include "partials/_mobile_nav.html" %}
+    {% include "partials/_search_modal.html" %}
+    {% include "partials/_cart_drawer.html" %}
+
+    <script src="{% static 'js/shop.js' %}"></script>
+    <script src="{% static 'js/vendor/alpine.min.js' %}"></script>
     {% block extra_js %}{% endblock %}
   </body>
 </html>

@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}پنل · {{ SITE_NAME }}{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/panel.css' %}">
+  </head>
+  <body class="panel-body">
+    <div class="panel-shell">
+      <aside class="panel-sidebar">
+        <a class="panel-brand" href="{% url 'panel:dashboard' %}">{{ SITE_NAME }}</a>
+        <nav class="panel-nav" aria-label="ناوبری پنل">
+          <a href="{% url 'panel:dashboard' %}" class="{% if panel_section == 'dashboard' %}is-active{% endif %}">داشبورد</a>
+          <a href="{% url 'panel:orders' %}" class="{% if panel_section == 'orders' %}is-active{% endif %}">سفارش‌ها</a>
+          <a href="{% url 'panel:products' %}" class="{% if panel_section == 'products' %}is-active{% endif %}">محصولات</a>
+          <a href="{% url 'common:home' %}">مشاهده سایت</a>
+          <a href="{% url 'admin:index' %}">ادمین جنگو</a>
+        </nav>
+        <form method="post" action="{% url 'panel:logout' %}" style="margin-top:2rem">
+          {% csrf_token %}
+          <button class="panel-btn panel-btn-ghost" type="submit">خروج</button>
+        </form>
+      </aside>
+      <div class="panel-main">
+        <div class="panel-topbar">
+          <h1 style="margin:0;font-size:1.35rem">{% block heading %}پنل{% endblock %}</h1>
+          <a class="panel-btn panel-btn-primary" href="{% url 'admin:shop_product_add' %}">+ محصول</a>
+        </div>
+        {% if messages %}
+          <ul>
+            {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

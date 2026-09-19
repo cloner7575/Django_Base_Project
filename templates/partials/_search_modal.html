@@ -1,0 +1,21 @@
+<div x-show="searchOpen" x-cloak class="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-labelledby="search-title">
+  <div class="absolute inset-0 bg-ruby/40 backdrop-blur-sm" @click="closeAllModals()"></div>
+  <div class="absolute inset-x-4 top-24 mx-auto max-w-lg rounded-section border border-border/70 bg-cream p-5 shadow-ruby-lg md:inset-x-auto md:start-1/2 md:-translate-x-1/2 md:p-6" @click.stop>
+    <div class="mb-4 flex items-center justify-between">
+      <h2 id="search-title" class="text-base font-bold text-[#14110F]">جستجو</h2>
+      <button type="button" class="header-icon-btn" @click="closeAllModals()" aria-label="بستن">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form action="{% url 'shop:product_list' %}" method="get" class="relative">
+      <input type="search" name="q" class="search-pill" placeholder="نام محصول را بنویسید…" autofocus>
+      <svg class="pointer-events-none absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+    </form>
+    <p class="mt-4 text-[12px] text-muted">جستجوهای پرطرفدار</p>
+    <div class="mt-2 flex flex-wrap gap-2">
+      <a href="{% url 'shop:product_list' %}?category=shama" class="rounded-pill border border-border bg-white px-3 py-1.5 text-[12px] text-ruby hover:border-ruby/30">شمع</a>
+      <a href="{% url 'shop:product_list' %}?category=sang" class="rounded-pill border border-border bg-white px-3 py-1.5 text-[12px] text-ruby hover:border-ruby/30">سنگ مصنوعی</a>
+      <a href="{% url 'shop:product_list' %}?category=set" class="rounded-pill border border-border bg-white px-3 py-1.5 text-[12px] text-ruby hover:border-ruby/30">ست هدیه</a>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,107 @@
-<header class="site-header">
-  <div class="site-header__inner">
-    <a class="brand" href="{% url 'common:home' %}">{{ SITE_NAME }}</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="{% url 'common:home' %}" {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>Home</a>
-      <a href="{% url 'admin:index' %}">Admin</a>
-      <a href="{% url 'common:health' %}">Health</a>
+{% load static %}
+<header class="sticky top-0 z-50 border-b border-border/70 bg-cream/95 backdrop-blur-md transition-shadow duration-350" :class="headerSticky ? 'header-scrolled' : ''">
+  <div class="container-nr">
+    <div class="hidden lg:block">
+      <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-6 py-3">
+        <div class="relative max-w-[420px] justify-self-start">
+          <button type="button" @click="openSearch()" class="header-search w-full text-start" aria-label="جستجو">
+            جستجو در محصولات...
+          </button>
+          <svg class="pointer-events-none absolute start-4 top-1/2 h-[17px] w-[17px] -translate-y-1/2 text-muted/55" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+          </svg>
+        </div>
+
+        <a href="{% url 'common:home' %}" class="logo-header-link justify-self-center text-center" aria-label="فیتیله">
+          <img src="{% static 'img/logo-header.svg' %}" alt="فیتیله" class="logo-header-img" width="120" height="42" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <span class="logo-fitile-mark" style="display:none">فیتیله</span>
+          <span class="logo-fitile-tag">نور و بافت خانه</span>
+        </a>
+
+        <div class="flex items-center justify-end gap-5 justify-self-end">
+          <button type="button" @click="openCart()" class="header-icon-btn" aria-label="سبد خرید">
+            <span class="relative inline-flex">
+              <svg class="h-[21px] w-[21px]" fill="none" stroke="currentColor" stroke-width="1.35" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
+              </svg>
+              <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="header-cart-badge"></span>
+            </span>
+          </button>
+          <a href="{% url 'shop:wishlist' %}" class="header-icon-btn" aria-label="علاقه‌مندی‌ها">
+            <svg class="h-[21px] w-[21px]" fill="none" stroke="currentColor" stroke-width="1.35" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+            </svg>
+          </a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'accounts:logout' %}" class="header-auth-link" onclick="event.preventDefault(); this.nextElementSibling.submit();">
+              <svg class="h-[21px] w-[21px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.35" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+              </svg>
+              <span class="max-w-[7.5rem] truncate">{{ user.get_username }}</span>
+            </a>
+            <form method="post" action="{% url 'accounts:logout' %}" class="hidden">{% csrf_token %}</form>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="header-auth-link">
+              <svg class="h-[21px] w-[21px] shrink-0" fill="none" stroke="currentColor" stroke-width="1.35" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+              </svg>
+              <span>ورود / ثبت‌نام</span>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <nav class="border-t border-border/70 py-2.5" aria-label="منوی اصلی">
+        <ul class="flex flex-wrap items-center justify-center gap-x-0.5 gap-y-1">
+          <li>
+            <a href="{% url 'common:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}nav-link-active{% endif %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>خانه</a>
+          </li>
+          <li>
+            <a href="{% url 'shop:product_list' %}" class="nav-link {% if request.resolver_match.app_name == 'shop' and request.resolver_match.url_name == 'product_list' %}nav-link-active{% endif %}">فروشگاه</a>
+          </li>
+          <li>
+            <a href="{% url 'shop:cart_detail' %}" class="nav-link">سبد خرید</a>
+          </li>
+          {% if user.is_staff %}
+            <li><a href="{% url 'panel:dashboard' %}" class="nav-link">پنل</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="flex items-center justify-between py-2.5 lg:hidden">
+      <button type="button" @click="mobileMenuOpen = !mobileMenuOpen" class="flex h-10 w-10 items-center justify-center text-[#14110F]" aria-label="منو" :aria-expanded="mobileMenuOpen">
+        <svg x-show="!mobileMenuOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        <svg x-show="mobileMenuOpen" x-cloak class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <a href="{% url 'common:home' %}" class="logo-header-link text-center" aria-label="فیتیله">
+        <img src="{% static 'img/logo-header.svg' %}" alt="فیتیله" class="logo-header-img" style="height:32px" width="96" height="32" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+        <span class="logo-fitile-mark" style="font-size:1.35rem;display:none">فیتیله</span>
+      </a>
+      <div class="flex items-center gap-0.5">
+        <button type="button" @click="openSearch()" class="flex h-10 w-10 items-center justify-center" aria-label="جستجو">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+        </button>
+        <button type="button" @click="openCart()" class="relative flex h-10 w-10 items-center justify-center" aria-label="سبد خرید">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>
+          <span x-show="cartCount > 0" x-text="cartCount" x-cloak class="absolute top-1 start-6 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-ruby px-1 text-[9px] font-bold text-white"></span>
+        </button>
+      </div>
+    </div>
+
+    <nav x-show="mobileMenuOpen" x-cloak x-transition class="border-t border-border/70 py-3 lg:hidden" aria-label="منوی موبایل">
+      <ul class="flex flex-col gap-0.5">
+        <li><a href="{% url 'common:home' %}" class="block rounded-lg px-4 py-2.5 text-sm hover:bg-soft">خانه</a></li>
+        <li><a href="{% url 'shop:product_list' %}" class="block rounded-lg px-4 py-2.5 text-sm hover:bg-soft">فروشگاه</a></li>
+        <li><a href="{% url 'shop:wishlist' %}" class="block rounded-lg px-4 py-2.5 text-sm hover:bg-soft">علاقه‌مندی</a></li>
+        <li class="mt-2 border-t border-border/60 pt-2">
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button type="submit" class="block w-full rounded-lg px-4 py-2.5 text-start text-sm hover:bg-soft">خروج</button></form>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="block rounded-lg px-4 py-2.5 text-sm hover:bg-soft">ورود / ثبت‌نام</a>
+          {% endif %}
+        </li>
+      </ul>
     </nav>
   </div>
 </header>

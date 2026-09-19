@@ -1,0 +1,56 @@
+<div x-show="cartOpen" x-cloak class="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title">
+  <div class="absolute inset-0 bg-ruby/40 backdrop-blur-sm" @click="closeAllModals()"></div>
+  <div class="absolute inset-y-0 end-0 flex w-full max-w-md flex-col border-s border-border/70 bg-cream shadow-ruby-lg" @click.stop>
+    <div class="flex items-center justify-between border-b border-border/70 px-5 py-4">
+      <h2 id="cart-drawer-title" class="text-base font-bold text-[#14110F]">سبد خرید</h2>
+      <button type="button" class="header-icon-btn" @click="closeAllModals()" aria-label="بستن">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-5 py-4">
+      <template x-if="cartItems.length === 0">
+        <div class="flex flex-col items-center gap-3 py-16 text-center">
+          <svg class="h-12 w-12 text-muted/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
+          </svg>
+          <p class="text-sm text-muted">سبد خرید شما خالی است</p>
+          <a href="{% url 'shop:product_list' %}" class="btn-ruby-solid mt-2" @click="closeAllModals()">مشاهده فروشگاه</a>
+        </div>
+      </template>
+
+      <template x-for="item in cartItems" :key="item.id">
+        <div class="mb-4 flex gap-3 border-b border-border/50 pb-4">
+          <div class="h-20 w-16 shrink-0 overflow-hidden rounded-btn bg-oat">
+            <img x-show="item.image" :src="item.image" :alt="item.name" class="h-full w-full object-cover">
+          </div>
+          <div class="min-w-0 flex-1">
+            <a :href="item.url" class="line-clamp-2 text-[13px] font-medium text-[#14110F]" x-text="item.name" @click="closeAllModals()"></a>
+            <p class="mt-1 text-[11px] text-muted">
+              <span x-text="item.size"></span>
+              <span x-show="item.color"> · <span x-text="item.color"></span></span>
+            </p>
+            <div class="mt-2 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1 rounded-btn border border-border">
+                <button type="button" class="px-2 py-1 text-sm" @click="updateQty(item, -1)" aria-label="کاهش">−</button>
+                <span class="min-w-[1.5rem] text-center text-[12px]" x-text="item.qty"></span>
+                <button type="button" class="px-2 py-1 text-sm" @click="updateQty(item, 1)" aria-label="افزایش">+</button>
+              </div>
+              <p class="text-[13px] font-bold" x-text="formatPrice(item.line_total) + ' تومان'"></p>
+            </div>
+            <button type="button" class="mt-1 text-[11px] text-muted hover:text-ruby" @click="removeFromCart(item.id)">حذف</button>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <div class="border-t border-border/70 bg-white/80 px-5 py-4" x-show="cartItems.length > 0" x-cloak>
+      <div class="mb-3 flex items-center justify-between text-sm">
+        <span class="text-muted">جمع</span>
+        <span class="font-bold text-[#14110F]" x-text="formatPrice(cartTotal()) + ' تومان'"></span>
+      </div>
+      <a href="{% url 'shop:checkout' %}" class="btn-ruby-solid w-full" @click="closeAllModals()">ادامه خرید</a>
+      <a href="{% url 'shop:cart_detail' %}" class="mt-2 block text-center text-[12px] text-muted hover:text-ruby" @click="closeAllModals()">سبد کامل</a>
+    </div>
+  </div>
+</div>

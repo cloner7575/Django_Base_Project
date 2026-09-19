@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}ثبت‌نام · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack auth-form">
+    <h1>ثبت‌نام</h1>
+    <p class="lede">حساب جدید بسازید تا بتوانید سفارش دهید.</p>
+    <form method="post" class="stack" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+      {% endif %}
+      {% for field in form %}
+        {% include "components/_field.html" with field=field %}
+      {% endfor %}
+      {% include "components/_button.html" with text="ایجاد حساب" %}
+    </form>
+    <p>قبلاً ثبت‌نام کرده‌اید؟ <a href="{% url 'accounts:login' %}">ورود</a></p>
+  </div>
+{% endblock %}

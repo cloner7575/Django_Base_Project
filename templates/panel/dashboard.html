@@ -1,0 +1,33 @@
+{% extends "panel/base.html" %}
+{% block title %}داشبورد · پنل{% endblock %}
+{% block heading %}داشبورد{% endblock %}
+{% block content %}
+  <div class="panel-kpis">
+    <div class="panel-card"><span>فروش امروز</span><strong>{{ kpi_today }}</strong></div>
+    <div class="panel-card"><span>فروش ۷ روز</span><strong>{{ kpi_week }}</strong></div>
+    <div class="panel-card"><span>در انتظار پرداخت</span><strong>{{ kpi_pending }}</strong></div>
+    <div class="panel-card"><span>سفارش امروز</span><strong>{{ kpi_today_orders }}</strong></div>
+  </div>
+  <div class="panel-card" style="margin-bottom:1rem">
+    <p style="color:var(--panel-muted);margin:0">هشدار: موجودی کم {{ low_stock }} · بدون تصویر {{ no_image }}</p>
+  </div>
+  <div class="panel-card">
+    <h2 style="margin-top:0">آخرین سفارش‌ها</h2>
+    <table class="panel-table">
+      <thead><tr><th>#</th><th>گیرنده</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th></tr></thead>
+      <tbody>
+        {% for order in recent_orders %}
+          <tr>
+            <td><a href="{% url 'panel:order_detail' order.pk %}">{{ order.pk }}</a></td>
+            <td>{{ order.full_name }}</td>
+            <td>{{ order.total_amount|stringformat:"d" }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.created_at }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">سفارشی نیست.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

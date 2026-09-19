@@ -1,0 +1,51 @@
+{% load static %}
+<article class="product-card group lg:min-w-0">
+  <a href="{{ product.url }}" class="product-image-wrap block">
+    {% if product.image_url %}
+      <img src="{{ product.image_url }}" alt="{{ product.name }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" width="480" height="600">
+    {% else %}
+      <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#FFFEFB] via-[#F0E9DF] to-[#EFE4DB] text-sm text-muted">فیتیله</div>
+    {% endif %}
+    {% if product.is_sale %}
+      <span class="absolute start-2 top-2 z-10 rounded-pill bg-ruby px-2.5 py-0.5 text-[10px] font-bold text-white">تخفیف</span>
+    {% elif product.is_new %}
+      <span class="absolute start-2 top-2 z-10 rounded-pill bg-gold px-2.5 py-0.5 text-[10px] font-bold text-white">جدید</span>
+    {% endif %}
+    <button type="button" @click.prevent="toggleWishlist('{{ product.slug }}')" class="absolute end-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/95 shadow-md backdrop-blur-sm transition-all duration-350 hover:scale-110 md:end-3 md:top-3 md:h-9 md:w-9" :class="isWishlisted('{{ product.slug }}') ? 'text-ruby' : 'text-muted/50'" aria-label="افزودن به علاقه‌مندی">
+      <svg class="h-3.5 w-3.5 md:h-4 md:w-4" :fill="isWishlisted('{{ product.slug }}') ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+      </svg>
+    </button>
+  </a>
+  <div class="flex flex-1 flex-col px-2.5 pb-3 pt-2.5 md:px-3 md:pb-4 md:pt-3">
+    <h3 class="mb-1 text-[12px] font-medium leading-snug text-[#14110F] md:mb-1.5 md:text-[13px]">
+      <a href="{{ product.url }}" class="hover:text-ruby">{{ product.name }}</a>
+    </h3>
+    {% if product.colors %}
+      <div class="product-color-row mb-2 flex items-center gap-1.5" aria-label="رنگ‌های موجود">
+        {% for c in product.colors|slice:":4" %}
+          <span class="product-color-dot" style="--swatch: {{ c.hex }}" title="{{ c.name }}"></span>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <p class="product-price mb-1.5 md:mb-2">
+      {% if product.sale_price_num and product.price_num and product.sale_price_num < product.price_num %}
+        <span class="me-1 text-[11px] font-normal text-muted line-through">{{ product.price }}</span>
+        {{ product.display_price }}
+      {% else %}
+        {{ product.display_price }}
+      {% endif %}
+      <span class="text-[10px] font-normal text-muted md:text-[11px]">تومان</span>
+    </p>
+    <button
+      type="button"
+      @click="addToCart({ variant_id: {{ product.default_variant_id|default:'null' }}, slug: '{{ product.slug }}', url: '{{ product.url }}' })"
+      class="btn-add-cart mt-auto"
+    >
+      <svg class="h-3.5 w-3.5 text-ruby md:h-4 md:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
+      </svg>
+      افزودن به سبد
+    </button>
+  </div>
+</article>

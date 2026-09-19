@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}پرداخت موفق · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack" role="status">
+    <h1>پرداخت موفق</h1>
+    <p class="lede">سفارش شماره {{ order.pk }} با موفقیت ثبت و پرداخت شد.</p>
+    <p>مبلغ: {{ order.total_amount|toman }}</p>
+    <p>تاریخ: {{ order.created_at|jalali:"%Y/%m/%d %H:%M" }}</p>
+    {% include "components/_button.html" with text="بازگشت به محصولات" href="/shop/products/" %}
+  </div>
+{% endblock %}

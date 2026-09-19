@@ -1,0 +1,28 @@
+{% extends "panel/base.html" %}
+{% block title %}سفارش {{ order.pk }}{% endblock %}
+{% block heading %}سفارش #{{ order.pk }}{% endblock %}
+{% block content %}
+  <div class="panel-card" style="margin-bottom:1rem">
+    <p>{{ order.full_name }} · <span dir="ltr">{{ order.phone }}</span></p>
+    <p>{{ order.address }}</p>
+    <p>مبلغ: {{ order.total_amount }} تومان · {{ order.get_status_display }}</p>
+    <form method="post">
+      {% csrf_token %}
+      <label for="status">تغییر وضعیت</label>
+      <select name="status" id="status">
+        {% for value, label in order.Status.choices %}
+          <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+      <button class="panel-btn panel-btn-primary" type="submit">ذخیره</button>
+    </form>
+  </div>
+  <div class="panel-card">
+    <h2>اقلام</h2>
+    <ul>
+      {% for item in order.items.all %}
+        <li>{{ item.product_name }} {% if item.size %}( {{ item.size }} ){% endif %} × {{ item.quantity }} — {{ item.line_total }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

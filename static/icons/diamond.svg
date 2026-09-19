@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+  <path d="M10 1.5 12.4 7.6H19L13.8 11.4 15.7 18 10 14.2 4.3 18l1.9-6.6L1 7.6h6.6L10 1.5Z" fill="url(#faliiGem)" stroke="#A67C52" stroke-width="0.6" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="faliiGem" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4C2A6"/>
+      <stop offset="45%" stop-color="#A67C52"/>
+      <stop offset="100%" stop-color="#14110F"/>
+    </linearGradient>
+  </defs>
+</svg>
