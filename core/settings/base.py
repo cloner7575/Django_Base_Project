@@ -56,6 +56,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.common.context_processors.site",
@@ -115,6 +116,17 @@ LANGUAGE_CODE = os.getenv("DJANGO_LANGUAGE_CODE", "en-us")
 TIME_ZONE = os.getenv("DJANGO_TIME_ZONE", "UTC")
 USE_I18N = True
 USE_TZ = True
+
+_RTL_LANGS = frozenset({"ar", "fa", "he", "ur"})
+_direction = os.getenv("DJANGO_TEXT_DIRECTION", "").strip().lower()
+if _direction in {"rtl", "ltr"}:
+    TEXT_DIRECTION = _direction
+else:
+    TEXT_DIRECTION = (
+        "rtl"
+        if LANGUAGE_CODE.split("-", maxsplit=1)[0].lower() in _RTL_LANGS
+        else "ltr"
+    )
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]

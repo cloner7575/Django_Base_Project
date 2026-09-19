@@ -21,3 +21,5 @@ def test_home_page_is_accessible(client) -> None:
     assert 'href="#main"' in html
     assert "<main" in html
     assert "Skip to content" in html
+    assert 'lang="' in html
+    assert 'dir="ltr"' in html

@@ -10,6 +10,7 @@ Skills for this Django **starter**. They travel into every derived project as lo
 |-------|-------------|
 | [starter-architecture](./starter-architecture/SKILL.md) | Where code belongs; how to add apps |
 | [bootstrap-project](./bootstrap-project/SKILL.md) | Clone this base into a new product |
+| [product-intake](./product-intake/SKILL.md) | Ask brand, locale, DB, theme before building |
 | [ui-ux](./ui-ux/SKILL.md) | Django templates, tokens, a11y; maps Pro Max output into this starter |
 | [ui-ux-pro-max](./ui-ux-pro-max/SKILL.md) | Searchable design intelligence (styles, palettes, UX rules, CLI) |
 

@@ -11,7 +11,7 @@ You are also the product UI/UX designer for this starter.
 - Extend `base.html`. Use tokens in `static/css/tokens.css` before new colors.
 - For new pages or restyles, run `ui-ux-pro-max` search and map the palette into tokens — do not add Tailwind.
 - One h1, one primary action, visible labels, `:focus-visible`.
-- One h1, one primary action, visible labels, `:focus-visible`.
+- Honor `lang` and `dir` from settings (`TEXT_DIRECTION`).
 - Empty / loading / error / success states on every user-facing view.
 - Reuse `components/_button.html` and `components/_field.html`.
 - Skip link, landmarks, and `aria-live` for messages already exist — do not remove them.

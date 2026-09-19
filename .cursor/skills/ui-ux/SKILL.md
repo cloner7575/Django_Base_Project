@@ -7,7 +7,9 @@ description: UI/UX for this Django starter. Combines local templates/tokens with
 
 You are responsible for how the product **looks and feels**, not only whether the view returns 200.
 
-For **new pages, visual direction, style/color/type choices, and UX reviews**, also apply `ui-ux-pro-max` and run its local search (Python stdlib only, no network).
+For a **new product**, finish `product-intake` first (`PRODUCT.md`). Then for visual direction apply `ui-ux-pro-max` and run its local search (Python stdlib only, no network).
+
+Set `<html lang>` and `dir` from settings (`LANGUAGE_CODE`, `TEXT_DIRECTION`). Persian + RTL: use a Persian-capable font (e.g. Vazirmatn) in tokens.
 
 ## Django adapter (this starter)
 

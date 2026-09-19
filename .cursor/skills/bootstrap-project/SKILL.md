@@ -7,6 +7,10 @@ description: Turn this Django starter into a new product repo while keeping arch
 
 Goal: a new codebase that still looks like this starter, so the senior Django + UI assistant keeps working.
 
+## 0. Intake first
+
+Run `product-intake` before copying, renaming, or writing a plan. Persist answers in `PRODUCT.md`. Do not guess brand, language, direction, or database.
+
 ## Keep
 
 - `apps/`, `core/`, `templates/`, `static/`, `tests/`, `.cursor/` (including `ui-ux-pro-max`), `AGENTS.md`
@@ -17,7 +21,7 @@ Goal: a new codebase that still looks like this starter, so the senior Django + 
 ## Drop or regenerate
 
 - `.venv/`, `db.sqlite3`, `__pycache__/`, `.env`
-- Copy `.env.example` → `.env` and set `DJANGO_SITE_NAME` to the product name
+- Copy `.env.example` → `.env` and set values from `PRODUCT.md` (`DJANGO_SITE_NAME`, language, direction, `DATABASE_URL`)
 
 ## Rename (optional)
 

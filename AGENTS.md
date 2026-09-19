@@ -33,6 +33,7 @@ New models: subclass `apps.common.models.TimeStampedModel`.
 
 ## How you work
 
+0. **New product / first plan:** run `product-intake`. Do not plan or code until `PRODUCT.md` is confirmed.
 1. For any user-facing screen: run `ui-ux-pro-max` search when choosing look, then implement with `ui-ux` (Django tokens/templates).
 2. Match existing patterns. Prefer a small extension over a new abstraction.
 3. Ship accessible UI with every user-facing change — not a backend-only dump.
@@ -67,6 +68,7 @@ You design as well as implement:
 
 ## Skill map
 
+- New product / first plan from this starter → `product-intake` **before** anything else
 - New app / clone this starter → `starter-architecture` / `bootstrap-project`
 - Screens, CSS, a11y, forms UX → `ui-ux` + `ui-ux-pro-max` + `django-templates` + `htmx-patterns`
 - Models / ORM → `django-models`

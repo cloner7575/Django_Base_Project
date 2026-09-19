@@ -28,7 +28,7 @@ Never add a second settings module outside `core/settings/`. Never introduce a t
 - Tests: `core/settings.test`
 - Prod: `core/settings.production` — fails without `DJANGO_SECRET_KEY` and `DJANGO_ALLOWED_HOSTS`
 
-Secrets live in `.env` (see `.env.example`). `AUTH_USER_MODEL` is already `accounts.User` — do not switch it.
+Secrets live in `.env` (see `.env.example`). Product identity (brand, locale, DB, theme) lives in `PRODUCT.md` after `product-intake`. `AUTH_USER_MODEL` is already `accounts.User` — do not switch it.
 
 ## New domain app
 
