@@ -51,6 +51,7 @@ class PostQuerySet(models.QuerySet):
     def owned_by(self, user: AbstractBaseUser) -> "PostQuerySet":
         return self.filter(author=user)
 
+
 class Post(models.Model):
     objects = PostQuerySet.as_manager()
 ```

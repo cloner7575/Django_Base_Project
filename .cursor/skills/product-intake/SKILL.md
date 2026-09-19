@@ -86,7 +86,9 @@ Include at least:
    - `.env` / `.env.example`: `DJANGO_SITE_NAME`, `DJANGO_LANGUAGE_CODE`, `DJANGO_TIME_ZONE`, `DJANGO_TEXT_DIRECTION`, `DATABASE_URL`
    - `html` `lang` / `dir` come from settings — do not hardcode
    - For Persian + RTL, prefer a Persian-capable font in tokens (e.g. Vazirmatn) via `ui-ux`
-   - If they chose Pro Max colors: run `search.py --design-system -p "<brand>"` and map into `static/css/tokens.css`
+   - For `fa` products: Jalali dates (`persian-locale`) and تومان pricing if e-commerce (`persian-ecommerce`)
+   - If e-commerce / «فروشگاه» / NightRuby-class: run **`persian-shop-playbook`** — copy `.cursor/skills/persian-shop-playbook/design.md` → project-root `design.md` (swap brand mark only), then follow that playbook’s Fast path. Prefer locked cream tokens over a fresh Pro Max palette unless the user asked for a different mood
+   - If they chose Pro Max colors **and** it is not a cream shop: run `search.py --design-system -p "<brand>"` and map into `static/css/tokens.css`
    - Add optional packages **only** if they selected them (DRF, Celery, Docker)
    - First domain app under `apps/` per `starter-architecture`
 
@@ -100,6 +102,9 @@ Include at least:
 | Theme | Pro Max from pitch |
 | Extras | None |
 | Time zone | `Asia/Tehran` if Persian, else `UTC` |
+| Calendar (fa) | Jalali display — skill `persian-locale` |
+| Shop currency (fa) | تومان + thousand separators — skill `persian-ecommerce` |
+| Shop UI (fa ecommerce) | Cream NightRuby system — `persian-shop-playbook/design.md` → project `design.md` |
 
 ## Do not
 

@@ -1,0 +1,20 @@
+---
+description: Persian (fa) locale — Jalali calendars and Toman pricing for Iranian products
+alwaysApply: false
+---
+
+# Persian locale for fa products
+
+## Calendar
+
+- User-facing dates are **Jalali (شمسی)**.
+- DB stores Gregorian timezone-aware datetimes.
+- Use `{% load persian %}{{ dt|jalali }}` or `apps.common.persian.format_jalali`.
+
+## Money (shops)
+
+- Default currency label: **تومان**.
+- Always thousand-separate: `{{ price|toman }}` → `185,000 تومان`.
+- Convert ×10 to ریال only at payment gateway calls.
+
+See skills: `persian-locale`, `persian-ecommerce`.

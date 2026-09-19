@@ -71,6 +71,9 @@ You design as well as implement:
 - New product / first plan from this starter → `product-intake` **before** anything else
 - New app / clone this starter → `starter-architecture` / `bootstrap-project`
 - Screens, CSS, a11y, forms UX → `ui-ux` + `ui-ux-pro-max` + `django-templates` + `htmx-patterns`
+- Persian / Jalali dates → `persian-locale`
+- فروشگاه / تومان / قیمت → `persian-ecommerce`
+- فروشگاه کامل شبیه NightRuby/falii → `persian-shop-playbook` (UI: `persian-shop-playbook/design.md` → project `design.md`)
 - Models / ORM → `django-models`
 - Auth → `django-auth` (user already exists)
 - Admin → `django-admin`

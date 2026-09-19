@@ -19,7 +19,13 @@ Celery is not installed yet. When adding it, use the project package `core` as t
 Place tasks in `<app>/tasks.py`. Prefer `@shared_task`. Use `bind=True` when you need `self.retry` or the task id. Add type hints.
 
 ```python
-@shared_task(bind=True, autoretry_for=(OSError,), retry_backoff=True, retry_jitter=True, max_retries=5)
+@shared_task(
+    bind=True,
+    autoretry_for=(OSError,),
+    retry_backoff=True,
+    retry_jitter=True,
+    max_retries=5,
+)
 def send_invoice(self, invoice_id: int) -> None:
     invoice = Invoice.objects.filter(pk=invoice_id).first()
     if invoice is None:

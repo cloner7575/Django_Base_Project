@@ -29,8 +29,11 @@ from django.db import transaction
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 @receiver(post_save, sender=Invoice)
-def enqueue_invoice_email(sender, instance: Invoice, created: bool, **kwargs: object) -> None:
+def enqueue_invoice_email(
+    sender, instance: Invoice, created: bool, **kwargs: object
+) -> None:
     if not created:
         return
 

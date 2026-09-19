@@ -90,3 +90,4 @@ Every list/detail/form needs empty, loading, error, and success — never a blan
 ## Integration
 
 - `ui-ux-pro-max`, `django-templates`, `htmx-patterns`, `django-forms`, `code-reviewer`
+- Persian cream shops: do **not** freestyle from Pro Max — follow `persian-shop-playbook/design.md` (and project `design.md` if present)

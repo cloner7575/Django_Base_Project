@@ -13,6 +13,10 @@ Skills for this Django **starter**. They travel into every derived project as lo
 | [product-intake](./product-intake/SKILL.md) | Ask brand, locale, DB, theme before building |
 | [ui-ux](./ui-ux/SKILL.md) | Django templates, tokens, a11y; maps Pro Max output into this starter |
 | [ui-ux-pro-max](./ui-ux-pro-max/SKILL.md) | Searchable design intelligence (styles, palettes, UX rules, CLI) |
+| [persian-locale](./persian-locale/SKILL.md) | Jalali calendar, fa/RTL locale conventions |
+| [persian-ecommerce](./persian-ecommerce/SKILL.md) | فروشگاه فارسی: تومان، جداکننده هزارگان، checkout |
+| [persian-shop-playbook](./persian-shop-playbook/SKILL.md) | NightRuby-class shop: storefront + panel + domain checklist |
+| ↳ [design.md](./persian-shop-playbook/design.md) | Locked cream UI system — copy to project `design.md` for the next shop |
 
 ### Workflows
 
