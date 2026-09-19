@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: sepehrad
+      POSTGRES_USER: sepehrad
+      POSTGRES_PASSWORD: sepehrad
+    volumes:
+      - sepehrad_pg:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sepehrad -d sepehrad"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    env_file:
+      - .env.example
+    environment:
+      DJANGO_SETTINGS_MODULE: core.settings.production
+      DJANGO_SECRET_KEY: change-me-in-real-deploy
+      DJANGO_DEBUG: "false"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,web
+      DJANGO_CSRF_TRUSTED_ORIGINS: http://localhost:8000
+      DATABASE_URL: postgres://sepehrad:sepehrad@db:5432/sepehrad
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_data:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  sepehrad_pg:
+  media_data:

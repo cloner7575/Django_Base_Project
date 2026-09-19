@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}نمونه کار · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack page-intro">
+    <h1>نمونه کارها</h1>
+    <p class="lede">پروژه‌های اجرا‌شده تابلوسازی سپهراد را ببینید و برای پروژه مشابه مشاوره بگیرید.</p>
+  </div>
+
+  {% if categories %}
+    <nav class="filter-bar" aria-label="فیلتر دسته">
+      <a href="{% url 'portfolio:list' %}" {% if not active_category %}aria-current="page"{% endif %}>همه</a>
+      {% for category in categories %}
+        <a
+          href="{% url 'portfolio:list' %}?category={{ category.slug }}"
+          {% if active_category and active_category.pk == category.pk %}aria-current="page"{% endif %}
+        >{{ category.name }}</a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+
+  {% if projects %}
+    <ul class="project-grid">
+      {% for project in projects %}
+        <li>{% include "components/_project_tile.html" %}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="empty-state" role="status">
+      <p>در این دسته هنوز نمونه کاری نیست.</p>
+      <a class="btn btn--soft" href="{% url 'portfolio:list' %}">مشاهده همه نمونه‌ها</a>
+    </div>
+  {% endif %}
+{% endblock %}

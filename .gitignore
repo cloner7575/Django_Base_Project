@@ -46,3 +46,4 @@ design-system/
 # Cursor local
 .cursor/tasks/
 .cursor/*.local.*
+test.sqlite3

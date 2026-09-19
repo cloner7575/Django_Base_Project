@@ -1,5 +1,34 @@
 <footer class="site-footer">
-  <div class="site-footer__inner">
-    <p>{{ SITE_NAME }} starter. Copy this repo, then add domain apps under <code>apps/</code>.</p>
+  <div class="site-footer__inner footer-grid">
+    <div class="footer-col">
+      <p class="footer-brand">{{ SITE_NAME }}</p>
+      <p class="footer-blurb">
+        کارگاه تابلوسازی در رباط‌کریم؛ طراحی و ساخت تابلو نئون LED،
+        حروف برجسته و تابلوهای تبلیغاتی از ایده تا نصب.
+      </p>
+    </div>
+    <div class="footer-col">
+      <p class="footer-label">تماس</p>
+      <ul class="footer-list">
+        <li>
+          <a href="tel:{{ CONTACT_PHONE }}" dir="ltr">{{ CONTACT_PHONE_DISPLAY }}</a>
+        </li>
+        <li>
+          <a href="{{ CONTACT_WHATSAPP }}" rel="noopener noreferrer" target="_blank">گفتگو در واتساپ</a>
+        </li>
+        <li>{{ CONTACT_ADDRESS }}</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <p class="footer-label">دسترسی سریع</p>
+      <nav class="footer-nav" aria-label="فوتر">
+        <a href="{% url 'portfolio:list' %}">نمونه کار</a>
+        <a href="{% url 'blog:list' %}">آموزش</a>
+        <a href="{% url 'contact:contact' %}">درخواست مشاوره</a>
+      </nav>
+    </div>
+  </div>
+  <div class="site-footer__inner footer-bottom">
+    <p>© {{ SITE_NAME }} — رباط‌کریم</p>
   </div>
 </footer>

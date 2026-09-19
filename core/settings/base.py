@@ -13,6 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 SITE_NAME = os.getenv("DJANGO_SITE_NAME", "Core")
+CONTACT_PHONE = os.getenv("DJANGO_CONTACT_PHONE", "09126655379")
+CONTACT_PHONE_DISPLAY = os.getenv("DJANGO_CONTACT_PHONE_DISPLAY", "۰۹۱۲ ۶۶۵ ۵۳۷۹")
+CONTACT_WHATSAPP = os.getenv(
+    "DJANGO_CONTACT_WHATSAPP",
+    f"https://wa.me/98{CONTACT_PHONE.lstrip('0')}",
+)
+CONTACT_ADDRESS = os.getenv("DJANGO_CONTACT_ADDRESS", "رباط‌کریم، ایران")
 
 SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
@@ -32,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "apps.accounts.apps.AccountsConfig",
     "apps.common.apps.CommonConfig",
+    "apps.portfolio.apps.PortfolioConfig",
+    "apps.blog.apps.BlogConfig",
+    "apps.contact.apps.ContactConfig",
 ]
 
 MIDDLEWARE = [
@@ -131,6 +141,14 @@ else:
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"

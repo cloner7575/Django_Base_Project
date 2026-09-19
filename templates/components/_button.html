@@ -1,5 +1,5 @@
 {% if href %}
-  <a class="btn {% if variant == 'ghost' %}btn--ghost{% else %}btn--primary{% endif %}" href="{{ href }}">{{ text }}</a>
+  <a class="btn {% if variant == 'ghost' %}btn--ghost{% elif variant == 'soft' %}btn--soft{% else %}btn--primary{% endif %}{% if size == 'sm' %} btn--sm{% endif %}" href="{{ href }}">{{ text }}</a>
 {% else %}
-  <button class="btn {% if variant == 'ghost' %}btn--ghost{% else %}btn--primary{% endif %}" type="{{ type|default:'submit' }}">{{ text }}</button>
+  <button class="btn {% if variant == 'ghost' %}btn--ghost{% elif variant == 'soft' %}btn--soft{% else %}btn--primary{% endif %}{% if size == 'sm' %} btn--sm{% endif %}" type="{{ type|default:'submit' }}">{{ text }}</button>
 {% endif %}

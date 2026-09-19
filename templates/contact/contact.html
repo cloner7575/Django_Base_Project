@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}درخواست مشاوره · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="contact-layout">
+    <div class="stack page-intro">
+      <h1>درخواست مشاوره</h1>
+      <p class="lede">
+        مشخصات پروژه را بفرستید تا برای طراحی و ساخت تابلو با شما هماهنگ کنیم.
+        معمولاً همان روز پاسخ می‌دهیم.
+      </p>
+      <ul class="contact-meta">
+        <li class="contact-meta__item">
+          <span class="contact-meta__label">تلفن</span>
+          <a href="tel:{{ CONTACT_PHONE }}" dir="ltr">{{ CONTACT_PHONE_DISPLAY }}</a>
+        </li>
+        <li class="contact-meta__item">
+          <span class="contact-meta__label">واتساپ</span>
+          <a href="{{ CONTACT_WHATSAPP }}" rel="noopener noreferrer" target="_blank">شروع گفتگو</a>
+        </li>
+        <li class="contact-meta__item">
+          <span class="contact-meta__label">آدرس</span>
+          <span>{{ CONTACT_ADDRESS }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <form method="post" class="stack contact-form" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <div class="form-errors" role="alert">
+          {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+      {% endif %}
+      {% include "components/_field.html" with field=form.name %}
+      {% include "components/_field.html" with field=form.phone %}
+      {% include "components/_field.html" with field=form.email %}
+      {% include "components/_field.html" with field=form.service_interest %}
+      {% include "components/_field.html" with field=form.message %}
+      <button class="btn btn--primary" type="submit">ارسال درخواست مشاوره</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <article class="stack detail">
+    <header class="detail__header">
+      <p class="breadcrumb">
+        <a href="{% url 'portfolio:list' %}">نمونه کار</a>
+        {% if project.category %} · {{ project.category.name }}{% endif %}
+      </p>
+      <h1>{{ project.title }}</h1>
+      {% if project.summary %}<p class="lede">{{ project.summary }}</p>{% endif %}
+    </header>
+
+    {% if project.cover %}
+      <figure class="detail__cover">
+        <img src="{{ project.cover.url }}" alt="{{ project.title }}" width="960" height="720">
+      </figure>
+    {% else %}
+      <div class="detail-placeholder" aria-hidden="true">
+        <svg class="project-tile__glyph" width="64" height="64" viewBox="0 0 48 48" fill="none">
+          <path d="M8 32c6-10 10-14 16-14s10 4 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 20c4-6 7-8 12-8s8 2 12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+        </svg>
+      </div>
+    {% endif %}
+
+    {% if project.description %}
+      <div class="prose">{{ project.description|linebreaks }}</div>
+    {% endif %}
+
+    {% if project.images.all %}
+      <section aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading">گالری</h2>
+        <ul class="gallery-grid">
+          {% for image in project.images.all %}
+            <li>
+              <img
+                src="{{ image.image.url }}"
+                alt="{{ image.alt_text|default:project.title }}"
+                width="640"
+                height="480"
+                loading="lazy"
+              >
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    <div class="detail-cta">
+      <a class="btn btn--primary" href="{% url 'contact:contact' %}">مشاوره برای پروژه مشابه</a>
+    </div>
+  </article>
+{% endblock %}

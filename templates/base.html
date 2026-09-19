@@ -4,20 +4,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#070b14">
+    <meta name="description" content="تابلوسازی سپهراد در رباط‌کریم — طراحی و ساخت تابلو نئون LED، حروف برجسته و تابلو تبلیغاتی. مشاوره رایگان.">
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
     {% block extra_css %}{% endblock %}
   </head>
-  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="has-sticky-contact" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <a class="skip-link" href="#main">رفتن به محتوا</a>
     {% include "partials/_header.html" %}
     <main id="main" class="site-main" tabindex="-1">
       {% include "partials/_messages.html" %}
       {% block content %}{% endblock %}
     </main>
     {% include "partials/_footer.html" %}
+    {% include "partials/_sticky_contact.html" %}
     <script src="{% static 'js/app.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
   </body>

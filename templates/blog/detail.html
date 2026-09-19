@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}{{ post.title }} · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <article class="stack detail prose-page">
+    <header class="detail__header">
+      <p class="breadcrumb">
+        <a href="{% url 'blog:list' %}">آموزش</a>
+        ·
+        <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|jalali }}</time>
+      </p>
+      <h1>{{ post.title }}</h1>
+      {% if post.excerpt %}<p class="lede">{{ post.excerpt }}</p>{% endif %}
+    </header>
+
+    {% if post.cover %}
+      <figure class="detail__cover">
+        <img src="{{ post.cover.url }}" alt="" width="960" height="540">
+      </figure>
+    {% endif %}
+
+    <div class="prose">{{ post.body|linebreaks }}</div>
+
+    <div class="detail-cta">
+      <p class="lede">برای اجرای حرفه‌ای همین ایده، با کارگاه سپهراد در رباط‌کریم در تماس باشید.</p>
+      <a class="btn btn--primary" href="{% url 'contact:contact' %}">درخواست مشاوره</a>
+    </div>
+  </article>
+{% endblock %}

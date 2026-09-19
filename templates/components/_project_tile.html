@@ -1,0 +1,19 @@
+<a class="project-tile" href="{{ project.get_absolute_url }}">
+  <div class="project-tile__media">
+    {% if project.cover %}
+      <img src="{{ project.cover.url }}" alt="" width="480" height="600" loading="lazy">
+    {% else %}
+      <div class="project-tile__placeholder" aria-hidden="true">
+        <svg class="project-tile__glyph" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <path d="M8 32c6-10 10-14 16-14s10 4 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 20c4-6 7-8 12-8s8 2 12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+          <circle cx="24" cy="36" r="2.5" fill="currentColor"/>
+        </svg>
+      </div>
+    {% endif %}
+  </div>
+  <span class="project-tile__title">{{ project.title }}</span>
+  {% if project.category %}
+    <span class="project-tile__meta">{{ project.category.name }}</span>
+  {% endif %}
+</a>

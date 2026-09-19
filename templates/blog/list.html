@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load persian %}
+
+{% block title %}آموزش · {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+  <div class="stack page-intro">
+    <h1>آموزش و مقالات</h1>
+    <p class="lede">نکات طراحی و ساخت تابلو نئون و تبلیغاتی از کارگاه سپهراد.</p>
+  </div>
+
+  {% if posts %}
+    <ul class="post-list post-list--full">
+      {% for post in posts %}
+        <li>
+          <a href="{{ post.get_absolute_url }}">
+            <strong>{{ post.title }}</strong>
+            <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|jalali }}</time>
+            {% if post.excerpt %}<span>{{ post.excerpt }}</span>{% endif %}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="empty-state" role="status">
+      <p>هنوز مطلبی منتشر نشده است.</p>
+      <a class="btn btn--soft" href="{% url 'contact:contact' %}">سؤال دارید؟ مشاوره بگیرید</a>
+    </div>
+  {% endif %}
+{% endblock %}

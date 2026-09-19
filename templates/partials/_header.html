@@ -1,10 +1,18 @@
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand" href="{% url 'common:home' %}">{{ SITE_NAME }}</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="{% url 'common:home' %}" {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>Home</a>
-      <a href="{% url 'admin:index' %}">Admin</a>
-      <a href="{% url 'common:health' %}">Health</a>
+    <a class="brand" href="{% url 'common:home' %}">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__text">{{ SITE_NAME }}</span>
+    </a>
+    <nav class="nav" aria-label="منوی اصلی">
+      <a href="{% url 'common:home' %}" {% if request.resolver_match.app_name == "common" and request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>خانه</a>
+      <a href="{% url 'portfolio:list' %}" {% if request.resolver_match.app_name == "portfolio" %}aria-current="page"{% endif %}>نمونه کار</a>
+      <a href="{% url 'blog:list' %}" {% if request.resolver_match.app_name == "blog" %}aria-current="page"{% endif %}>آموزش</a>
+      <a href="{% url 'contact:contact' %}" {% if request.resolver_match.app_name == "contact" %}aria-current="page"{% endif %}>مشاوره</a>
     </nav>
+    <div class="header-actions">
+      <a class="header-phone" href="tel:{{ CONTACT_PHONE }}" dir="ltr">{{ CONTACT_PHONE_DISPLAY }}</a>
+      <a class="btn btn--primary btn--sm header-cta" href="{% url 'contact:contact' %}">درخواست مشاوره</a>
+    </div>
   </div>
 </header>
