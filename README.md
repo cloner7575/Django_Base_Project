@@ -2,6 +2,8 @@
 
 Copy this repository for every new Django product. Keep the layout so Cursor skills and rules stay valid.
 
+In Cursor, start with **product intake**: the agent asks brand, language, RTL/LTR, database, and theme, then writes `PRODUCT.md` before planning or coding.
+
 ## What you get
 
 - Split settings: `core.settings.development` / `test` / `production`
@@ -21,6 +23,7 @@ templates/        base, partials, components, pages
 static/           css tokens + base styles
 tests/            pytest
 .cursor/          skills, rules, hooks
+PRODUCT.md        filled after product-intake
 ```
 
 ## Setup

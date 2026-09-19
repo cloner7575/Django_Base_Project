@@ -11,6 +11,7 @@ The user has provided context about the task. Use it to guide exploration.
 
 Onboard to the current task by:
 
+- If this is a **new product** (no filled `PRODUCT.md`), stop and run `product-intake` instead of exploring
 - Exploring the codebase thoroughly (`apps/`, `core/`, templates, tests, settings)
 - Reading `starter-architecture` and `ui-ux` when the task adds apps or screens
 - Asking clarifying questions only when blocked
