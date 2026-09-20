@@ -46,8 +46,10 @@ HTMX: check `request.headers.get("HX-Request")`, return a partial on success/err
 
 ## Templates
 
-- Render fields with `components/_field.html`
-- Show `form.non_field_errors` (and follow `ui-ux`)
+- Render fields with `components/_field.html` — it already carries the label,
+  required marker, help text, and the error ids Django's `aria-describedby`
+  points at
+- Show non-field errors with `partials/_form_errors.html` (`role="alert"`)
 - Partials (`_form.html`) for HTMX responses
 - Include `{% csrf_token %}` on POST forms
 - Use `hx-indicator` and `hx-disabled-elt="this"` for HTMX submits

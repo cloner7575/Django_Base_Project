@@ -46,6 +46,47 @@ Persist Pro Max with `--persist` only if the user wants a lasting design-system 
 
 Persian cream shops: do **not** freestyle from Pro Max — follow `persian-shop-playbook/design.md` (and project `design.md`).
 
+## What the starter already ships
+
+The shell is a finished design system, not a blank slate. Extend it; do not
+rebuild it next to itself.
+
+**Direction** (from Pro Max, `developer tool · technical · minimal`): cool
+slate neutrals, emerald accent, IBM Plex Sans with JetBrains Mono for anything
+technical. Both fonts are self-hosted variable woff2 in `static/fonts/`.
+
+| Layer | Where | Notes |
+|-------|-------|-------|
+| Tokens | `static/css/tokens.css` | Type scale, space (4px base), radii, shadows, motion, layout, light + dark colour roles |
+| Components | `static/css/base.css` | No raw colours allowed — a test enforces it |
+| Icons | `static/img/icons.svg` + `components/_icon.html` | Lucide geometry, `currentColor`, decorative by default |
+| Buttons | `components/_button.html` | `variant` primary/secondary/ghost/danger, `size="sm"`, `full=True` |
+| Fields | `components/_field.html` | Label, required marker, help text, errors, `aria-*` from Django |
+
+Class inventory in `base.css`: `.container` `.stack` `.cluster` `.grid-auto`
+`.card` `.card--interactive` `.panel` `.badge` `.hero` `.eyebrow` `.lede`
+`.section-title` `.status` `.steps` `.messages` `.form-errors` `.auth-card`
+`.error-page` `.htmx-indicator` `.visually-hidden` `.ltr` `.icon--flip`.
+
+Do not pass `block=...` to `_button.html`: Django binds `block` to the current
+BlockNode inside every `{% block %}`, so the flag is named `full`.
+
+### Direction
+
+`<html dir>` comes from `TEXT_DIRECTION`, and the stylesheet already carries an
+RTL layer: tracking reset to zero, leading raised to 1.8, direction-bearing
+sprite icons mirrored, Latin fragments (`code`, `.ltr`) bidi-isolated, and
+tel/email/url/password inputs forced LTR. Keep it working:
+
+- Logical properties only — `margin-inline`, `inset-inline-start`, `text-align: start`
+- Animate with `translate: 0.2em 0`, not `transform: translateX()`, so mirroring
+  and motion do not overwrite each other
+- Mirror a new directional icon with `flip=True` on `components/_icon.html`
+- Wrap Latin values inside translated copy in `<bdi>`
+
+Persian products: the whole engineering checklist is in
+`persian-ui/rtl-engineering.md`.
+
 ## Django adapter (this starter)
 
 Pro Max often assumes Tailwind. **This repo is Django templates + `static/css`.** Do not add Tailwind/shadcn/React SPA unless asked.
@@ -98,6 +139,7 @@ Pro Max often assumes Tailwind. **This repo is Django templates + `static/css`.*
 ## Anti-patterns
 
 - Inline `style=` except true one-offs
+- Physical offsets (`left`, `padding-left`, `translateX`) — they break RTL
 - Icon-only controls without accessible name
 - Modal/drawer without focus trap + Escape
 - Bootstrap/Tailwind CDN fighting tokens

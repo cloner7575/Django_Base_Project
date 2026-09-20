@@ -26,10 +26,16 @@ amount_rial = amount_toman * 10  # when calling the gateway
 
 ```django
 {% load persian %}
-{{ product.price|toman }}           {# 185,000 تومان #}
-{{ line.line_total|toman:"" }}      {# 185,000  (no suffix) #}
+{{ product.price|toman }}              {# 185,000 تومان #}
+{{ product.price|toman|fa_digits }}    {# ۱۸۵٬۰۰۰ تومان #}
+{{ line.line_total|toman:"" }}         {# 185,000  (no suffix) #}
 {{ order.total_amount|toman }}
 ```
+
+Pick Persian or Latin digits once and use it on every price in the product.
+Prices in a column (cart, invoice, order list) line up only with
+`font-variant-numeric: tabular-nums`. Order numbers and tracking codes stay
+Latin and isolated: `<bdi>{{ order.number }}</bdi>`.
 
 Python:
 
@@ -69,9 +75,17 @@ Models subclass `apps.common.models.TimeStampedModel`. Dates shown to users → 
 
 ## UI
 
-- `fa` + RTL + Vazirmatn (`ui-ux`, `persian-locale`)
+- `fa` + RTL + self-hosted Vazirmatn → **`persian-ui`** and its
+  [rtl-engineering.md](../persian-ui/rtl-engineering.md)
 - Full cream shop look → **`persian-shop-playbook`** + its **`design.md`** (do not freestyle a SaaS palette)
-- One primary CTA per view; empty cart / empty catalog states
+- One primary CTA per view. On a PDP that is «افزودن به سبد خرید» — everything
+  else is secondary
+- Write every state: empty cart، empty catalog، ناموجود، خطای پرداخت،
+  پرداخت موفق. A shop with an undesigned empty cart is unfinished
+- Stock and variant feedback must be immediate and Persian
+  («این سایز موجود نیست»), not a silent disabled button
+- Checkout is the highest-anxiety screen: show the total, the address, and the
+  gateway you are about to send the user to
 - Seed demo data with `manage.py seed_shop` when a seed command exists
 
 ## Do not
@@ -85,6 +99,7 @@ Models subclass `apps.common.models.TimeStampedModel`. Dates shown to users → 
 ## Related
 
 - Full NightRuby-class shop + reusable UI → `persian-shop-playbook` ([design.md](../persian-shop-playbook/design.md))
+- Persian RTL UI quality bar → `persian-ui`
 - Jalali / fa locale → `persian-locale`
 - Product intake → `product-intake`
 - DRF catalog → `django-rest-framework`

@@ -14,7 +14,12 @@ You are the product UI/UX designer for this starter — not a backend dump into 
 - One h1, one primary action, visible labels, `:focus-visible`.
 - Honor `lang` and `dir` from settings (`TEXT_DIRECTION`).
 - Empty / loading / error / success on every user-facing view.
-- Reuse `components/_button.html` and `components/_field.html`.
+- Reuse `components/_button.html`, `_field.html`, and `_icon.html`; add to
+  `base.css` before inventing a page-local stylesheet.
+- `base.css` carries **no raw colours** — only `var(--color-*)` and
+  `color-mix()` on them. `tests/test_ui.py` fails the build otherwise.
+- Icons are the sprite in `static/img/icons.svg` (Lucide geometry), never
+  emoji. Add a `<symbol>` there instead of pasting inline SVG in a page.
 - Do not ship starter leftovers (Health in nav, “reusable Django base”, unfinished glow boxes).
 
 See skills: `ui-ux`, `persian-ui`, `ui-ux-pro-max`.

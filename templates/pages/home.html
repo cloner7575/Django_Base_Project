@@ -1,36 +1,125 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}{{ SITE_NAME }} · Starter{% endblock %}
+{% block title %}{{ SITE_NAME }} · {% translate "Starter" %}{% endblock %}
+{% block meta_description %}{% translate "Django starter with settings, custom user, templates, DRF, and HTMX already wired." %}{% endblock %}
 
 {% block content %}
-  <div class="stack">
+  <div class="stack stack--loose">
     <section class="hero">
-      <h1>A reusable Django base.</h1>
+      <p class="eyebrow">
+        {% include "components/_icon.html" with name="terminal" size="sm" %}
+        {% translate "Django 6.1 · Python 3.12" %}
+      </p>
+      <h1>{% translate "A Django base that starts finished." %}</h1>
       <p class="lede">
-        Settings, custom user, templates, and Cursor skills are already here.
-        Add a domain app under <code>apps/</code> and keep this layout so every new project stays consistent.
+        {% blocktranslate %}Split settings, a custom user, an accessible template shell, a versioned DRF surface, and HTMX are already wired. Add a domain app under <code>apps/</code> and keep this layout so every project stays consistent.{% endblocktranslate %}
+      </p>
+      <div class="cluster">
+        <a class="btn btn--primary" href="{% url 'api:v1:health' %}">
+          {% translate "Open the API" %}
+          {% include "components/_icon.html" with name="arrow-right" size="sm" %}
+        </a>
+        {% if user.is_authenticated %}
+          <a class="btn btn--secondary" href="{% url 'accounts:password_change' %}">{% translate "Account settings" %}</a>
+        {% else %}
+          <a class="btn btn--secondary" href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a>
+        {% endif %}
+      </div>
+      <p class="hero__meta">
+        <span>{% include "components/_icon.html" with name="check-circle" size="sm" %}{% translate "pytest + ruff in CI" %}</span>
+        <span>{% include "components/_icon.html" with name="check-circle" size="sm" %}{% translate "Light and dark themes" %}</span>
+        <span>{% include "components/_icon.html" with name="check-circle" size="sm" %}{% translate "WCAG-minded chrome" %}</span>
       </p>
     </section>
-    <section class="card-grid" aria-label="Next steps">
-      <article class="card">
-        <h2>Create an app</h2>
-        <ol>
-          <li><code>.venv/bin/python manage.py startapp shop apps/shop</code></li>
-          <li>Set <code>name = "apps.shop"</code> and a short <code>label</code> in <code>apps.py</code></li>
-          <li>Add the AppConfig to <code>INSTALLED_APPS</code></li>
-        </ol>
-      </article>
-      <article class="card">
-        <h2>Models</h2>
-        <p>Subclass <code>apps.common.models.TimeStampedModel</code>. Put domain rules on the model, not in the view.</p>
-      </article>
-      <article class="card">
-        <h2>UI</h2>
-        <p>Extend <code>templates/base.html</code>. Use tokens in <code>static/css/tokens.css</code>. Follow the <code>ui-ux</code> skill for a11y, forms, and empty states.</p>
-      </article>
+
+    <section class="stack" aria-labelledby="wired-heading">
+      <div class="section-title">
+        <h2 id="wired-heading">{% translate "What is already wired" %}</h2>
+        <p class="text-muted">{% translate "Delete what a product does not need — do not rebuild it." %}</p>
+      </div>
+      <div class="grid-auto">
+        <article class="card card--interactive">
+          <span class="card__icon">{% include "components/_icon.html" with name="package" %}</span>
+          <h3>{% translate "Apps and models" %}</h3>
+          <p>{% blocktranslate %}Domain code lives in <code>apps/&lt;name&gt;</code>. Models subclass <code>TimeStampedModel</code>; rules sit on models and QuerySets, views stay thin.{% endblocktranslate %}</p>
+        </article>
+        <article class="card card--interactive">
+          <span class="card__icon">{% include "components/_icon.html" with name="layers" %}</span>
+          <h3>{% translate "Settings per environment" %}</h3>
+          <p>{% blocktranslate %}<code>development</code>, <code>test</code>, and <code>production</code> share one base. Secrets come from the environment; production refuses to boot without them.{% endblocktranslate %}</p>
+        </article>
+        <article class="card card--interactive">
+          <span class="card__icon">{% include "components/_icon.html" with name="code" %}</span>
+          <h3>{% translate "Versioned API" %}</h3>
+          <p>{% blocktranslate %}DRF is mounted at <code>/api/v1/</code> with namespace versioning, pagination, throttling, and a single error envelope.{% endblocktranslate %}</p>
+        </article>
+        <article class="card card--interactive">
+          <span class="card__icon">{% include "components/_icon.html" with name="shield-check" %}</span>
+          <h3>{% translate "Auth and hardening" %}</h3>
+          <p>{% blocktranslate %}Login, logout, and the full password-reset flow ship as designed screens. Security headers, HSTS, and secure cookies switch on in production.{% endblocktranslate %}</p>
+        </article>
+        <article class="card card--interactive">
+          <span class="card__icon">{% include "components/_icon.html" with name="accessibility" %}</span>
+          <h3>{% translate "Accessible shell" %}</h3>
+          <p>{% blocktranslate %}Skip link, landmarks, visible focus, form errors next to fields, and designed 403 / 404 / 500 pages. Light and dark both pass contrast.{% endblocktranslate %}</p>
+        </article>
+        <article class="card card--interactive">
+          <span class="card__icon">{% include "components/_icon.html" with name="flask" %}</span>
+          <h3>{% translate "Quality gates" %}</h3>
+          <p>{% blocktranslate %}Hermetic pytest settings, ruff lint and format, migration drift checks, and <code>check --deploy</code> run on every push.{% endblocktranslate %}</p>
+        </article>
+      </div>
     </section>
-    <p>
-      {% include "components/_button.html" with text="Open admin" href="/admin/" %}
-    </p>
+
+    <section class="panel stack" aria-labelledby="health-heading">
+      <div class="section-title">
+        <h2 id="health-heading">{% translate "Service status" %}</h2>
+        <span class="badge badge--accent">{% translate "HTMX reference" %}</span>
+      </div>
+      <p class="lede">
+        {% blocktranslate %}This panel is the starter's HTMX reference: a GET that swaps a server-rendered partial, with an indicator, a real status code, and a designed error state.{% endblocktranslate %}
+      </p>
+      <div id="health-panel" class="status" role="status">
+        <span class="status__dot" aria-hidden="true"></span>
+        <div class="status__body">
+          <p class="status__headline">{% translate "Status not checked yet." %}</p>
+          <p class="text-muted">{% translate "Run the check to query the database connection." %}</p>
+        </div>
+      </div>
+      <div class="cluster">
+        <button class="btn btn--primary"
+                type="button"
+                hx-get="{% url 'common:health_panel' %}"
+                hx-target="#health-panel"
+                hx-swap="outerHTML"
+                hx-indicator="#health-indicator"
+                hx-disabled-elt="this">
+          {% translate "Run health check" %}
+        </button>
+        <span id="health-indicator" class="htmx-indicator" role="status">{% translate "Checking…" %}</span>
+      </div>
+    </section>
+
+    <section class="stack" aria-labelledby="start-heading">
+      <div class="section-title">
+        <h2 id="start-heading">{% translate "Start a domain app" %}</h2>
+      </div>
+      <div class="grid-auto">
+        <article class="card">
+          <h3>{% translate "Three commands" %}</h3>
+          <ol class="steps">
+            <li><code>.venv/bin/python manage.py startapp shop apps/shop</code></li>
+            <li>{% blocktranslate %}Set <code>name = "apps.shop"</code> and a short <code>label</code> in <code>apps.py</code>{% endblocktranslate %}</li>
+            <li>{% blocktranslate %}Register the AppConfig in <code>core/settings/base.py</code>{% endblocktranslate %}</li>
+          </ol>
+        </article>
+        <article class="card">
+          <h3>{% translate "Make it yours" %}</h3>
+          <p>{% blocktranslate %}Restyle from <code>static/css/tokens.css</code> first: colors, type scale, spacing, radii, and elevation all resolve from there, in both themes.{% endblocktranslate %}</p>
+          <p>{% blocktranslate %}Persian products swap the font tokens for Vazirmatn and follow the <code>persian-ui</code> skill.{% endblocktranslate %}</p>
+        </article>
+      </div>
+    </section>
   </div>
 {% endblock %}

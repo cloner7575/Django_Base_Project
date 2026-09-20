@@ -7,4 +7,5 @@ app_name = "common"
 urlpatterns = [
     path("", views.home, name="home"),
     path("health/", views.health, name="health"),
+    path("health/panel/", views.health_panel, name="health_panel"),
 ]

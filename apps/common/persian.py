@@ -14,6 +14,19 @@ def currency_label() -> str:
     return getattr(settings, "CURRENCY_LABEL", "تومان")
 
 
+def to_persian_digits(value: object, *, separators: bool = True) -> str:
+    """Rewrite ASCII digits as Persian ones (۰-۹) for display only.
+
+    `separators` also swaps the thousands comma for the Arabic separator ٬,
+    which is what a grouped Persian number looks like. Never feed the result
+    back into `int()` — this is a presentation layer.
+    """
+    text = str(value).translate(_PERSIAN_DIGITS)
+    if separators:
+        text = text.replace(",", "٬")
+    return text
+
+
 def format_int_grouped(value: int | str, *, persian_digits: bool = False) -> str:
     """Format an integer with thousand separators (e.g. 185000 → 185,000)."""
     try:
@@ -22,7 +35,7 @@ def format_int_grouped(value: int | str, *, persian_digits: bool = False) -> str
         return str(value)
     grouped = f"{number:,}"
     if persian_digits:
-        grouped = grouped.translate(_PERSIAN_DIGITS).replace(",", "٬")
+        grouped = to_persian_digits(grouped)
     return grouped
 
 
@@ -49,13 +62,20 @@ def format_toman(
 def to_jalali(
     value: date | datetime | None,
 ) -> jdatetime.date | jdatetime.datetime | None:
+    """Convert to Jalali for display, with Persian month and weekday names.
+
+    Without the locale, `%B` renders "Farvardin" and `%A` renders "Friday".
+    """
     if value is None:
         return None
     if isinstance(value, datetime):
         if timezone.is_aware(value):
             value = timezone.localtime(value)
-        return jdatetime.datetime.fromgregorian(datetime=value)
-    return jdatetime.date.fromgregorian(date=value)
+        return jdatetime.datetime.fromgregorian(
+            datetime=value,
+            locale=jdatetime.FA_LOCALE,
+        )
+    return jdatetime.date.fromgregorian(date=value, locale=jdatetime.FA_LOCALE)
 
 
 def format_jalali(
@@ -70,7 +90,7 @@ def format_jalali(
         return ""
     text = jalali.strftime(fmt)
     if persian_digits:
-        text = text.translate(_PERSIAN_DIGITS)
+        text = to_persian_digits(text, separators=False)
     return text
 
 

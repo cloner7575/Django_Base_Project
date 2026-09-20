@@ -1,5 +1,40 @@
+{% load i18n %}
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <p>{{ SITE_NAME }} starter. Copy this repo, then add domain apps under <code>apps/</code>.</p>
+    <div class="site-footer__brand">
+      <a class="brand" href="{% url 'common:home' %}">
+        <span class="brand__mark" aria-hidden="true">{% include "components/_icon.html" with name="zap" %}</span>
+        <span>{{ SITE_NAME }}</span>
+      </a>
+      <p>{% blocktranslate %}Django starter with split settings, a custom user, an accessible template shell, a versioned API, and HTMX.{% endblocktranslate %}</p>
+    </div>
+
+    <nav aria-labelledby="footer-app">
+      <h2 id="footer-app">{% translate "Application" %}</h2>
+      <ul>
+        <li><a href="{% url 'common:home' %}">{% translate "Overview" %}</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'accounts:password_change' %}">{% translate "Change password" %}</a></li>
+        {% else %}
+          <li><a href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a></li>
+          <li><a href="{% url 'accounts:password_reset' %}">{% translate "Reset password" %}</a></li>
+        {% endif %}
+        {% if user.is_staff %}<li><a href="{% url 'admin:index' %}">{% translate "Admin" %}</a></li>{% endif %}
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="footer-machine">
+      <h2 id="footer-machine">{% translate "Machine endpoints" %}</h2>
+      <ul>
+        <li><a href="{% url 'common:health' %}"><code>{% url 'common:health' %}</code></a></li>
+        <li><a href="{% url 'api:v1:health' %}"><code>{% url 'api:v1:health' %}</code></a></li>
+        <li><a href="{% url 'api:v1:me' %}"><code>{% url 'api:v1:me' %}</code></a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="site-footer__bar">
+    <p>{% blocktranslate %}Built on Django 6.1 · Python 3.12{% endblocktranslate %}</p>
+    <p>{% translate "Replace this footer with the product's real navigation." %}</p>
   </div>
 </footer>

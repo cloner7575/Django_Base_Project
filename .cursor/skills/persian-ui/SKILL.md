@@ -1,104 +1,136 @@
 ---
 name: persian-ui
 description: >-
-  Complete, production-grade Persian (fa) RTL UI/UX for Iranian websites on this
-  Django starter — typography, chrome, forms, marketing pages, trust patterns,
-  and a hard quality bar against skeleton designs. Use when LANGUAGE_CODE is fa,
-  PRODUCT.md is Persian/RTL, building سایت شرکتی، لندینگ، فرم تماس، گالری، بلاگ،
-  or when the user says طراحی فارسی، UI فارسی، RTL، یا طراحی سایت ایرانی.
+  Production-grade Persian (fa) RTL UI/UX on this Django starter — Vazirmatn
+  typography, direction and bidi engineering, Persian numerals, Iranian chrome
+  and trust patterns, forms, and a hard quality bar against translated
+  skeletons. Use when LANGUAGE_CODE is fa, PRODUCT.md is Persian/RTL, or the
+  user asks for طراحی فارسی، UI فارسی، RTL، سایت شرکتی، لندینگ، فرم تماس،
+  گالری، بلاگ، یا طراحی سایت ایرانی.
 ---
 
 # Persian UI (fa / RTL)
 
-Ship **finished Iranian web UI**, not a translated English skeleton. Pair with `ui-ux` (Django tokens/templates) and `persian-locale` (Jalali). Cream shops still follow `persian-shop-playbook/design.md`.
+Ship a site an Iranian visitor reads as **native**, not as an English starter
+with Persian words in it. Two failure modes to design against:
 
-## Mandatory workflow (every fa screen)
+1. **A translated skeleton** — starter layout, Latin fonts, English nav leftovers.
+2. **A shell with no substance** — gradient hero, two buttons, empty grey boxes.
 
-1. Read `PRODUCT.md` (brand, audience, mood).
-2. Run Pro Max for palette/mood, then **override Latin-only fonts**:
+Pair with `ui-ux` (tokens, components, a11y). Mechanics — fonts, direction,
+numerals, bidi, forms — live in **[rtl-engineering.md](rtl-engineering.md)**.
+Page recipes live in **[corporate-sites.md](corporate-sites.md)**. Cream shops
+follow `persian-shop-playbook/design.md` instead of freestyling.
+
+## Workflow
+
+1. **Read `PRODUCT.md`** — brand, audience, city, mood. No `PRODUCT.md` yet →
+   run `product-intake` first.
+2. **Switch the product to fa** (`DJANGO_LANGUAGE_CODE=fa`,
+   `DJANGO_TEXT_DIRECTION=rtl`, `DJANGO_TIME_ZONE=Asia/Tehran`) and
+   **replace the font** with Vazirmatn before judging any screen — Latin type
+   makes every Persian layout look wrong.
+3. **Direction** from Pro Max, then override its Latin display fonts:
    ```bash
-   python3 .cursor/skills/ui-ux-pro-max/scripts/search.py "<industry> <mood> persian rtl" --design-system -p "$SITE_NAME"
+   python3 .cursor/skills/ui-ux-pro-max/scripts/search.py "<industry> <mood>" --design-system -p "$SITE_NAME"
    ```
-3. Map colors into `static/css/tokens.css`. Set `--font-sans` / `--font-display` to **Vazirmatn, Estedad, or another Persian-capable face** — never Orbitron / Inter / Roboto as primary UI fonts.
-4. Build **full page compositions** (header → hero → sections → footer). Do not stop at a headline + two buttons.
-5. Pass the [Definition of done](#definition-of-done) before claiming finished.
-6. For corporate/marketing detail patterns, read [corporate-sites.md](corporate-sites.md).
+4. **Map into `static/css/tokens.css`** — colours, type scale, spacing. Never
+   raw hex in `base.css`.
+5. **Compose whole pages** — header → hero → sections that each do one job →
+   footer. Then pass the [definition of done](#definition-of-done).
 
-## Hard rules — Persian / RTL
+## Hard rules
 
 | Topic | Rule |
 |-------|------|
-| Direction | `dir="{{ TEXT_DIRECTION }}"` from settings. Logical CSS: `margin-inline`, `padding-inline`, `inset-inline`, `text-align: start` |
-| Copy | All user-facing strings in Persian (nav, skip link, buttons, empty states, errors, `aria-label`) |
-| Phone / numbers | `dir="ltr"` on tel links and numeric inputs; display can use Persian digits |
-| Dates | Jalali via `persian-locale` — no میلادی for end users |
-| WhatsApp / call | Sticky or always-visible contact path on marketing sites (tel + wa.me) |
-| Forms | Visible Persian labels; errors next to fields; success message in Persian |
-| Admin | Persian `verbose_name`s when product is fa-first |
+| Direction | `dir="{{ TEXT_DIRECTION }}"` from settings, never hardcoded. Logical CSS only: `margin-inline`, `inset-inline-start`, `text-align: start` |
+| Type | Vazirmatn (Estedad for display), self-hosted under `static/fonts/`. Two families maximum |
+| Assets | **Self-host everything.** Google Fonts, jsDelivr and unpkg are slow or unreachable from Iran — a CDN dependency is a blank page for your user |
+| Copy | Every user-facing string in Persian: nav, buttons, skip link, empty states, errors, `aria-label`, `<title>`, meta description |
+| نیم‌فاصله | می‌شود، کتاب‌ها، برنامه‌ریزی — ZWNJ is a spelling requirement, not a nicety |
+| Punctuation | `،` `؛` `؟` «گیومه» `٪`. No ASCII commas or straight quotes in Persian sentences |
+| Numerals | Persian digits in prose and prices; Latin + `dir="ltr"` for phones, codes and inputs |
+| Dates | Jalali only for end users (`{{ dt|jalali }}`) — see `persian-locale` |
+| Money | تومان with thousand separators (`{{ price|toman }}`) — see `persian-ecommerce` |
+| Contact | Phone reachable in one tap from every page; WhatsApp deep link; Instagram is usually the main social channel in Iran |
+| Maps | Neshan or a static image before Google Maps embeds |
+| Trust | Commercial sites: نماد اعتماد الکترونیکی (enamad) and ساماندهی placeholders in the footer, with real links once the client has them |
+| Forms | Visible Persian labels, `inputmode`/`autocomplete` set, errors next to fields, Persian success message |
+| Admin | Persian `verbose_name` / `verbose_name_plural` when the product is fa-first |
 
-## Visual quality bar (reject if any fail)
+## Design direction
 
-**Fail / rewrite immediately when you see:**
+Iranian users skim on mobile, on an unreliable connection, and decide in the
+first viewport whether the business is real. So:
 
-- Starter leftovers: “A reusable Django base”, English “Home/Admin/Health” nav, Latin decorative words as the hero (“NEON”, “OPEN”, “LUXURY”)
-- Hero that is only gradient + text with no craft (no real photo treatment, no patterned atmosphere, no brand mark system)
-- Empty grey boxes as “gallery” without intentional empty-state design
-- Thin footer: one sentence, no address/phone/links
-- Pro Max Latin display fonts left as primary type
-- Pages that look done on desktop but collapse into an unreadable stack on 375px
-- Purple-on-white / cream-serif-terracotta AI clichés unless the product asked for them (see user frontend rules)
+- **Brand first.** The name (as a wordmark, not a serif fallback) is the
+  hero-level signal. Remove the nav — the page should still be identifiable.
+- **One conversion path.** سفارش، مشاوره، تماس، خرید — pick one and repeat it.
+- **Evidence over adjectives.** Real photos of the workshop/clinic/product beat
+  «کیفیت بی‌نظیر». No invented «۵۰۰+ پروژه» or «۹۸٪ رضایت».
+- **Mobile is the design, desktop is the adaptation.** Most Iranian traffic is
+  mobile; a sticky call bar is normal, a 1400px hero is not the starting point.
+- **Weight over decoration.** Persian text at heavier weights and generous
+  leading reads better than thin type with glow effects.
 
-**Pass when:**
+Per-industry atmospheres and page-by-page recipes: [corporate-sites.md](corporate-sites.md).
 
-- Brand name is the hero-level signal on marketing first viewport
-- One clear primary CTA in Persian matching the business goal (سفارش، مشاوره، تماس، …)
-- Sections each have one job, real Persian copy, and spacing from tokens
-- Header + footer feel like a real Iranian business site (phone, WhatsApp, city)
-- Motion is intentional (2–3 cues) and respects `prefers-reduced-motion`
-- Empty/loading/error/success states are designed, not blank
+## Quality bar
 
-## Typography
+**Reject and rewrite when you see:**
 
-- Body: Vazirmatn (or Estedad) — self-host under `static/fonts/` when possible; CDN ok for MVP
-- Headings: same family at heavier weights, or Estedad for display
-- Line-height ~1.7 for Persian body; avoid cramped Latin metrics
-- Do not mix 3+ Persian fonts
+- Starter leftovers: English `Home / Admin / Health` nav, "A reusable Django base"
+- Latin decorative words as the hero identity («NEON», «LUXURY») for a Persian brand
+- Pro Max Latin display fonts still set as the UI font
+- A hero that is only a gradient and text — no photography, no crafted brand plane
+- Empty grey boxes labelled «گالری», or an undesigned empty state
+- Thin footer: one sentence, no phone, no address, no links
+- Desktop-only polish that collapses into an unreadable stack at 375px
+- Purple-on-white / cream-serif-terracotta AI clichés nobody asked for
 
-## Chrome patterns (marketing / corporate)
+**Accept when:**
 
-**Header:** brand · primary nav (خانه، خدمات/نمونه کار، …) · phone (`dir="ltr"`) · optional CTA button  
-**Footer:** brand blurb · tel · WhatsApp · address/city · same nav links  
-**Mobile:** readable tap targets; consider bottom-safe padding if sticky call bar exists
-
-## Forms (Iranian users)
-
-- Labels above fields (not placeholder-only)
-- Phone field: `inputmode="tel"`, `autocomplete="tel"`, `dir="ltr"`
-- Submit button states the outcome: «ارسال درخواست مشاوره» not «Submit»
-- After success: clear Persian confirmation + how you will follow up
+- Persian text is set in a Persian face, at ~1.8 leading, with zero tracking
+- Each section has one job, real Persian copy, and spacing from tokens
+- Header and footer look like a real Iranian business site (تلفن، واتساپ، شهر، اینستاگرام)
+- Empty, loading, error and success states are all written in Persian
+- Motion is 2–3 intentional cues and respects `prefers-reduced-motion`
+- The page works with images blocked and on a slow connection
 
 ## Definition of done
 
-Before marking a fa UI task complete:
+```bash
+# 1. No English strings left in the templates you touched
+rg -n "[A-Za-z]{4,}" templates/ --glob '!*.txt' | rg -v "href|src|class|hx-|aria-|csrf|static|url|block|endblock"
 
-- [ ] No English UI strings on public pages (except intentional brand Latin if the brand uses it)
-- [ ] Tokens updated; pages use token colors/spacing only
-- [ ] Header + footer complete for the product type
-- [ ] First viewport passes brand test (remove nav → still recognizable)
-- [ ] Empty states written in Persian
-- [ ] 375 / 768 / 1024 checked mentally or in browser
-- [ ] `ui-ux` a11y rules still hold (skip link, focus, labels)
+# 2. Renders and stays green
+DJANGO_LANGUAGE_CODE=fa DJANGO_TEXT_DIRECTION=rtl .venv/bin/python manage.py runserver
+.venv/bin/pytest && .venv/bin/ruff check .
+```
+
+- [ ] Font is Vazirmatn, self-hosted, preloaded; no `fonts.googleapis.com` request
+- [ ] `dir` comes from settings; no hardcoded `rtl` and no `translateX` in new CSS
+- [ ] نیم‌فاصله and Persian punctuation correct in all copy you wrote
+- [ ] Dates Jalali, prices تومان with separators, phones `<bdi dir="ltr">`
+- [ ] Header + footer complete for this product type, contact one tap away
+- [ ] Empty / loading / error / success states written in Persian
+- [ ] 375 / 768 / 1024 checked **in RTL**, no horizontal scroll
+- [ ] `ui-ux` a11y bar still holds: skip link, landmarks, labels, `:focus-visible`
+- [ ] Brand test passes: hide the nav, the first viewport still says who this is
 
 ## Do not
 
-- Ship the Django starter home template adapted with one Persian headline
-- Use emoji as icons
-- Treat Pro Max Immersive/3D recommendations as a license for unfinished “glow boxes”
-- Hardcode `dir="rtl"` in HTML when settings provide `TEXT_DIRECTION`
+- Adapt the starter home template with one Persian headline and call it a design
+- Leave `Inter` / `Roboto` / `Orbitron` as the primary face because Pro Max said so
+- Use emoji as icons — the sprite plus `components/_icon.html`
+- Hardcode `dir="rtl"`, or add `text-transform: uppercase` to Persian text
+- Load fonts, icons or JS from a foreign CDN
+- Invent statistics, certificates, or client logos
 
 ## Related
 
-- Visual system + Django adapter → `ui-ux` + `ui-ux-pro-max`
-- Jalali / numbers helpers → `persian-locale`
-- تومان / shop → `persian-ecommerce` / `persian-shop-playbook`
-- Corporate page recipes → [corporate-sites.md](corporate-sites.md)
+- Direction, fonts, numerals, bidi, forms → **[rtl-engineering.md](rtl-engineering.md)**
+- Page recipes for corporate/marketing → **[corporate-sites.md](corporate-sites.md)**
+- Tokens, components, a11y → `ui-ux`; design intelligence → `ui-ux-pro-max`
+- Jalali and locale → `persian-locale` · تومان and shops → `persian-ecommerce`
+- Full NightRuby-class shop → `persian-shop-playbook`

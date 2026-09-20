@@ -13,3 +13,6 @@ select = ["E", "F", "I", "UP", "B"]
 [format]
 quote-style = "preserve"
 indent-style = "space"
+# Migrations are generated artifacts: reformatting them fights makemigrations
+# on every future run and adds noise to reviews.
+exclude = ["**/migrations/*.py"]

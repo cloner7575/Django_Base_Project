@@ -1,67 +1,87 @@
 ---
 name: django-templates
-description: Django template patterns including inheritance, partials, tags, and filters. Use when working with templates, creating reusable components, or organizing template structure.
+description: Django template patterns including inheritance, partials, components, error pages, context processors, tags, and filters. Use when working with templates, creating reusable components, or organizing template structure.
 ---
 
 # Django Template Patterns
 
-## Template Organization
-
-This starter already has:
+## What the starter already provides
 
 ```
 templates/
-├── base.html
-├── partials/_header.html
-├── partials/_footer.html
-├── partials/_messages.html
-├── components/_button.html
-├── components/_field.html
-├── pages/home.html
-└── <app>/
-    ├── list.html
-    ├── detail.html
-    ├── _list.html
-    └── _form.html
+├── base.html                  shell: lang/dir, skip link, htmx, blocks
+├── 403.html 403_csrf.html 404.html 500.html
+├── partials/_header.html _footer.html _messages.html
+├── partials/_form_errors.html   non-field errors, role="alert"
+├── partials/_health.html        HTMX fragment reference
+├── components/_button.html _field.html _icon.html
+├── registration/                login, password change, password reset
+└── pages/home.html
 ```
 
-- Full pages extend `base.html`
-- HTMX partials: `_list.html` (underscore prefix)
-- Shared chrome: `partials/`; reusable UI: `components/`
-- Follow the `ui-ux` skill for a11y and tokens
+Blocks in `base.html`: `title`, `meta_description`, `body_class`, `content`,
+`extra_css`, `extra_js`. Use `{{ block.super }}` when appending.
 
-## Inheritance
+`500.html` is deliberately standalone: Django renders it with **no context
+processors and no request**, so it must not depend on `SITE_NAME`, `user`, or
+anything from the database. Keep it that way.
 
-1. `base.html` — HTML skeleton, navbar, footer
-2. Optional section templates
-3. Page templates that extend base or a section
+## Conventions
 
-Standard blocks: `title`, `content`, `extra_css`, `extra_js`. Use `{{ block.super }}` when appending.
+- Full pages extend `base.html` (or a section template that does)
+- HTMX fragments are `_name.html` and extend nothing
+- Shared chrome in `partials/`, reusable UI in `components/`
+- App templates in `templates/<app>/` — `list.html`, `detail.html`, `_form.html`
+- `{% url %}` always; never a hardcoded path
+- `{% empty %}` on every loop that can be empty
+- `{% include ... with x=y only %}` when the partial should not inherit context
 
-## Partials and Components
+## Forms
 
-```django
-{% include "components/_button.html" with text="Submit" variant="primary" %}
-{% include "_card.html" with title=post.title only %}
-```
+Render fields through `components/_field.html`. Django sets `aria-invalid` and
+`aria-describedby` on the widget pointing at `<auto_id>_helptext` and
+`<auto_id>_error`; the component uses exactly those ids, so do not rename them.
+Pair it with `partials/_form_errors.html` for `non_field_errors`.
 
-## Custom Tags and Filters
+## Components
 
-- `simple_tag` — return a string
-- `inclusion_tag` — render a fragment
-- Filters — transform a single value
+`_button.html` takes `text`, optional `href`, `variant`, `size`, `icon`, and
+`full` (full width). The full-width flag is **not** called `block`: Django
+binds `block` to the enclosing BlockNode, so `{% if block %}` is always true
+inside a page.
 
-Put them in `<app>/templatetags/<app>_tags.py` (include `__init__.py`).
+`_icon.html` pulls a `<symbol>` from `static/img/icons.svg`; pass `label` only
+when the icon carries meaning that no nearby text repeats.
 
-## Anti-Patterns
+## Context processors
 
-- Complex conditionals in templates — move to views or model methods (`user.can_moderate`)
-- Hardcoded paths — use `{% url 'posts:detail' pk=post.pk %}`
-- Inline styles — use CSS classes
-- Loops without `{% empty %}`
+`apps.common.context_processors.site` provides `SITE_NAME` and
+`TEXT_DIRECTION`. Add to it only for values every page needs — a context
+processor runs on every render, so it must never query the database per
+request without caching.
+
+## Custom tags and filters
+
+Put them in `apps/<app>/templatetags/<name>.py` with an `__init__.py`:
+
+- `simple_tag` returns a string
+- `inclusion_tag` renders a fragment
+- filters transform one value (see `apps/common/templatetags/persian.py`)
+
+## Translatable copy
+
+`USE_I18N` is on and `LocaleMiddleware` is installed. Wrap user-visible strings
+in `{% translate %}` / `{% blocktranslate %}` so a product can localise without
+re-writing templates. See the `django-i18n` skill.
+
+## Anti-patterns
+
+- Business conditionals in templates — expose a model method or property
+- Inline styles instead of classes and tokens
+- A partial that extends `base.html`
+- Copy-pasted markup that should be a component
+- Query logic in the template (`{% for x in obj.related.all %}` without prefetch)
 
 ## Integration
 
-- `htmx-patterns` for dynamic partials
-- `django-forms` for form rendering
-- `pytest-django-patterns` for template tests
+`ui-ux`, `htmx-patterns`, `django-forms`, `django-i18n`, `pytest-django-patterns`

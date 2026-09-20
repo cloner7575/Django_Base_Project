@@ -1,10 +1,33 @@
+{% load i18n %}
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand" href="{% url 'common:home' %}">{{ SITE_NAME }}</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="{% url 'common:home' %}" {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>Home</a>
-      <a href="{% url 'admin:index' %}">Admin</a>
-      <a href="{% url 'common:health' %}">Health</a>
+    <a class="brand" href="{% url 'common:home' %}">
+      <span class="brand__mark" aria-hidden="true">{% include "components/_icon.html" with name="zap" %}</span>
+      <span>{{ SITE_NAME }}</span>
+    </a>
+    <nav class="nav" aria-label="{% translate 'Primary' %}">
+      <a class="nav__link" href="{% url 'common:home' %}"
+         {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>{% translate "Overview" %}</a>
+      {% if user.is_staff %}
+        <a class="nav__link" href="{% url 'admin:index' %}">
+          {% include "components/_icon.html" with name="sliders" size="sm" %}{% translate "Admin" %}
+        </a>
+      {% endif %}
+      {% if user.is_authenticated %}
+        <a class="nav__link" href="{% url 'accounts:password_change' %}"
+           {% if request.resolver_match.url_name == "password_change" %}aria-current="page"{% endif %}>{% translate "Password" %}</a>
+        <form class="nav__form" action="{% url 'accounts:logout' %}" method="post">
+          {% csrf_token %}
+          <button class="btn btn--ghost btn--sm" type="submit">
+            {% include "components/_icon.html" with name="log-out" size="sm" %}{% translate "Sign out" %}
+          </button>
+        </form>
+      {% else %}
+        <a class="btn btn--secondary btn--sm" href="{% url 'accounts:login' %}"
+           {% if request.resolver_match.url_name == "login" %}aria-current="page"{% endif %}>
+          {% include "components/_icon.html" with name="log-in" size="sm" %}{% translate "Sign in" %}
+        </a>
+      {% endif %}
     </nav>
   </div>
 </header>

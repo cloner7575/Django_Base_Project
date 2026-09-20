@@ -12,7 +12,10 @@ Use before calling any user-facing screen “done”.
 
 ## Visual system
 
-- [ ] All colors/spacing/radii/fonts come from tokens
+- [ ] All colors/spacing/radii/fonts come from tokens (`base.css` keeps zero
+      raw colour literals — `tests/test_ui.py` checks this)
+- [ ] Icons come from `static/img/icons.svg` via `components/_icon.html`;
+      decorative ones are `aria-hidden`, meaningful ones carry `label`
 - [ ] Accent used for actions and focus — not rainbow decoration
 - [ ] Imagery or crafted atmosphere present where marketing needs it
 - [ ] Missing images have intentional placeholders
@@ -31,12 +34,21 @@ Use before calling any user-facing screen “done”.
 - [ ] 768px: layout adapts (not only stacked clones of desktop)
 - [ ] 1024px+: max width respected; hero not sparse-and-broken
 
+## Direction (any language)
+
+- [ ] New CSS uses logical properties; no `left` / `padding-left` / `translateX`
+- [ ] Directional icons mirror (sprite defaults, or `flip=True`)
+- [ ] Latin values inside translated copy are wrapped in `<bdi>` or `.ltr`
+
 ## Persian extras (if fa)
 
 - [ ] `persian-ui` definition of done passed
+- [ ] Vazirmatn self-hosted; no foreign CDN request in the network tab
 - [ ] No accidental English UI strings
-- [ ] Tel/WhatsApp reachable
-- [ ] Jalali dates where dates show
+- [ ] نیم‌فاصله and Persian punctuation correct («…»، ؟، ٪)
+- [ ] Tel/WhatsApp reachable in one tap; phone numbers not reversed
+- [ ] Jalali dates and تومان prices wherever numbers show
+- [ ] Checked at 375px **in RTL**, not only LTR
 
 ## Fail examples (rewrite)
 

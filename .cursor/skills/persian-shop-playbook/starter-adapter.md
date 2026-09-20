@@ -51,7 +51,13 @@ design.md           # project copy of playbook design.md (brand-swapped)
 
 ## Token mapping (no Tailwind)
 
-Paste [design.md](design.md) §2. Critical:
+Paste [design.md](design.md) §2 into `static/css/tokens.css`. The starter's
+`[dir="rtl"]` layer (zero tracking, 1.8 leading, mirrored icons, bidi isolation,
+LTR phone inputs) keeps working underneath — do not strip it, and do not
+re-add Latin tracking to Persian headings. Details:
+[persian-ui/rtl-engineering.md](../persian-ui/rtl-engineering.md).
+
+Critical:
 
 - `color-scheme: light` + `<meta name="color-scheme" content="light">`
 - **No** `prefers-color-scheme: dark` remapping

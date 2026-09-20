@@ -5,7 +5,15 @@ description: Django cache framework, Redis, cached_property, invalidation, and N
 
 # Django Caching
 
-Redis and a cache backend are not configured yet. Default is locmem in-process, which does not share across workers. For multi-process or Docker, use Redis.
+`CACHES` is already configured in `core/settings/base.py`: locmem by default,
+and the Redis backend as soon as `REDIS_URL` is set in the environment. Locmem
+is per-process, so it does not share between gunicorn workers — any product
+with more than one worker, or with throttling that must be enforced globally,
+needs Redis.
+
+```bash
+.venv/bin/pip install redis    # only then set REDIS_URL
+```
 
 ## When to Cache
 
@@ -13,20 +21,25 @@ Cache expensive **read** paths with a clear invalidation key. Do not cache as a 
 
 Fix the query first (`django-models`), then cache if it is still hot.
 
-## Backend Sketch (when needed)
+## Tuning the configured backend
+
+Add `KEY_PREFIX` and `TIMEOUT` to the Redis branch in `core/settings/base.py`
+when a product shares one Redis between environments:
 
 ```python
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": os.environ["REDIS_URL"],
+        "LOCATION": REDIS_URL,
         "KEY_PREFIX": "core",
         "TIMEOUT": 300,
     }
 }
 ```
 
-Never hardcode production Redis passwords in settings.
+The URL comes from the environment. Never hardcode a Redis password in
+settings, and remember `core/settings/test.py` pins locmem so the suite never
+talks to a live server.
 
 ## Patterns
 

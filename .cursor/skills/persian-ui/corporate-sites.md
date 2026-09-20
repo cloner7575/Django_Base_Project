@@ -1,82 +1,123 @@
 # Persian corporate / marketing sites
 
-Use with `persian-ui` when building سایت شرکتی، لندینگ خدمات، گالری نمونه کار، بلاگ آموزشی، فرم مشاوره.
+Page-by-page recipes for سایت شرکتی، لندینگ خدمات، گالری نمونه کار، بلاگ
+آموزشی، فرم مشاوره. Use with `persian-ui`.
 
 ## Information architecture (default)
 
 | Route | Purpose | Must include |
 |-------|---------|--------------|
 | `/` | Trust + convert | Brand hero, short proof, services or featured work, CTA to contact |
-| Services or portfolio | Evidence | Filterable list, detail with story, CTA |
-| Blog / آموزش | SEO + trust | List + Jalali dates, readable prose width |
-| Contact | Lead capture | Form + phone + WhatsApp + address |
+| خدمات / نمونه کار | Evidence | Filterable list, detail with story, CTA |
+| بلاگ / آموزش | SEO + trust | List with Jalali dates, readable prose width |
+| تماس | Lead capture | Form + phone + WhatsApp + address + working hours |
+| درباره ما | Legitimacy | Real story, team or workshop photo, city |
 
-Keep nav to 4–6 items. One primary conversion path.
+Keep nav to 4–6 items. One primary conversion path across the whole site.
 
-## Home composition (first viewport)
+## Home composition
 
-Allowed in the first viewport:
+**First viewport** — nothing else:
 
-- Brand (hero-level)
-- One headline or supporting line
-- One short sentence
+- Brand at hero level (wordmark, not a serif fallback)
+- One headline plus one supporting sentence
 - One CTA group (primary + optional secondary)
-- One dominant visual plane (photo, workshop atmosphere, or crafted brand graphic — **not** a Latin word as decoration)
+- One dominant visual plane: real photography, workshop atmosphere, or a
+  crafted brand graphic — **not** a Latin word as decoration
 
-Not in the first viewport: KPI strips, blog teasers, long service grids, address blocks, multi-card dashboards.
+Not in the first viewport: KPI strips, blog teasers, long service grids,
+address blocks, multi-card dashboards.
 
-Below the fold: services → proof/gallery → education teaser → final CTA.
+**Below the fold, in order:** خدمات → نمونه کار / گالری → چرا ما (evidence, not
+adjectives) → آموزش teaser → CTA نهایی + contact block.
 
-## Visual recipes by industry (pick one, commit)
+## Visual recipes by industry
 
 | Industry | Atmosphere | Accent direction |
 |----------|------------|------------------|
-| تابلو / نئون / چاپ | Dark workshop, controlled glow | Cyan / magenta neon — sparingly |
-| کلینیک / سلامت | Calm light surfaces | Trust blue/teal, soft borders |
-| حقوقی / B2B | Restrained light or charcoal | Single strong accent, generous whitespace |
-| آموزش | Clear hierarchy, readable cards | Warm accent, strong type scale |
+| تابلو / نئون / چاپ | Dark workshop, controlled glow | Cyan or magenta, sparingly |
+| کلینیک / سلامت / زیبایی | Calm light surfaces, soft borders | Trust blue or teal |
+| حقوقی / مالی / B2B | Restrained light or charcoal, generous whitespace | One strong accent |
+| آموزش / آموزشگاه | Clear hierarchy, readable cards | Warm accent, strong type scale |
+| ساختمان / صنعتی | Photo-led, high contrast | Industrial amber or steel |
 
-Do not blend neon cyberpunk with cream linen unless the brand asks.
+Commit to one. Do not blend neon cyberpunk with cream linen.
 
 ## Gallery / portfolio
 
-- Consistent aspect ratio (e.g. 4:5 or 3:2)
-- Title + category under image; whole tile clickable
-- Missing image: designed placeholder (gradient/pattern + icon), never a collapsed empty `<img>`
-- Detail: cover, short story, gallery, CTA «مشاوره برای پروژه مشابه»
+- One aspect ratio for every tile (4:5 or 3:2), whole tile clickable
+- Title + category under the image, never floating over it unreadably
+- Missing image → designed placeholder (gradient or pattern + sprite icon),
+  never a collapsed `<img>`
+- Detail page: cover, short story (مسئله → راه‌حل → نتیجه), gallery,
+  CTA «مشاوره برای پروژه مشابه»
+- Filters that return nothing get a written empty state and a way back
 
 ## Blog / آموزش
 
-- Excerpt on list; Jalali `time datetime`
-- Article: breadcrumb, title, lede, prose `max-width: ~40rem`
-- End with soft CTA to contact when relevant
+- List: excerpt, category, Jalali date in a `<time>` with a machine-readable
+  `datetime` (see `persian-locale`)
+- Article: breadcrumb, title, lede, prose at `max-inline-size: ~40rem`,
+  `line-height` from the RTL tokens
+- Persian prose needs `text-align: start`, never `justify` — justification in
+  Persian creates rivers because letters join
+- End with a soft CTA when it fits the topic
 
 ## Contact page
 
-Two-column on desktop (intro + form), single column on mobile.
+Two columns on desktop (intro + form), one on mobile. Always visible:
 
-Always show:
+- تلفن ثابت و موبایل as `tel:` links
+- WhatsApp deep link `https://wa.me/98…`
+- اینستاگرام — usually the most-used channel in Iran
+- آدرس + شهر, and ساعات کاری («شنبه تا چهارشنبه، ۹ تا ۱۷»)
+- Map: Neshan embed or a static image with a link out
 
-- Phone click-to-call
-- WhatsApp deep link (`https://wa.me/98…`)
-- City / address from product facts
+Form rules and the phone validator: `persian-ui/rtl-engineering.md` §5.
 
-Validate phone in the form; show field errors in Persian.
+## Sticky contact on mobile
 
-## Trust without fake stats
+Common and expected on Iranian service sites. Keep it out of the way of the
+footer and the iPhone home indicator:
 
-Prefer real facts: city, years if known, service list, sample projects.  
-Avoid invented «۵۰۰+ پروژه» / «۹۸٪ رضایت» unless the user provided numbers.
+```css
+.contact-bar {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  padding-block-end: calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: var(--color-surface);
+  border-block-start: 1px solid var(--color-border);
+}
+
+@media (min-width: 48rem) {
+  .contact-bar { display: none; }
+}
+```
+
+Add matching `padding-block-end` to `main` so the bar never covers content.
+
+## Trust without fake numbers
+
+Use what is real: city, years active if known, service list, named sample
+projects, a photo of the actual place. Commercial sites put نماد اعتماد
+الکترونیکی and ساماندهی in the footer — link them once the client supplies the
+codes, and leave a labelled placeholder until then. Never invent a certificate.
 
 ## Copy tone
 
-- Clear, professional Persian; short sentences
-- Buttons as verbs: «درخواست مشاوره»، «مشاهده نمونه کار»، «تماس تلفنی»
-- Empty: «هنوز نمونه‌ای ثبت نشده» + what to do next
+- Professional, short sentences, no marketing inflation
+- Buttons are verbs: «درخواست مشاوره»، «مشاهده نمونه کار»، «تماس تلفنی»
+- Empty state says what happened and what to do: «هنوز نمونه‌ای ثبت نشده است»
+- Error copy instructs, never blames: «شماره تماس را وارد کنید»
 
-## Self-review questions
+## Self-review
 
-1. Would this look at home next to a real Iranian business site in the same niche?
-2. Can a user call or WhatsApp within one tap from any page?
-3. Is anything still English because it was copied from the starter?
-4. Does the hero work if images fail to load?
+1. Would this sit credibly next to a real Iranian business site in the niche?
+2. Can a visitor call or WhatsApp in one tap from any page?
+3. Is anything still English because it came from the starter?
+4. Does the hero survive with images blocked?
+5. On a 375px screen, is the primary CTA reachable without pinch-zoom?

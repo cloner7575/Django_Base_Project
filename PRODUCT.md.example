@@ -24,11 +24,14 @@ Fill this during **product-intake**. The agent must not invent these values.
 
 ## Platform
 
-- Database: (`sqlite` | `postgres` | `mysql`)
-- REST API: (`no` | `drf`)
+- Database: (`sqlite` | `postgres`)
+- REST API: DRF is already wired at `/api/v1/` — list the resources it exposes,
+  or note "internal only" if the product has no public API
+- Public signup: (`no` — staff-created accounts | `yes` — needs a signup view)
 - Background jobs: (`no` | `celery`)
+- Cache / Redis: (`no` | `yes`)
 - Docker: (`no` | `yes`)
-- Auth beyond admin: (`no` | `yes`)
+- Deploy target:
 
 ## MVP
 

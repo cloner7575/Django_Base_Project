@@ -1,10 +1,32 @@
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
-
-def health(request: HttpRequest) -> JsonResponse:
-    return JsonResponse({"status": "ok"})
+from apps.common.htmx import is_htmx
+from apps.common.services import database_status
 
 
 def home(request: HttpRequest) -> HttpResponse:
     return render(request, "pages/home.html")
+
+
+def health(request: HttpRequest) -> JsonResponse:
+    """Machine-readable probe. 503 when a dependency is down."""
+    reachable, database = database_status()
+    return JsonResponse(
+        {"status": "ok" if reachable else "degraded", "database": database},
+        status=200 if reachable else 503,
+    )
+
+
+def health_panel(request: HttpRequest) -> HttpResponse:
+    """HTMX fragment for the same probe. Direct hits go back to the page."""
+    if not is_htmx(request):
+        return redirect("common:home")
+
+    reachable, database = database_status()
+    return render(
+        request,
+        "partials/_health.html",
+        {"reachable": reachable, "database": database},
+        status=200 if reachable else 503,
+    )

@@ -11,13 +11,31 @@ This repo is a **cookie-cutter Django base**. Derived projects keep the same tre
 
 | Path | Owns |
 |------|------|
-| `core/` | Project wiring only: settings, root urls, WSGI/ASGI |
-| `apps/accounts` | `User` and auth-admin. Do not put product features here |
-| `apps/common` | Abstract models, health, shell pages, context processors |
+| `core/settings/` | `base` / `development` / `test` / `production`, plus `env.py` |
+| `core/urls.py` | Root URLconf: admin, accounts, `api/`, `i18n/`, common |
+| `core/api_urls.py` | API version namespaces (`api:v1`) |
+| `apps/accounts` | `User`, auth screens, `me` endpoint. Not product features |
+| `apps/common` | `TimeStampedModel`, health, htmx helpers, DRF pagination and error envelope, context processors |
 | `apps/<name>` | One bounded context (billing, catalog, …) |
-| `templates/` | Cross-app HTML. App-specific templates: `templates/<app>/` or `<app>/templates/<app>/` |
-| `static/` | Design tokens and global CSS/JS |
+| `templates/` | Shell, error pages, `registration/`, components, partials |
+| `static/` | `css/tokens.css`, `css/base.css`, `js/app.js`, `vendor/htmx.min.js` |
+| `locale/` | Compiled translations (`LOCALE_PATHS`) |
 | `tests/` | pytest. Mirror app names: `tests/test_<app>_*.py` |
+
+Per-app file conventions:
+
+```
+apps/<app>/
+├── models.py        state and invariants
+├── selectors.py     reusable read paths (optional)
+├── services.py      multi-model / external-system writes (optional)
+├── forms.py         HTML input validation
+├── views.py         HTML orchestration
+├── urls.py          app_name = "<app>"
+├── serializers.py   API contracts
+├── api.py           API views
+└── api_urls.py      API routes, no app_name
+```
 
 Never add a second settings module outside `core/settings/`. Never introduce a top-level Django app beside `apps/`.
 
@@ -25,8 +43,16 @@ Never add a second settings module outside `core/settings/`. Never introduce a t
 
 - Shared: `core/settings/base.py`
 - Local: `core/settings/development.py` (`DEBUG=True`, default for `manage.py`)
-- Tests: `core/settings.test`
-- Prod: `core/settings.production` — fails without `DJANGO_SECRET_KEY` and `DJANGO_ALLOWED_HOSTS`
+- Tests: `core.settings.test` — hermetic; pins locale, cache, mailer, throttling
+- Prod: `core.settings.production` — refuses an insecure or short `SECRET_KEY`,
+  refuses empty `ALLOWED_HOSTS`, forces HSTS/SSL/secure cookies, and serves
+  hashed static files through WhiteNoise
+
+Already wired in the base and not worth re-inventing: WhiteNoise, `STORAGES`,
+`CACHES` (locmem, Redis when `REDIS_URL` is set), `MAILERS` (Django 6.1's
+replacement for the deprecated `EMAIL_*` settings), `LocaleMiddleware` with a
+single-language default, DRF defaults, and console logging with an `apps`
+logger.
 
 Secrets live in `.env` (see `.env.example`). Product identity (brand, locale, DB, theme) lives in `PRODUCT.md` after `product-intake`. `AUTH_USER_MODEL` is already `accounts.User` — do not switch it.
 
@@ -39,8 +65,10 @@ Secrets live in `.env` (see `.env.example`). Product identity (brand, locale, DB
 1. `AppConfig.name = "apps.catalog"` and `label = "catalog"`
 2. Append `"apps.catalog.apps.CatalogConfig"` to `INSTALLED_APPS`
 3. `path("catalog/", include("apps.catalog.urls"))` in `core/urls.py`
-4. Models subclass `TimeStampedModel`
-5. Tests under `tests/`
+4. API too? Add `apps/catalog/api_urls.py` (no `app_name`) and include it in
+   `v1_patterns` in `core/api_urls.py`
+5. Models subclass `TimeStampedModel`
+6. Tests under `tests/`, plus the migration in the same commit
 
 ## Commerce example (large shops)
 

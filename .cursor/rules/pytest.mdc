@@ -6,10 +6,14 @@ alwaysApply: false
 
 # Pytest
 
-- TDD: failing test before production code.
+- TDD: failing test before production code. Cover the sad path.
 - `@pytest.mark.django_db` (or module `pytestmark`) when touching the database.
-- Factory Boy for models once factories exist; fixtures in `conftest.py`.
+- Shared fixtures in `tests/conftest.py` (`user`, `staff_user`, `auth_client`).
+  Factory Boy is not installed — add it per product if a model needs it.
+- List views and endpoints get a `django_assert_num_queries` guard.
 - Test behavior and HTTP/status/side effects, not Django internals.
-- Run with `.venv/bin/pytest`. Settings module is `core.settings.test`.
+- Keep tests hermetic: no `.env`, no clock, no network. Settings module is
+  `core.settings.test`; Django deprecation warnings are errors.
+- Run with `.venv/bin/pytest`.
 
 See skill: `pytest-django-patterns`.

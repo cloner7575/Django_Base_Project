@@ -1,76 +1,128 @@
 ---
 name: pytest-django-patterns
-description: pytest-django testing patterns, Factory Boy, fixtures, and TDD workflow. Use when writing tests, creating test factories, or following TDD red-green-refactor cycle.
+description: pytest-django testing patterns for this starter — fixtures, TDD, query counts, HTMX and API tests, and hermetic test settings. Use when writing tests, adding fixtures, or following the red-green-refactor cycle.
 ---
 
 # pytest-django Testing Patterns
 
-## TDD (RED-GREEN-REFACTOR)
+## TDD
 
-1. **RED**: write a failing test that describes the behavior
-2. **GREEN**: write the minimum code to pass
-3. **REFACTOR**: clean up while tests stay green
+1. **RED** — a failing test that describes the behaviour
+2. **GREEN** — the minimum code that passes it
+3. **REFACTOR** — clean up with the test still green
 
-If implementing a feature or fixing a bug, write the test **before** production code.
+For a bug fix, the test reproduces the bug first. A fix with no test is a fix
+that comes back.
 
-## Database and Fixtures
+## What the starter gives you
 
-- `@pytest.mark.django_db` on tests that touch the DB, or `pytestmark = pytest.mark.django_db` at module level
-- Factory Boy for models (`factory.Sequence`, `Faker`, `SubFactory`, `post_generation` for M2M)
-- pytest fixtures for clients and auth (`client.force_login(user)`)
-- Shared fixtures in `conftest.py`
+`pytest.ini` pins `DJANGO_SETTINGS_MODULE=core.settings.test`, enables
+`--strict-markers`, and turns Django deprecation warnings into **errors** so a
+deprecated API fails the build instead of scrolling past.
 
-Keep tests in the starter's `tests/` tree:
+`core/settings/test.py` is hermetic on purpose: language, direction, timezone,
+cache, mailer, media root, and throttling are pinned so a developer's `.env`
+cannot change the result. Keep it that way — a test that only passes on your
+laptop is worse than no test.
+
+`tests/conftest.py` provides `user`, `staff_user`, and `auth_client`
+(`client.force_login`). Add shared fixtures there; keep single-use data in the
+test.
 
 ```
 tests/
 ├── conftest.py
-├── test_starter.py
+├── test_starter.py     shell, health, error pages
+├── test_accounts.py    auth screens
+├── test_api.py         DRF surface
+├── test_settings.py    settings guardrails
 └── test_<app>_<area>.py
 ```
 
-## What to Test
+## Database
 
-**Views**: status codes, authz, context, side effects, HTMX via `HTTP_HX_REQUEST="true"`.
+`@pytest.mark.django_db` per test, or `pytestmark = pytest.mark.django_db` for
+the module. Anything that renders a page which touches the ORM needs it —
+including a health endpoint.
 
-**Forms**: valid/invalid data, `clean_*`, save vs update with `instance=`.
+## Patterns worth copying
 
-**Models**: methods, custom QuerySets, constraints.
+Query counts on every list view and list endpoint:
 
-**Tasks**: mock I/O, test logic and idempotency, do not require a live worker.
+```python
+def test_list_is_not_n_plus_one(client, django_assert_num_queries, posts):
+    with django_assert_num_queries(3):
+        client.get(reverse("blog:list"))
+```
 
-## Patterns
+HTMX fragments — modern header syntax:
+
+```python
+response = client.get(url, headers={"HX-Request": "true"})
+assert "<html" not in response.content.decode()
+```
+
+API, through the namespaced reverse:
+
+```python
+response = auth_client.patch(
+    reverse("api:v1:me"),
+    data={"email": "taken@example.com"},
+    content_type="application/json",
+)
+assert response.status_code == 400
+assert response.json()["code"] == "invalid"
+```
+
+Parametrise the sad paths:
 
 ```python
 @pytest.mark.parametrize(("payload", "status"), [({}, 400), ({"title": "x"}, 201)])
-def test_create(client, payload, status):
-    response = client.post("/api/posts/", payload)
-    assert response.status_code == status
+def test_create(auth_client, payload, status): ...
 ```
 
-- `mocker.patch()` for HTTP, email, filesystem
-- `refresh_from_db()` after updates
-- `CaptureQueriesContext` when asserting query counts
-- Do not mock your own domain code; do not re-test Django internals
+Deferred side effects:
+
+```python
+with django_capture_on_commit_callbacks(execute=True):
+    place_order(user=user, cart=cart)
+assert len(mail.outbox) == 1
+```
+
+## What to test
+
+- **Views**: status code, authorization, redirect target, side effect
+- **Forms**: invalid input, `clean_*`, the error the user actually sees
+- **Models / QuerySets**: methods, constraints, state transitions
+- **Services**: database state plus the side effect, via `on_commit` capture
+- **API**: anonymous access, ownership scoping, validation error shape
+- **Tasks**: logic and idempotency with I/O mocked, never a live worker
+
+Test behaviour, not Django internals. Do not mock your own domain code.
+
+## Factories
+
+Factory Boy is not installed in the base. Plain fixtures are enough for a
+starter; add `factory-boy` per product once a model needs more than three
+fields to build, and put factories in `tests/factories.py`.
 
 ## Commands
 
 ```bash
 .venv/bin/pytest
 .venv/bin/pytest -x --lf
-.venv/bin/pytest -k "test_name"
-.venv/bin/pytest tests/apps/posts/
+.venv/bin/pytest -k "health"
 ```
-
-Settings: `DJANGO_SETTINGS_MODULE` is `core.settings.test` (see `pytest.ini`).
 
 ## Pitfalls
 
-- Forgetting `@pytest.mark.django_db`
-- Building models by hand instead of factories once factories exist
-- Testing implementation instead of behavior
-- Writing tests after the fact and missing edge cases
+- Missing `django_db` (the error says so — read it)
+- Asserting on rendered HTML strings that change with every design tweak
+- Tests that depend on `.env`, the clock, or network access
+- One test that asserts fifteen things
+- Writing tests after the fact and only covering the happy path
 
 ## Integration
 
-- `systematic-debugging`, `django-models`, `django-forms`, `celery-patterns`, `django-rest-framework`
+`definition-of-done`, `systematic-debugging`, `django-performance`,
+`django-rest-framework`, `htmx-patterns`

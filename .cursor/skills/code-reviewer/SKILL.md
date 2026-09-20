@@ -55,13 +55,34 @@ def post_list(request: HttpRequest) -> HttpResponse:
 - Never silent `except Exception: pass`
 - Log with context; `messages.error` or API error body
 
+### API (DRF)
+
+- Route reachable as `api:v1:<name>`; no second error shape next to
+  `apps.common.api.api_exception_handler`
+- `get_queryset()` scoped to `request.user` and optimised
+- `read_only_fields` covers ownership and timestamps
+- Public endpoints are deliberate, not an `AllowAny` left over from debugging
+
+### Migrations
+
+- Model change ships with its migration in the same commit
+- `makemigrations --check --dry-run` is clean
+- Data migrations use `apps.get_model()` and declare a reverse
+
 ### Celery (when present)
 
 - Idempotent; pass IDs; retries with backoff; logged lifecycle
 
+### i18n
+
+- User-visible strings wrapped in `{% translate %}` / `gettext`
+- `gettext_lazy` at module level, `gettext` per request
+
 ### Tests
 
-- `@pytest.mark.django_db` when needed; factories; behavior not internals
+- `@pytest.mark.django_db` when needed; behaviour not internals
+- List views and endpoints carry a query-count assertion
+- The sad path is covered, not only the happy one
 
 ### UI / UX (user-facing HTML)
 
@@ -79,8 +100,13 @@ def post_list(request: HttpRequest) -> HttpResponse:
 ## Process
 
 ```bash
-.venv/bin/ruff check .
 git diff
+.venv/bin/ruff check .
+.venv/bin/pytest
+.venv/bin/python manage.py makemigrations --check --dry-run
 ```
+
+Run them. A review that reports "looks good" without executing the suite is an
+opinion, not a review.
 
 Do not rewrite unrelated code. Cite `starter-architecture`, `ui-ux`, `persian-ui`, `django-models`, `django-forms`, `htmx-patterns`, and `pytest-django-patterns` when relevant.

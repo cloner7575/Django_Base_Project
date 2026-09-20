@@ -5,7 +5,18 @@ description: Celery task patterns including task definition, retry strategies, p
 
 # Celery Patterns for Django
 
-Celery is not installed yet. When adding it, use the project package `core` as the Celery app (`celery -A core`), not a `config` package.
+Celery is intentionally **not** installed in the base — an unused broker is a
+dependency, a deploy step, and a failure mode in every derived product. Add it
+only when work genuinely must leave the request cycle.
+
+```bash
+.venv/bin/pip install "celery[redis]" redis   # then add both to requirements.txt
+```
+
+Wire it as `core/celery.py` with `celery -A core`, set `CELERY_BROKER_URL` from
+the environment, and set `CELERY_TASK_ALWAYS_EAGER = True` in
+`core/settings/test.py` so the suite stays hermetic. Never create a parallel
+`config` package for it.
 
 ## Core Rules
 

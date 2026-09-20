@@ -18,6 +18,27 @@ class User(AbstractUser):
 
 Never switch to `django.contrib.auth.models.User` in a derived project.
 
+## Screens already shipped
+
+`apps/accounts` serves the whole password lifecycle at `/accounts/`, with
+templates in `templates/registration/`:
+
+| Route name | Screen |
+|---|---|
+| `accounts:login` | sign in (`LoginForm`, autocomplete attributes) |
+| `accounts:logout` | POST-only sign out (the header form) |
+| `accounts:password_change[_done]` | change while signed in |
+| `accounts:password_reset[_done/_confirm/_complete]` | forgotten password |
+
+`LOGIN_URL` is `accounts:login`, so `@login_required` lands somewhere real
+instead of the admin. The reset email template is overridden because Django's
+default reverses an unnamespaced `password_reset_confirm`, which does not exist
+here — keep `{% url 'accounts:password_reset_confirm' %}` if you edit it.
+
+Registration/signup is deliberately **not** shipped: who may create an account
+is a product decision. Add a `SignupView` + `UserCreationForm` in `accounts`
+when the product needs one, and rate-limit it.
+
 ## Views and Decorators
 
 - `@login_required` / `@permission_required` for template views
