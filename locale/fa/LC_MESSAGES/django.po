@@ -1,0 +1,1021 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-20 08:47+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: apps/portfolio/content.py:19
+msgid "Mohammadreza Zare"
+msgstr "محمدرضا زارع"
+
+#: apps/portfolio/content.py:42
+msgid "Messaging-first commerce platform for sellers."
+msgstr "پلتفرم تجارت پیام‌محور برای فروشندگان."
+
+#: apps/portfolio/content.py:44
+msgid ""
+"A commerce platform designed to help sellers manage products, orders and "
+"customer conversations through messaging platforms."
+msgstr ""
+"پلتفرم تجاری برای مدیریت محصولات، سفارش‌ها و گفت‌وگوی مشتریان از طریق "
+"پیام‌رسان‌ها."
+
+#: apps/portfolio/content.py:48 apps/portfolio/content.py:78
+#: apps/portfolio/content.py:138
+msgid "View Case Study"
+msgstr "مشاهده کیس‌استادی"
+
+#: apps/portfolio/content.py:50
+msgid ""
+"Sellers needed to run product catalogs and order flows inside messaging apps "
+"without a fragile, ad-hoc bot script."
+msgstr ""
+"فروشندگان نیاز داشتند کاتالوگ و سفارش را داخل پیام‌رسان مدیریت کنند، بدون "
+"بات‌های شکننده و موردی."
+
+#: apps/portfolio/content.py:54
+msgid ""
+"Designed and built the Django backend, REST surfaces, and messaging "
+"integrations that connect conversations to orders."
+msgstr ""
+"بک‌اند Django، سطح REST و یکپارچه‌سازی پیام‌رسان را طوری ساختم که گفت‌وگو به "
+"سفارش وصل شود."
+
+#: apps/portfolio/content.py:58
+msgid "Modular catalog and order domains behind DRF endpoints."
+msgstr "دامنه‌های ماژولار کاتالوگ و سفارش پشت endpointهای DRF."
+
+#: apps/portfolio/content.py:59
+msgid "Telegram/Bale adapters isolated from core business logic."
+msgstr "آداپترهای تلگرام/بله جدا از منطق اصلی کسب‌وکار."
+
+#: apps/portfolio/content.py:60
+msgid "PostgreSQL models for products, conversations, and orders."
+msgstr "مدل‌های PostgreSQL برای محصول، گفت‌وگو و سفارش."
+
+#: apps/portfolio/content.py:61
+msgid "Authentication and seller-scoped permissions for API access."
+msgstr "احراز هویت و دسترسی محدود به فروشنده برای API."
+
+#: apps/portfolio/content.py:64
+msgid "Sellers manage inventory and orders from messaging threads."
+msgstr "فروشندگان موجودی و سفارش را از داخل گفت‌وگو مدیریت می‌کنند."
+
+#: apps/portfolio/content.py:65
+msgid "Backend stays testable with clear service boundaries."
+msgstr "بک‌اند با مرزهای سرویس شفاف، قابل تست باقی می‌ماند."
+
+#: apps/portfolio/content.py:72
+msgid "AI-powered insurance platform."
+msgstr "پلتفرم بیمه با قابلیت‌های هوش مصنوعی."
+
+#: apps/portfolio/content.py:74
+msgid ""
+"A digital insurance platform focused on simplifying insurance-related "
+"workflows and integrating AI-assisted services."
+msgstr ""
+"پلتفرم دیجیتال بیمه با تمرکز روی ساده‌سازی فرایندها و سرویس‌های کمکی مبتنی بر "
+"AI."
+
+#: apps/portfolio/content.py:80
+msgid ""
+"Insurance workflows were scattered across manual steps; the product needed a "
+"reliable API layer plus AI-assisted services."
+msgstr ""
+"فرایندهای بیمه پراکنده و دستی بودند؛ محصول به لایه API پایدار و سرویس‌های AI "
+"نیاز داشت."
+
+#: apps/portfolio/content.py:84
+msgid ""
+"Built backend APIs, data models, and integration points for AI-assisted "
+"insurance features on Django and PostgreSQL."
+msgstr ""
+"APIهای بک‌اند، مدل داده و نقاط یکپارچه‌سازی قابلیت‌های بیمهٔ مبتنی بر AI را روی "
+"Django و PostgreSQL ساختم."
+
+#: apps/portfolio/content.py:88
+msgid "REST API for policies, quotes, and workflow states."
+msgstr "REST API برای بیمه‌نامه، استعلام و وضعیت فرایند."
+
+#: apps/portfolio/content.py:89
+msgid "Service layer for AI provider calls with clear failure modes."
+msgstr "لایه سرویس برای فراخوانی ارائه‌دهنده AI با حالت‌های خطای مشخص."
+
+#: apps/portfolio/content.py:90
+msgid "PostgreSQL as the source of truth for insurance records."
+msgstr "PostgreSQL به‌عنوان منبع حقیقت برای رکوردهای بیمه."
+
+#: apps/portfolio/content.py:91
+msgid "Auth-gated endpoints for staff and partner clients."
+msgstr "endpointهای محافظت‌شده برای کارکنان و شرکا."
+
+#: apps/portfolio/content.py:94
+msgid "Insurance flows expose a consistent API surface."
+msgstr "فرایندهای بیمه سطح API یکنواختی دارند."
+
+#: apps/portfolio/content.py:95
+msgid "AI features plug in without coupling to request handlers."
+msgstr "قابلیت‌های AI بدون کوپل به handlerها وصل می‌شوند."
+
+#: apps/portfolio/content.py:101
+msgid "Insurance API Architecture"
+msgstr "معماری API بیمه"
+
+#: apps/portfolio/content.py:102
+msgid "Modular backend for insurance services."
+msgstr "بک‌اند ماژولار برای سرویس‌های بیمه."
+
+#: apps/portfolio/content.py:104
+msgid ""
+"Backend architecture for insurance services with modular APIs, "
+"authentication, business logic and scalable service structure."
+msgstr ""
+"معماری بک‌اند برای سرویس‌های بیمه با API ماژولار، احراز هویت، منطق کسب‌وکار و "
+"ساختار مقیاس‌پذیر."
+
+#: apps/portfolio/content.py:108
+msgid "View Architecture"
+msgstr "مشاهده معماری"
+
+#: apps/portfolio/content.py:110
+msgid ""
+"Insurance capabilities needed a modular API layout that could grow without "
+"collapsing into a single fat application."
+msgstr ""
+"قابلیت‌های بیمه به چیدمان ماژولار API نیاز داشتند تا بدون تبدیل‌شدن به یک اپ "
+"فربه رشد کنند."
+
+#: apps/portfolio/content.py:114
+msgid ""
+"Designed the service boundaries, authentication model, and business-logic "
+"layer for a scalable insurance API platform."
+msgstr ""
+"مرزهای سرویس، مدل احراز هویت و لایه منطق کسب‌وکار را برای یک پلتفرم API بیمه "
+"مقیاس‌پذیر طراحی کردم."
+
+#: apps/portfolio/content.py:118
+msgid "API gateway-style entry into versioned Django/DRF services."
+msgstr "ورود به سبک API gateway به سرویس‌های نسخه‌بندی‌شده Django/DRF."
+
+#: apps/portfolio/content.py:119
+msgid "Domain modules for auth, policies, and external providers."
+msgstr "ماژول‌های دامنه برای احراز هویت، بیمه‌نامه و ارائه‌دهندگان خارجی."
+
+#: apps/portfolio/content.py:120
+msgid "RBAC and token-based authentication for clients."
+msgstr "RBAC و احراز هویت مبتنی بر توکن برای کلاینت‌ها."
+
+#: apps/portfolio/content.py:121
+msgid "Clear separation between transport, domain, and persistence."
+msgstr "جداسازی شفاف بین لایه انتقال، دامنه و پایداری داده."
+
+#: apps/portfolio/content.py:124
+msgid "New insurance capabilities ship as modules, not rewrites."
+msgstr "قابلیت‌های جدید بیمه به‌صورت ماژول اضافه می‌شوند، نه بازنویسی کامل."
+
+#: apps/portfolio/content.py:125
+msgid "Auth and business rules stay auditable in one place."
+msgstr "احراز هویت و قواعد کسب‌وکار در یک جا قابل ممیزی می‌مانند."
+
+#: apps/portfolio/content.py:131
+msgid "Web Development Platform"
+msgstr "پلتفرم توسعه وب"
+
+#: apps/portfolio/content.py:134
+msgid ""
+"A software development platform focused on delivering modern web products "
+"and backend solutions."
+msgstr ""
+"پلتفرم توسعه نرم‌افزار با تمرکز روی تحویل محصولات وب مدرن و راه‌حل‌های بک‌اند."
+
+#: apps/portfolio/content.py:140
+msgid ""
+"Delivery work needed a shared backend foundation for modern web products "
+"instead of one-off project scaffolds."
+msgstr "تحویل پروژه به زیربنای مشترک بک‌اند نیاز داشت، نه اسکلت‌های یک‌بارمصرف."
+
+#: apps/portfolio/content.py:144
+msgid ""
+"Owned backend architecture and API design for product delivery across client "
+"web projects."
+msgstr ""
+"مالکیت معماری بک‌اند و طراحی API برای تحویل محصول در پروژه‌های وب مشتریان."
+
+#: apps/portfolio/content.py:148
+msgid "Reusable Django project patterns for multi-client delivery."
+msgstr "الگوهای قابل‌استفاده مجدد Django برای تحویل چندمشتری."
+
+#: apps/portfolio/content.py:149
+msgid "REST APIs tailored to each product's domain model."
+msgstr "REST API متناسب با مدل دامنه هر محصول."
+
+#: apps/portfolio/content.py:150
+msgid "Maintainable service and selector boundaries."
+msgstr "مرزهای قابل‌نگهداری سرویس و selector."
+
+#: apps/portfolio/content.py:153
+msgid "Faster delivery with consistent backend structure."
+msgstr "تحویل سریع‌تر با ساختار بک‌اند یکنواخت."
+
+#: apps/portfolio/content.py:154
+msgid "Clients get production-ready APIs, not prototypes."
+msgstr "مشتری API آماده تولید می‌گیرد، نه پروتوتایپ."
+
+#: apps/portfolio/content.py:172 apps/portfolio/content.py:186
+msgid "Backend Engineer"
+msgstr "مهندس بک‌اند"
+
+#: apps/portfolio/content.py:175
+msgid "Designed and developed RESTful APIs using Django REST Framework."
+msgstr "طراحی و توسعه APIهای RESTful با Django REST Framework."
+
+#: apps/portfolio/content.py:177
+msgid ""
+"Implemented business logic and database architecture for messaging-first "
+"commerce."
+msgstr "پیاده‌سازی منطق کسب‌وکار و معماری پایگاه‌داده برای تجارت پیام‌محور."
+
+#: apps/portfolio/content.py:180
+msgid "Integrated Telegram and Bale so sellers manage orders in-chat."
+msgstr "یکپارچه‌سازی تلگرام و بله برای مدیریت سفارش داخل گفت‌وگو."
+
+#: apps/portfolio/content.py:181
+msgid "Improved maintainability through modular backend architecture."
+msgstr "بهبود نگهداری‌پذیری با معماری ماژولار بک‌اند."
+
+#: apps/portfolio/content.py:190
+msgid ""
+"Built insurance REST APIs with authentication and clear domain boundaries."
+msgstr "ساخت REST API بیمه با احراز هویت و مرزهای دامنه شفاف."
+
+#: apps/portfolio/content.py:193
+msgid "Integrated AI-assisted services behind stable service interfaces."
+msgstr "یکپارچه‌سازی سرویس‌های کمکی AI پشت رابط‌های پایدار."
+
+#: apps/portfolio/content.py:194
+msgid "Modeled PostgreSQL schemas for policies, workflows, and audits."
+msgstr "مدل‌سازی اسکیمای PostgreSQL برای بیمه‌نامه، فرایند و ممیزی."
+
+#: apps/portfolio/content.py:199
+msgid "Software Engineer"
+msgstr "مهندس نرم‌افزار"
+
+#: apps/portfolio/content.py:202
+msgid "Delivered Django backends and APIs for client web products."
+msgstr "تحویل بک‌اند Django و API برای محصولات وب مشتریان."
+
+#: apps/portfolio/content.py:203
+msgid "Owned data modeling, auth, and production-ready error handling."
+msgstr "مالکیت مدل‌سازی داده، احراز هویت و مدیریت خطای آماده تولید."
+
+#: apps/portfolio/content.py:204
+msgid "Collaborated with product stakeholders on real business logic."
+msgstr "همکاری با ذی‌نفعان محصول روی منطق واقعی کسب‌وکار."
+
+#: apps/portfolio/content.py:217
+msgid "Backend"
+msgstr "بک‌اند"
+
+#: apps/portfolio/content.py:218 templates/partials/_health.html:13
+msgid "Database"
+msgstr "پایگاه‌داده"
+
+#: apps/portfolio/content.py:219
+msgid "Infrastructure"
+msgstr "زیرساخت"
+
+#: apps/portfolio/content.py:221 templates/portfolio/case_study.html:45
+msgid "Architecture"
+msgstr "معماری"
+
+#: apps/portfolio/content.py:232
+msgid "Integrations"
+msgstr "یکپارچه‌سازی‌ها"
+
+#: apps/portfolio/content.py:239
+msgid "Understand"
+msgstr "درک"
+
+#: apps/portfolio/content.py:239
+msgid "Understand the business problem before writing code."
+msgstr "قبل از نوشتن کد، مسئله کسب‌وکار را بفهم."
+
+#: apps/portfolio/content.py:240
+msgid "Design"
+msgstr "طراحی"
+
+#: apps/portfolio/content.py:240
+msgid "Design clean architecture, APIs and data models."
+msgstr "معماری تمیز، API و مدل داده را طراحی کن."
+
+#: apps/portfolio/content.py:241
+msgid "Build"
+msgstr "ساخت"
+
+#: apps/portfolio/content.py:241
+msgid "Write maintainable, testable and production-ready code."
+msgstr "کد قابل‌نگهداری، قابل‌تست و آماده تولید بنویس."
+
+#: apps/portfolio/content.py:242
+msgid "Improve"
+msgstr "بهبود"
+
+#: apps/portfolio/content.py:242
+msgid "Monitor, refactor and continuously improve the system."
+msgstr "سیستم را پایش، بازآرایی و پیوسته بهبود بده."
+
+#: apps/portfolio/content.py:247
+msgid "Years Experience"
+msgstr "سال تجربه"
+
+#: apps/portfolio/content.py:248
+msgid "Primary Framework"
+msgstr "فریمورک اصلی"
+
+#: apps/portfolio/content.py:249
+msgid "Backend Focus"
+msgstr "تمرکز بک‌اند"
+
+#: apps/portfolio/content.py:250
+msgid "Real-world Projects"
+msgstr "پروژه‌های واقعی"
+
+#: apps/portfolio/content.py:264
+msgid "Clean Architecture"
+msgstr "معماری تمیز"
+
+#: apps/portfolio/content.py:265
+msgid "API Design"
+msgstr "طراحی API"
+
+#: apps/portfolio/content.py:266
+msgid "Database Modeling"
+msgstr "مدل‌سازی پایگاه‌داده"
+
+#: apps/portfolio/content.py:267
+msgid "Authentication"
+msgstr "احراز هویت"
+
+#: apps/portfolio/content.py:268
+msgid "Scalable Services"
+msgstr "سرویس‌های مقیاس‌پذیر"
+
+#: apps/portfolio/forms.py:7
+msgid "Name"
+msgstr "نام"
+
+#: apps/portfolio/forms.py:12
+msgid "Your name"
+msgstr "نام شما"
+
+#: apps/portfolio/forms.py:17 templates/portfolio/home.html:239
+msgid "Email"
+msgstr "ایمیل"
+
+#: apps/portfolio/forms.py:22
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: apps/portfolio/forms.py:29
+msgid "Message"
+msgstr "پیام"
+
+#: apps/portfolio/forms.py:34
+msgid "Tell me about the project or role."
+msgstr "درباره پروژه یا نقش بنویسید."
+
+#: apps/portfolio/models.py:10
+msgid "name"
+msgstr "نام"
+
+#: apps/portfolio/models.py:11
+msgid "email"
+msgstr "ایمیل"
+
+#: apps/portfolio/models.py:12
+msgid "message"
+msgstr "پیام"
+
+#: apps/portfolio/models.py:16
+msgid "contact message"
+msgstr "پیام تماس"
+
+#: apps/portfolio/models.py:17
+msgid "contact messages"
+msgstr "پیام‌های تماس"
+
+#: apps/portfolio/views.py:52
+msgid "Project not found."
+msgstr "پروژه پیدا نشد."
+
+#: apps/portfolio/views.py:85
+msgid "Thanks — your message was sent. I'll get back to you soon."
+msgstr "متشکرم — پیام شما ارسال شد. به‌زودی پاسخ می‌دهم."
+
+#: templates/403.html:4
+msgid "Access denied"
+msgstr "دسترسی مجاز نیست"
+
+#: templates/403.html:10
+msgid "You do not have access to this page."
+msgstr "به این صفحه دسترسی ندارید."
+
+#: templates/403.html:13
+msgid "Your account is signed in but lacks permission for this area."
+msgstr ""
+
+#: templates/403.html:15
+msgid "Sign in with an account that has permission for this area."
+msgstr ""
+
+#: templates/403.html:19 templates/403_csrf.html:14 templates/404.html:14
+#: templates/registration/password_change_done.html:14
+#: templates/registration/password_reset_done.html:14
+msgid "Back to home"
+msgstr "بازگشت به خانه"
+
+#: templates/403.html:22 templates/pages/home.html:26
+#: templates/registration/login.html:4 templates/registration/login.html:5
+#: templates/registration/login.html:16
+#: templates/registration/password_reset_complete.html:15
+msgid "Sign in"
+msgstr "ورود"
+
+#: templates/403_csrf.html:4
+msgid "Session expired"
+msgstr "نشست منقضی شد"
+
+#: templates/403_csrf.html:10
+msgid "Your session expired before the form was sent."
+msgstr "نشست شما قبل از ارسال فرم منقضی شد."
+
+#: templates/403_csrf.html:12
+msgid ""
+"This protects you against cross-site request forgery. Reload the page and "
+"submit the form again."
+msgstr ""
+
+#: templates/404.html:4
+msgid "Page not found"
+msgstr "صفحه پیدا نشد"
+
+#: templates/404.html:10
+msgid "We could not find that page."
+msgstr "آن صفحه پیدا نشد."
+
+#: templates/404.html:12
+msgid "The link may be outdated, or the page may have moved."
+msgstr ""
+
+#: templates/base.html:29
+msgid "Skip to content"
+msgstr "پرش به محتوا"
+
+#: templates/pages/home.html:4
+msgid "Starter"
+msgstr ""
+
+#: templates/pages/home.html:5
+msgid ""
+"Django starter with settings, custom user, templates, DRF, and HTMX already "
+"wired."
+msgstr ""
+
+#: templates/pages/home.html:12
+msgid "Django 6.1 · Python 3.12"
+msgstr ""
+
+#: templates/pages/home.html:14
+msgid "A Django base that starts finished."
+msgstr ""
+
+#: templates/pages/home.html:16
+msgid ""
+"Split settings, a custom user, an accessible template shell, a versioned DRF "
+"surface, and HTMX are already wired. Add a domain app under <code>apps/</"
+"code> and keep this layout so every project stays consistent."
+msgstr ""
+
+#: templates/pages/home.html:20
+msgid "Open the API"
+msgstr ""
+
+#: templates/pages/home.html:24
+msgid "Account settings"
+msgstr ""
+
+#: templates/pages/home.html:30
+msgid "pytest + ruff in CI"
+msgstr ""
+
+#: templates/pages/home.html:31
+msgid "Light and dark themes"
+msgstr ""
+
+#: templates/pages/home.html:32
+msgid "WCAG-minded chrome"
+msgstr ""
+
+#: templates/pages/home.html:38
+msgid "What is already wired"
+msgstr ""
+
+#: templates/pages/home.html:39
+msgid "Delete what a product does not need — do not rebuild it."
+msgstr ""
+
+#: templates/pages/home.html:44
+msgid "Apps and models"
+msgstr ""
+
+#: templates/pages/home.html:45
+msgid ""
+"Domain code lives in <code>apps/&lt;name&gt;</code>. Models subclass "
+"<code>TimeStampedModel</code>; rules sit on models and QuerySets, views stay "
+"thin."
+msgstr ""
+
+#: templates/pages/home.html:49
+msgid "Settings per environment"
+msgstr ""
+
+#: templates/pages/home.html:50
+msgid ""
+"<code>development</code>, <code>test</code>, and <code>production</code> "
+"share one base. Secrets come from the environment; production refuses to "
+"boot without them."
+msgstr ""
+
+#: templates/pages/home.html:54
+msgid "Versioned API"
+msgstr ""
+
+#: templates/pages/home.html:55
+msgid ""
+"DRF is mounted at <code>/api/v1/</code> with namespace versioning, "
+"pagination, throttling, and a single error envelope."
+msgstr ""
+
+#: templates/pages/home.html:59
+msgid "Auth and hardening"
+msgstr ""
+
+#: templates/pages/home.html:60
+msgid ""
+"Login, logout, and the full password-reset flow ship as designed screens. "
+"Security headers, HSTS, and secure cookies switch on in production."
+msgstr ""
+
+#: templates/pages/home.html:64
+msgid "Accessible shell"
+msgstr ""
+
+#: templates/pages/home.html:65
+msgid ""
+"Skip link, landmarks, visible focus, form errors next to fields, and "
+"designed 403 / 404 / 500 pages. Light and dark both pass contrast."
+msgstr ""
+
+#: templates/pages/home.html:69
+msgid "Quality gates"
+msgstr ""
+
+#: templates/pages/home.html:70
+msgid ""
+"Hermetic pytest settings, ruff lint and format, migration drift checks, and "
+"<code>check --deploy</code> run on every push."
+msgstr ""
+
+#: templates/pages/home.html:77
+msgid "Service status"
+msgstr ""
+
+#: templates/pages/home.html:78
+msgid "HTMX reference"
+msgstr ""
+
+#: templates/pages/home.html:81
+msgid ""
+"This panel is the starter's HTMX reference: a GET that swaps a server-"
+"rendered partial, with an indicator, a real status code, and a designed "
+"error state."
+msgstr ""
+
+#: templates/pages/home.html:86
+msgid "Status not checked yet."
+msgstr ""
+
+#: templates/pages/home.html:87
+msgid "Run the check to query the database connection."
+msgstr ""
+
+#: templates/pages/home.html:98
+msgid "Run health check"
+msgstr ""
+
+#: templates/pages/home.html:100
+msgid "Checking…"
+msgstr ""
+
+#: templates/pages/home.html:106
+msgid "Start a domain app"
+msgstr ""
+
+#: templates/pages/home.html:110
+msgid "Three commands"
+msgstr ""
+
+#: templates/pages/home.html:113
+msgid ""
+"Set <code>name = \"apps.shop\"</code> and a short <code>label</code> in "
+"<code>apps.py</code>"
+msgstr ""
+
+#: templates/pages/home.html:114
+msgid "Register the AppConfig in <code>core/settings/base.py</code>"
+msgstr ""
+
+#: templates/pages/home.html:118
+msgid "Make it yours"
+msgstr ""
+
+#: templates/pages/home.html:119
+msgid ""
+"Restyle from <code>static/css/tokens.css</code> first: colors, type scale, "
+"spacing, radii, and elevation all resolve from there, in both themes."
+msgstr ""
+
+#: templates/pages/home.html:120
+msgid ""
+"Persian products swap the font tokens for Vazirmatn and follow the "
+"<code>persian-ui</code> skill."
+msgstr ""
+
+#: templates/partials/_footer.html:9
+msgid "Software Engineer · Django Backend Developer"
+msgstr "مهندس نرم‌افزار · توسعه‌دهنده بک‌اند Django"
+
+#: templates/partials/_footer.html:13
+msgid "Links"
+msgstr "پیوندها"
+
+#: templates/partials/_footer.html:17 templates/partials/_header.html:40
+msgid "Resume"
+msgstr "رزومه"
+
+#: templates/partials/_footer.html:18 templates/partials/_header.html:26
+msgid "Contact"
+msgstr "تماس"
+
+#: templates/partials/_footer.html:25
+msgid "Building reliable backend systems."
+msgstr "ساخت سیستم‌های بک‌اند قابل‌اتکا."
+
+#: templates/partials/_form_errors.html:6
+msgid "There is a problem with this form."
+msgstr ""
+
+#: templates/partials/_header.html:16
+msgid "Menu"
+msgstr "منو"
+
+#: templates/partials/_header.html:21
+msgid "Primary"
+msgstr "اصلی"
+
+#: templates/partials/_header.html:22
+msgid "Work"
+msgstr "کارها"
+
+#: templates/partials/_header.html:23
+msgid "About"
+msgstr "درباره"
+
+#: templates/partials/_header.html:24 templates/portfolio/home.html:85
+msgid "Stack"
+msgstr "استک"
+
+#: templates/partials/_header.html:25 templates/portfolio/home.html:140
+msgid "Experience"
+msgstr "تجربه"
+
+#: templates/partials/_header.html:59
+msgid "Switch to dark theme"
+msgstr "رفتن به تم تیره"
+
+#: templates/partials/_header.html:60 templates/partials/_header.html:62
+msgid "Switch to light theme"
+msgstr "رفتن به تم روشن"
+
+#: templates/partials/_health.html:9
+msgid "All systems reachable."
+msgstr ""
+
+#: templates/partials/_health.html:9
+msgid "A dependency is down."
+msgstr ""
+
+#: templates/partials/_health.html:18
+msgid "Check the database container and the credentials in the environment."
+msgstr ""
+
+#: templates/portfolio/case_study.html:4
+msgid "Case Study"
+msgstr "کیس‌استادی"
+
+#: templates/portfolio/case_study.html:10
+msgid "Breadcrumb"
+msgstr "مسیر صفحه"
+
+#: templates/portfolio/case_study.html:11 templates/portfolio/home.html:69
+msgid "Selected Work"
+msgstr "نمونه کارها"
+
+#: templates/portfolio/case_study.html:35
+msgid "Problem"
+msgstr "مسئله"
+
+#: templates/portfolio/case_study.html:39
+msgid "Role"
+msgstr "نقش"
+
+#: templates/portfolio/case_study.html:54
+msgid "Outcomes"
+msgstr "نتایج"
+
+#: templates/portfolio/case_study.html:64
+msgid "Back to work"
+msgstr "بازگشت به کارها"
+
+#: templates/portfolio/home.html:4
+msgid "Software Engineer & Django Backend Developer"
+msgstr "مهندس نرم‌افزار و توسعه‌دهنده بک‌اند Django"
+
+#: templates/portfolio/home.html:5
+msgid ""
+"Backend developer focused on Python, Django and REST APIs — building "
+"production-ready systems with clean architecture."
+msgstr ""
+"توسعه‌دهنده بک‌اند با تمرکز روی Python، Django و REST API — ساخت سیستم‌های "
+"آماده تولید با معماری تمیز."
+
+#: templates/portfolio/home.html:15
+msgid "SOFTWARE ENGINEER · BACKEND DEVELOPER"
+msgstr "مهندس نرم‌افزار · توسعه‌دهنده بک‌اند"
+
+#: templates/portfolio/home.html:18
+#, fuzzy
+#| msgid "Building reliable backend systems."
+msgid "Building reliable"
+msgstr "ساخت سیستم‌های بک‌اند قابل‌اتکا."
+
+#: templates/portfolio/home.html:19
+#, fuzzy
+#| msgid "Building reliable backend systems."
+msgid "backend systems"
+msgstr "ساخت سیستم‌های بک‌اند قابل‌اتکا."
+
+#: templates/portfolio/home.html:20
+msgid "with Django."
+msgstr "با Django."
+
+#: templates/portfolio/home.html:23
+msgid ""
+"Backend developer focused on Python, Django and REST APIs, building "
+"production-ready systems with clean architecture, maintainable code and real-"
+"world business logic."
+msgstr ""
+"توسعه‌دهنده بک‌اند با تمرکز روی Python، Django و REST API؛ ساخت سیستم‌های آماده "
+"تولید با معماری تمیز، کد قابل‌نگهداری و منطق واقعی کسب‌وکار."
+
+#: templates/portfolio/home.html:30
+msgid "View Projects"
+msgstr "مشاهده پروژه‌ها"
+
+#: templates/portfolio/home.html:33
+msgid "Download Resume"
+msgstr "دانلود رزومه"
+
+#: templates/portfolio/home.html:38
+msgid "Available for selected projects"
+msgstr "آماده‌ی همکاری در پروژه‌های منتخب"
+
+#: templates/portfolio/home.html:42
+msgid "Architecture overview"
+msgstr "نمای کلی معماری"
+
+#: templates/portfolio/home.html:57
+msgid "Highlights"
+msgstr "نکات برجسته"
+
+#: templates/portfolio/home.html:70
+msgid "A selection of systems and products I've worked on."
+msgstr "گزیده‌ای از سیستم‌ها و محصولاتی که روی آن‌ها کار کرده‌ام."
+
+#: templates/portfolio/home.html:103
+msgid "How I Build"
+msgstr "چگونه می‌سازم"
+
+#: templates/portfolio/home.html:104
+msgid "An engineering approach shaped by production systems."
+msgstr "رویکرد مهندسی شکل‌گرفته از سیستم‌های واقعی."
+
+#: templates/portfolio/home.html:120
+msgid "Engineering Stack"
+msgstr "استک مهندسی"
+
+#: templates/portfolio/home.html:121
+msgid "Tools I use to design, build and operate backends."
+msgstr "ابزارهایی که برای طراحی، ساخت و نگهداری بک‌اند استفاده می‌کنم."
+
+#: templates/portfolio/home.html:141
+msgid "Roles focused on APIs, data models and business logic."
+msgstr "نقش‌هایی متمرکز بر API، مدل داده و منطق کسب‌وکار."
+
+#: templates/portfolio/home.html:164
+msgid "Behind the API"
+msgstr "پشت API"
+
+#: templates/portfolio/home.html:165
+msgid "System design beyond framework labels."
+msgstr "طراحی سیستم فراتر از برچسب فریمورک."
+
+#: templates/portfolio/home.html:168
+msgid "Request path"
+msgstr "مسیر درخواست"
+
+#: templates/portfolio/home.html:186
+msgid "A little about me."
+msgstr "کمی درباره من."
+
+#: templates/portfolio/home.html:190
+msgid ""
+"I'm a backend-focused software engineer working primarily with Python and "
+"Django. I enjoy turning complex business requirements into clean, reliable "
+"and maintainable software."
+msgstr ""
+"من یک مهندس نرم‌افزار متمرکز بر بک‌اند هستم و عمدتاً با Python و Django کار "
+"می‌کنم. از تبدیل نیازمندی‌های پیچیده کسب‌وکار به نرم‌افزار تمیز، قابل‌اتکا و "
+"قابل‌نگهداری لذت می‌برم."
+
+#: templates/portfolio/home.html:197
+msgid ""
+"My work sits at the intersection of backend engineering, product thinking "
+"and real-world business requirements."
+msgstr ""
+"کار من در تقاطع مهندسی بک‌اند، تفکر محصول و نیازمندی‌های واقعی کسب‌وکار قرار "
+"دارد."
+
+#: templates/portfolio/home.html:202
+msgid "Based in Iran · Working remotely"
+msgstr "مستقر در ایران · همکاری از راه دور"
+
+#: templates/portfolio/home.html:212
+msgid "Selected repositories, experiments and engineering work."
+msgstr "مخازن منتخب، آزمایش‌ها و کارهای مهندسی."
+
+#: templates/portfolio/home.html:215
+msgid "View GitHub"
+msgstr "مشاهده GitHub"
+
+#: templates/portfolio/home.html:224
+msgid "Have a project in mind?"
+msgstr "پروژه‌ای در ذهن دارید؟"
+
+#: templates/portfolio/home.html:226
+msgid ""
+"I'm open to interesting backend projects, product collaborations and "
+"engineering opportunities."
+msgstr "برای پروژه‌های بک‌اند جذاب، همکاری محصولی و فرصت‌های مهندسی آماده‌ام."
+
+#: templates/portfolio/home.html:233
+msgid "Let's talk"
+msgstr "صحبت کنیم"
+
+#: templates/portfolio/home.html:255
+msgid "Send a message"
+msgstr "ارسال پیام"
+
+#: templates/portfolio/home.html:260
+msgid "Send Message"
+msgstr "ارسال پیام"
+
+#: templates/registration/login.html:7
+msgid "Use the account that was created with the project."
+msgstr ""
+
+#: templates/registration/login.html:19
+msgid "Forgot your password?"
+msgstr ""
+
+#: templates/registration/password_change_done.html:4
+#: templates/registration/password_change_done.html:5
+msgid "Password changed"
+msgstr ""
+
+#: templates/registration/password_change_done.html:11
+msgid "Your new password is active on this account."
+msgstr ""
+
+#: templates/registration/password_change_form.html:4
+#: templates/registration/password_change_form.html:5
+msgid "Change password"
+msgstr ""
+
+#: templates/registration/password_change_form.html:7
+msgid "Signed in as"
+msgstr ""
+
+#: templates/registration/password_change_form.html:15
+#: templates/registration/password_reset_confirm.html:13
+msgid "Save new password"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:4
+#: templates/registration/password_reset_complete.html:5
+msgid "Password reset"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:11
+msgid "Your password is set. You can sign in now."
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:4
+#: templates/registration/password_reset_confirm.html:5
+msgid "Choose a new password"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:18
+msgid "This reset link is invalid or has already been used."
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:21
+msgid "Request a new link"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:4
+#: templates/registration/password_reset_done.html:5
+msgid "Check your email"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:11
+msgid ""
+"If an account exists for that address, a reset link is on its way. The link "
+"expires shortly, so use it soon."
+msgstr ""
+
+#: templates/registration/password_reset_email.html:2
+#, python-format
+msgid "You asked to reset the password for your %(site_name)s account."
+msgstr ""
+
+#: templates/registration/password_reset_email.html:4
+msgid "Open this link to choose a new password:"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:7
+msgid ""
+"If you did not ask for this, you can ignore this email and nothing will "
+"change."
+msgstr ""
+
+#: templates/registration/password_reset_form.html:4
+#: templates/registration/password_reset_form.html:5
+msgid "Reset password"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:8
+msgid ""
+"Enter the email address on the account. We will send a link to choose a new "
+"password."
+msgstr ""
+
+#: templates/registration/password_reset_form.html:17
+msgid "Send reset link"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:20
+msgid "Back to sign in"
+msgstr ""
+
+#: templates/registration/password_reset_subject.txt:1
+#, python-format
+msgid "Reset your %(site_name)s password"
+msgstr ""
+
+#~ msgid "Building reliable<br>backend systems<br>with Django."
+#~ msgstr "ساخت سیستم‌های بک‌اند<br>قابل‌اتکا<br>با Django."

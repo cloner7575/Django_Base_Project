@@ -1,40 +1,28 @@
 {% load i18n %}
 <footer class="site-footer">
-  <div class="site-footer__inner">
+  <div class="site-footer__inner site-footer__inner--portfolio">
     <div class="site-footer__brand">
-      <a class="brand" href="{% url 'common:home' %}">
-        <span class="brand__mark" aria-hidden="true">{% include "components/_icon.html" with name="zap" %}</span>
-        <span>{{ SITE_NAME }}</span>
+      <a class="brand" href="{% url 'portfolio:home' %}">
+        <span class="brand__mark brand__mark--text" aria-hidden="true">MRZ</span>
+        <span>محمدرضا زارع</span>
       </a>
-      <p>{% blocktranslate %}Django starter with split settings, a custom user, an accessible template shell, a versioned API, and HTMX.{% endblocktranslate %}</p>
+      <p>{% translate "Software Engineer · Django Backend Developer" %}</p>
     </div>
 
-    <nav aria-labelledby="footer-app">
-      <h2 id="footer-app">{% translate "Application" %}</h2>
+    <nav aria-labelledby="footer-links">
+      <h2 id="footer-links">{% translate "Links" %}</h2>
       <ul>
-        <li><a href="{% url 'common:home' %}">{% translate "Overview" %}</a></li>
-        {% if user.is_authenticated %}
-          <li><a href="{% url 'accounts:password_change' %}">{% translate "Change password" %}</a></li>
-        {% else %}
-          <li><a href="{% url 'accounts:login' %}">{% translate "Sign in" %}</a></li>
-          <li><a href="{% url 'accounts:password_reset' %}">{% translate "Reset password" %}</a></li>
-        {% endif %}
-        {% if user.is_staff %}<li><a href="{% url 'admin:index' %}">{% translate "Admin" %}</a></li>{% endif %}
-      </ul>
-    </nav>
-
-    <nav aria-labelledby="footer-machine">
-      <h2 id="footer-machine">{% translate "Machine endpoints" %}</h2>
-      <ul>
-        <li><a href="{% url 'common:health' %}"><code>{% url 'common:health' %}</code></a></li>
-        <li><a href="{% url 'api:v1:health' %}"><code>{% url 'api:v1:health' %}</code></a></li>
-        <li><a href="{% url 'api:v1:me' %}"><code>{% url 'api:v1:me' %}</code></a></li>
+        <li><a href="{{ github_url }}" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+        <li><a href="{{ linkedin_url }}" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+        <li><a href="{{ resume_url }}" rel="noopener noreferrer" target="_blank">{% translate "Resume" %}</a></li>
+        <li><a class="ltr" dir="ltr" href="mailto:{{ contact_email }}">{{ contact_email }}</a></li>
+        <li><a href="{% url 'portfolio:home' %}#contact">{% translate "Contact" %}</a></li>
       </ul>
     </nav>
   </div>
 
   <div class="site-footer__bar">
-    <p>{% blocktranslate %}Built on Django 6.1 · Python 3.12{% endblocktranslate %}</p>
-    <p>{% translate "Replace this footer with the product's real navigation." %}</p>
+    <p>© 2026 Mohammadreza Zare</p>
+    <p>{% translate "Building reliable backend systems." %}</p>
   </div>
 </footer>

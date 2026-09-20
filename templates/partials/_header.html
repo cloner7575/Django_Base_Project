@@ -1,33 +1,69 @@
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand" href="{% url 'common:home' %}">
-      <span class="brand__mark" aria-hidden="true">{% include "components/_icon.html" with name="zap" %}</span>
-      <span>{{ SITE_NAME }}</span>
+    <a class="brand" href="{% url 'portfolio:home' %}">
+      <span class="brand__mark brand__mark--text" aria-hidden="true">MRZ</span>
+      <span class="brand__name">محمدرضا زارع</span>
     </a>
-    <nav class="nav" aria-label="{% translate 'Primary' %}">
-      <a class="nav__link" href="{% url 'common:home' %}"
-         {% if request.resolver_match.url_name == "home" %}aria-current="page"{% endif %}>{% translate "Overview" %}</a>
-      {% if user.is_staff %}
-        <a class="nav__link" href="{% url 'admin:index' %}">
-          {% include "components/_icon.html" with name="sliders" size="sm" %}{% translate "Admin" %}
-        </a>
-      {% endif %}
-      {% if user.is_authenticated %}
-        <a class="nav__link" href="{% url 'accounts:password_change' %}"
-           {% if request.resolver_match.url_name == "password_change" %}aria-current="page"{% endif %}>{% translate "Password" %}</a>
-        <form class="nav__form" action="{% url 'accounts:logout' %}" method="post">
-          {% csrf_token %}
-          <button class="btn btn--ghost btn--sm" type="submit">
-            {% include "components/_icon.html" with name="log-out" size="sm" %}{% translate "Sign out" %}
-          </button>
-        </form>
-      {% else %}
-        <a class="btn btn--secondary btn--sm" href="{% url 'accounts:login' %}"
-           {% if request.resolver_match.url_name == "login" %}aria-current="page"{% endif %}>
-          {% include "components/_icon.html" with name="log-in" size="sm" %}{% translate "Sign in" %}
-        </a>
-      {% endif %}
+
+    <button
+      type="button"
+      class="btn btn--ghost btn--sm nav-toggle"
+      data-nav-toggle
+      aria-controls="site-nav"
+      aria-expanded="false"
+      aria-label="{% translate 'Menu' %}"
+    >
+      {% include "components/_icon.html" with name="menu" size="sm" %}
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="{% translate 'Primary' %}">
+      <a class="nav__link" href="{% url 'portfolio:home' %}#work">{% translate "Work" %}</a>
+      <a class="nav__link" href="{% url 'portfolio:home' %}#about">{% translate "About" %}</a>
+      <a class="nav__link" href="{% url 'portfolio:home' %}#stack">{% translate "Stack" %}</a>
+      <a class="nav__link" href="{% url 'portfolio:home' %}#experience">{% translate "Experience" %}</a>
+      <a class="nav__link" href="{% url 'portfolio:home' %}#contact">{% translate "Contact" %}</a>
+
+      <span class="nav__divider" aria-hidden="true"></span>
+
+      <a class="nav__link" href="{{ github_url }}" rel="noopener noreferrer" target="_blank">
+        {% include "components/_icon.html" with name="github" size="sm" %}
+        <span>GitHub</span>
+      </a>
+      <a class="nav__link" href="{{ linkedin_url }}" rel="noopener noreferrer" target="_blank">
+        {% include "components/_icon.html" with name="linkedin" size="sm" %}
+        <span>LinkedIn</span>
+      </a>
+      <a class="nav__link" href="{{ resume_url }}" rel="noopener noreferrer" target="_blank">
+        {% include "components/_icon.html" with name="download" size="sm" %}
+        <span>{% translate "Resume" %}</span>
+      </a>
+
+      <form class="nav__lang" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        {% if LANGUAGE_CODE == "fa" %}
+          <input type="hidden" name="language" value="en">
+          <button class="btn btn--ghost btn--sm" type="submit" lang="en">EN</button>
+        {% else %}
+          <input type="hidden" name="language" value="fa">
+          <button class="btn btn--ghost btn--sm" type="submit" lang="fa">فا</button>
+        {% endif %}
+      </form>
+
+      <button
+        type="button"
+        class="btn btn--ghost btn--sm"
+        data-theme-toggle
+        data-label-dark="{% translate 'Switch to dark theme' %}"
+        data-label-light="{% translate 'Switch to light theme' %}"
+        aria-pressed="true"
+        aria-label="{% translate 'Switch to light theme' %}"
+      >
+        <span class="theme-icon theme-icon--sun" aria-hidden="true">{% include "components/_icon.html" with name="sun" size="sm" %}</span>
+        <span class="theme-icon theme-icon--moon" aria-hidden="true">{% include "components/_icon.html" with name="moon" size="sm" %}</span>
+      </button>
     </nav>
   </div>
 </header>

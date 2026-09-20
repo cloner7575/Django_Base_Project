@@ -1,15 +1,26 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" dir="{{ TEXT_DIRECTION }}">
+<html lang="{{ LANGUAGE_CODE }}" dir="{{ TEXT_DIRECTION }}" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#f7f9fb" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#080c15" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0B0D10" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
     <meta name="description" content="{% block meta_description %}{{ SITE_NAME }}{% endblock %}">
     <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
-    <link rel="preload" href="{% static 'fonts/ibm-plex-sans-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("mrz-theme");
+          if (t === "light" || t === "dark") {
+            document.documentElement.setAttribute("data-theme", t);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" href="{% static 'fonts/vazirmatn-arabic.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/vazirmatn-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ project.title }} · {% translate "Case Study" %}{% endblock %}
+{% block meta_description %}{{ project.summary }}{% endblock %}
+{% block body_class %}page-portfolio page-case{% endblock %}
+
+{% block content %}
+  <article class="portfolio pf-case-page stack stack--loose">
+    <nav class="pf-breadcrumb" aria-label="{% translate 'Breadcrumb' %}">
+      <a href="{% url 'portfolio:home' %}#work">{% translate "Selected Work" %}</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ project.title }}</span>
+    </nav>
+
+    <header class="pf-case-page__header">
+      <p class="eyebrow">{{ project.subtitle }}</p>
+      <h1>{{ project.title }}</h1>
+      <p class="lede">{{ project.summary }}</p>
+      <ul class="pf-stack-list">
+        {% for item in project.stack %}
+          <li><code class="ltr" dir="ltr">{{ item }}</code></li>
+        {% endfor %}
+      </ul>
+    </header>
+
+    <div class="pf-case-page__mock">
+      <div class="pf-mockup pf-mockup--{{ project.mockup }}" aria-hidden="true">
+        {% include "portfolio/mockups/_frame.html" with variant=project.mockup title=project.title %}
+      </div>
+    </div>
+
+    <div class="pf-case-page__grid">
+      <section aria-labelledby="problem-heading">
+        <h2 id="problem-heading">{% translate "Problem" %}</h2>
+        <p>{{ project.problem }}</p>
+      </section>
+      <section aria-labelledby="role-heading">
+        <h2 id="role-heading">{% translate "Role" %}</h2>
+        <p>{{ project.role }}</p>
+      </section>
+    </div>
+
+    <section aria-labelledby="arch-case-heading">
+      <h2 id="arch-case-heading">{% translate "Architecture" %}</h2>
+      <ul class="pf-timeline__bullets">
+        {% for line in project.architecture %}
+          <li>{{ line }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section aria-labelledby="outcome-heading">
+      <h2 id="outcome-heading">{% translate "Outcomes" %}</h2>
+      <ul class="pf-timeline__bullets">
+        {% for line in project.outcomes %}
+          <li>{{ line }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <p>
+      <a class="btn btn--secondary" href="{% url 'portfolio:home' %}#work">
+        {% translate "Back to work" %}
+      </a>
+    </p>
+  </article>
+{% endblock %}

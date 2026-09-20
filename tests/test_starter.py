@@ -20,7 +20,7 @@ def test_health_reports_database(client) -> None:
 
 
 def test_home_page_is_accessible(client) -> None:
-    response = client.get(reverse("common:home"))
+    response = client.get(reverse("portfolio:home"))
     assert response.status_code == 200
     html = response.content.decode()
     assert 'href="#main"' in html
@@ -31,7 +31,7 @@ def test_home_page_is_accessible(client) -> None:
 
 
 def test_base_template_ships_htmx_and_csrf_header(client) -> None:
-    html = client.get(reverse("common:home")).content.decode()
+    html = client.get(reverse("portfolio:home")).content.decode()
     assert "vendor/htmx.min.js" in html
     assert "X-CSRFToken" in html
 
@@ -69,7 +69,7 @@ def test_csrf_failure_renders_the_friendly_page() -> None:
 def test_health_panel_is_htmx_only(client) -> None:
     response = client.get(reverse("common:health_panel"))
     assert response.status_code == 302
-    assert response.headers["Location"] == reverse("common:home")
+    assert response.headers["Location"] == reverse("portfolio:home")
 
 
 @pytest.mark.django_db

@@ -56,7 +56,7 @@ def test_login_signs_the_user_in(client, user) -> None:
         {"username": user.username, "password": PASSWORD},
     )
     assert response.status_code == 302
-    assert response.headers["Location"] == reverse("common:home")
+    assert response.headers["Location"] == reverse("portfolio:home")
 
 
 def test_logout_requires_post(auth_client) -> None:

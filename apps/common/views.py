@@ -5,10 +5,6 @@ from apps.common.htmx import is_htmx
 from apps.common.services import database_status
 
 
-def home(request: HttpRequest) -> HttpResponse:
-    return render(request, "pages/home.html")
-
-
 def health(request: HttpRequest) -> JsonResponse:
     """Machine-readable probe. 503 when a dependency is down."""
     reachable, database = database_status()
@@ -21,7 +17,7 @@ def health(request: HttpRequest) -> JsonResponse:
 def health_panel(request: HttpRequest) -> HttpResponse:
     """HTMX fragment for the same probe. Direct hits go back to the page."""
     if not is_htmx(request):
-        return redirect("common:home")
+        return redirect("portfolio:home")
 
     reachable, database = database_status()
     return render(

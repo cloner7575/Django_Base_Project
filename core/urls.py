@@ -8,6 +8,7 @@ urlpatterns = [
     path("accounts/", include("apps.accounts.urls")),
     path("api/", include("core.api_urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("", include("apps.portfolio.urls")),
     path("", include("apps.common.urls")),
 ]
 

@@ -30,7 +30,11 @@ def test_tokens_define_both_themes() -> None:
 
 def test_fonts_are_self_hosted() -> None:
     css = (STATIC / "css" / "tokens.css").read_text(encoding="utf-8")
-    for family in ("ibm-plex-sans-latin.woff2", "jetbrains-mono-latin.woff2"):
+    for family in (
+        "vazirmatn-arabic.woff2",
+        "vazirmatn-latin.woff2",
+        "jetbrains-mono-latin.woff2",
+    ):
         assert family in css
         assert (STATIC / "fonts" / family).is_file()
 
@@ -78,7 +82,7 @@ def test_button_full_width_flag_survives_inside_a_block() -> None:
 
 
 def test_home_page_has_one_h1_and_full_chrome(client) -> None:
-    html = client.get(reverse("common:home")).content.decode()
+    html = client.get(reverse("portfolio:home")).content.decode()
     assert html.count("<h1") == 1
     assert "<header" in html
     assert "<footer" in html
@@ -100,10 +104,15 @@ def test_rtl_layer_covers_what_logical_properties_do_not() -> None:
         assert rule in base
 
 
-def test_shell_flips_direction_from_settings(client, settings) -> None:
-    settings.TEXT_DIRECTION = "rtl"
-    html = client.get(reverse("common:home")).content.decode()
-    assert 'dir="rtl"' in html
+def test_shell_flips_direction_from_language(client, settings) -> None:
+    settings.LANGUAGE_CODE = "fa"
+    settings.LANGUAGES = [("fa", "فارسی"), ("en", "English")]
+    response = client.get(
+        reverse("portfolio:home"),
+        headers={"Accept-Language": "fa"},
+    )
+    assert 'dir="rtl"' in response.content.decode()
+    assert 'lang="fa"' in response.content.decode()
 
 
 def test_help_text_wrapper_survives_a_list(auth_client) -> None:

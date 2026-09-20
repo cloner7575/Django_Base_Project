@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "apps.accounts.apps.AccountsConfig",
     "apps.common.apps.CommonConfig",
+    "apps.portfolio.apps.PortfolioConfig",
 ]
 
 MIDDLEWARE = [
@@ -143,8 +144,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = "accounts:login"
-LOGIN_REDIRECT_URL = "common:home"
-LOGOUT_REDIRECT_URL = "common:home"
+LOGIN_REDIRECT_URL = "portfolio:home"
+LOGOUT_REDIRECT_URL = "portfolio:home"
 
 LANGUAGE_CODE = os.getenv("DJANGO_LANGUAGE_CODE", "en-us")
 TIME_ZONE = os.getenv("DJANGO_TIME_ZONE", "UTC")

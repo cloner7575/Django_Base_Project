@@ -1,0 +1,41 @@
+{# Minimal product mockup frame — variant styles live in base.css #}
+<div class="pf-mockup__window">
+  <div class="pf-mockup__bar">
+    <span></span><span></span><span></span>
+    <code class="ltr" dir="ltr">{{ title }}</code>
+  </div>
+  <div class="pf-mockup__screen pf-mockup__screen--{{ variant }}">
+    {% if variant == "rahatsell" %}
+      <div class="pf-mock-chat">
+        <div class="pf-mock-chat__row"></div>
+        <div class="pf-mock-chat__row pf-mock-chat__row--me"></div>
+        <div class="pf-mock-chat__card">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="pf-mock-chat__row"></div>
+      </div>
+    {% elif variant == "bimtec" %}
+      <div class="pf-mock-dash">
+        <div class="pf-mock-dash__kpi"></div>
+        <div class="pf-mock-dash__kpi"></div>
+        <div class="pf-mock-dash__panel"></div>
+      </div>
+    {% elif variant == "insurance" %}
+      <div class="pf-mock-api ltr" dir="ltr">
+        <code>GET /v1/policies</code>
+        <code>POST /v1/quotes</code>
+        <code>GET /v1/auth/me</code>
+        <code class="pf-mock-api__ok">200 OK · modular</code>
+      </div>
+    {% else %}
+      <div class="pf-mock-platform">
+        <div class="pf-mock-platform__nav"></div>
+        <div class="pf-mock-platform__grid">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}محمدرضا زارع · {% translate "Software Engineer & Django Backend Developer" %}{% endblock %}
+{% block meta_description %}{% translate "Backend developer focused on Python, Django and REST APIs — building production-ready systems with clean architecture." %}{% endblock %}
+{% block body_class %}page-portfolio{% endblock %}
+
+{% block content %}
+  <div class="portfolio stack stack--loose">
+
+    {# --- Hero ----------------------------------------------------------- #}
+    <section class="pf-hero" aria-labelledby="hero-heading">
+      <div class="pf-hero__copy">
+        <p class="eyebrow pf-hero__label">
+          {% translate "SOFTWARE ENGINEER · BACKEND DEVELOPER" %}
+        </p>
+        <h1 id="hero-heading" class="pf-hero__title">
+          <span class="pf-hero__line">{% translate "Building reliable" %}</span>
+          <span class="pf-hero__line">{% translate "backend systems" %}</span>
+          <span class="pf-hero__line">{% translate "with Django." %}</span>
+        </h1>
+        <p class="lede pf-hero__lede">
+          {% blocktranslate trimmed %}
+            Backend developer focused on Python, Django and REST APIs, building
+            production-ready systems with clean architecture, maintainable code
+            and real-world business logic.
+          {% endblocktranslate %}
+        </p>
+        <div class="cluster pf-hero__cta">
+          <a class="btn btn--primary" href="#work">{% translate "View Projects" %}</a>
+          <a class="btn btn--secondary" href="{{ resume_url }}" rel="noopener noreferrer" target="_blank">
+            {% include "components/_icon.html" with name="download" size="sm" %}
+            {% translate "Download Resume" %}
+          </a>
+        </div>
+        <p class="pf-availability">
+          <span class="pf-availability__dot" aria-hidden="true"></span>
+          {% translate "Available for selected projects" %}
+        </p>
+      </div>
+
+      <aside class="pf-terminal" aria-label="{% translate 'Architecture overview' %}">
+        <div class="pf-terminal__chrome">
+          <span></span><span></span><span></span>
+          <code class="ltr">architecture.py</code>
+        </div>
+        <pre class="pf-terminal__body ltr" dir="ltr"><code>Python
+└── Django
+    ├── REST API
+    ├── PostgreSQL
+    ├── Authentication
+    └── Business Logic</code></pre>
+      </aside>
+    </section>
+
+    {# --- Stats ---------------------------------------------------------- #}
+    <section class="pf-stats" aria-label="{% translate 'Highlights' %}">
+      {% for value, label in stats %}
+        <div class="pf-stat">
+          <p class="pf-stat__value ltr" dir="ltr">{{ value }}</p>
+          <p class="pf-stat__label">{{ label }}</p>
+        </div>
+      {% endfor %}
+    </section>
+
+    {# --- Work ----------------------------------------------------------- #}
+    <section id="work" class="pf-section" aria-labelledby="work-heading">
+      <div class="section-title">
+        <h2 id="work-heading">{% translate "Selected Work" %}</h2>
+        <p class="text-muted">{% translate "A selection of systems and products I've worked on." %}</p>
+      </div>
+
+      <div class="pf-work">
+        {% for project in projects %}
+          <article class="pf-case">
+            <div class="pf-case__media">
+              <div class="pf-mockup pf-mockup--{{ project.mockup }}" aria-hidden="true">
+                {% include "portfolio/mockups/_frame.html" with variant=project.mockup title=project.title %}
+              </div>
+            </div>
+            <div class="pf-case__body">
+              <p class="eyebrow">{{ project.subtitle }}</p>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.summary }}</p>
+              <ul class="pf-stack-list" aria-label="{% translate 'Stack' %}">
+                {% for item in project.stack %}
+                  <li><code class="ltr" dir="ltr">{{ item }}</code></li>
+                {% endfor %}
+              </ul>
+              <a class="pf-link" href="{% url 'portfolio:case_study' project.slug %}">
+                {{ project.cta_label }}
+                {% include "components/_icon.html" with name="arrow-right" size="sm" %}
+              </a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# --- How I Build ---------------------------------------------------- #}
+    <section class="pf-section" aria-labelledby="build-heading">
+      <div class="section-title">
+        <h2 id="build-heading">{% translate "How I Build" %}</h2>
+        <p class="text-muted">{% translate "An engineering approach shaped by production systems." %}</p>
+      </div>
+      <ol class="pf-steps">
+        {% for number, title, text in build_steps %}
+          <li class="pf-step">
+            <span class="pf-step__num ltr" dir="ltr">{{ number }}</span>
+            <h3>{{ title }}</h3>
+            <p>{{ text }}</p>
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    {# --- Stack ---------------------------------------------------------- #}
+    <section id="stack" class="pf-section" aria-labelledby="stack-heading">
+      <div class="section-title">
+        <h2 id="stack-heading">{% translate "Engineering Stack" %}</h2>
+        <p class="text-muted">{% translate "Tools I use to design, build and operate backends." %}</p>
+      </div>
+      <div class="pf-stack-grid">
+        {% for group in stack_groups %}
+          <div class="pf-stack-group">
+            <h3>{{ group.title }}</h3>
+            <ul>
+              {% for item in group.items %}
+                <li><code class="ltr" dir="ltr">{{ item }}</code></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {# --- Experience ----------------------------------------------------- #}
+    <section id="experience" class="pf-section" aria-labelledby="exp-heading">
+      <div class="section-title">
+        <h2 id="exp-heading">{% translate "Experience" %}</h2>
+        <p class="text-muted">{% translate "Roles focused on APIs, data models and business logic." %}</p>
+      </div>
+      <ol class="pf-timeline">
+        {% for item in experience %}
+          <li class="pf-timeline__item">
+            <div class="pf-timeline__meta">
+              <h3>{{ item.company }}</h3>
+              <p class="pf-timeline__role">{{ item.role }}</p>
+              <p class="pf-timeline__period ltr" dir="ltr">{{ item.period }}</p>
+            </div>
+            <ul class="pf-timeline__bullets">
+              {% for bullet in item.bullets %}
+                <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    {# --- Behind the API ------------------------------------------------- #}
+    <section class="pf-section" aria-labelledby="arch-heading">
+      <div class="section-title">
+        <h2 id="arch-heading">{% translate "Behind the API" %}</h2>
+        <p class="text-muted">{% translate "System design beyond framework labels." %}</p>
+      </div>
+      <div class="pf-arch">
+        <ol class="pf-arch__flow" aria-label="{% translate 'Request path' %}">
+          {% for layer in architecture_flow %}
+            <li>
+              <span class="ltr" dir="ltr">{{ layer }}</span>
+            </li>
+          {% endfor %}
+        </ol>
+        <ul class="pf-arch__concepts">
+          {% for concept in architecture_concepts %}
+            <li>{{ concept }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    {# --- About ---------------------------------------------------------- #}
+    <section id="about" class="pf-section pf-about" aria-labelledby="about-heading">
+      <div class="section-title">
+        <h2 id="about-heading">{% translate "A little about me." %}</h2>
+      </div>
+      <div class="pf-about__copy measure">
+        <p>
+          {% blocktranslate trimmed %}
+            I'm a backend-focused software engineer working primarily with Python
+            and Django. I enjoy turning complex business requirements into clean,
+            reliable and maintainable software.
+          {% endblocktranslate %}
+        </p>
+        <p>
+          {% blocktranslate trimmed %}
+            My work sits at the intersection of backend engineering, product
+            thinking and real-world business requirements.
+          {% endblocktranslate %}
+        </p>
+        <p class="text-muted">{% translate "Based in Iran · Working remotely" %}</p>
+      </div>
+    </section>
+
+    {# --- GitHub --------------------------------------------------------- #}
+    <section class="pf-section pf-github" aria-labelledby="gh-heading">
+      <div class="pf-github__card">
+        <div>
+          <p class="eyebrow">GitHub</p>
+          <h2 id="gh-heading"><span class="ltr" dir="ltr">{{ github_handle }}</span></h2>
+          <p class="text-muted">{% translate "Selected repositories, experiments and engineering work." %}</p>
+        </div>
+        <a class="btn btn--secondary" href="{{ github_url }}" rel="noopener noreferrer" target="_blank">
+          {% translate "View GitHub" %}
+          {% include "components/_icon.html" with name="arrow-right" size="sm" %}
+        </a>
+      </div>
+    </section>
+
+    {# --- Contact -------------------------------------------------------- #}
+    <section id="contact" class="pf-section pf-contact" aria-labelledby="contact-heading">
+      <div class="pf-contact__intro">
+        <h2 id="contact-heading">{% translate "Have a project in mind?" %}</h2>
+        <p class="lede">
+          {% blocktranslate trimmed %}
+            I'm open to interesting backend projects, product collaborations and
+            engineering opportunities.
+          {% endblocktranslate %}
+        </p>
+        <p>
+          <a class="btn btn--primary" href="mailto:{{ contact_email }}">
+            {% translate "Let's talk" %}
+            {% include "components/_icon.html" with name="arrow-right" size="sm" %}
+          </a>
+        </p>
+        <ul class="pf-contact__links">
+          <li>
+            <span>{% translate "Email" %}</span>
+            <a class="ltr" dir="ltr" href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+          </li>
+          <li>
+            <span>LinkedIn</span>
+            <a class="ltr" dir="ltr" href="{{ linkedin_url }}" rel="noopener noreferrer" target="_blank">linkedin.com/in/mohammad-zare-5b3630154</a>
+          </li>
+          <li>
+            <span>GitHub</span>
+            <a class="ltr" dir="ltr" href="{{ github_url }}" rel="noopener noreferrer" target="_blank">{{ github_handle }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="pf-contact__form" method="post" action="{% url 'portfolio:contact' %}" novalidate>
+        {% csrf_token %}
+        <h3>{% translate "Send a message" %}</h3>
+        {% include "partials/_form_errors.html" with form=contact_form %}
+        {% include "components/_field.html" with field=contact_form.name %}
+        {% include "components/_field.html" with field=contact_form.email %}
+        {% include "components/_field.html" with field=contact_form.message %}
+        <button class="btn btn--primary" type="submit">{% translate "Send Message" %}</button>
+      </form>
+    </section>
+
+  </div>
+{% endblock %}
